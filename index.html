@@ -12,6 +12,23 @@
 
     <!--include bootstrap icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <style>
+        .fp-product-card {
+            background-size: cover;
+            /* remove underline and color from link */
+            text-decoration: none;
+            color: inherit;
+
+        }
+
+        .fp-product-card:hover {
+            color: inherit;
+            /* add shadow to card */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+    </style>
+
     <title>Dress Shop</title>
 </head>
 
@@ -20,6 +37,11 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Dress Shop</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form class="d-flex w-100 pe-2">
                     <select class="form-select w-auto">
                         <option value="all" selected>All Categories</option>
@@ -28,20 +50,18 @@
                         <option value="shirts">Shirts</option>
                         <option value="shoes">Shoes</option>
                         <option value="suits">Suits</option>
+                        <option value="ties">Ties</option>
                     </select>
                     <input class="form-control me-2" type="search" placeholder="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 d-flex justify-content-center align-items-center">
                         <li class="nav-item">
                             <a class="nav-link" href="#">About</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown">
                                 Catalogue
                             </a>
                             <ul class="dropdown-menu">
@@ -51,6 +71,7 @@
                                 <li><a class="dropdown-item" href="#">Shirts</a></li>
                                 <li><a class="dropdown-item" href="#">Shoes</a></li>
                                 <li><a class="dropdown-item" href="#">Suits</a></li>
+                                <li><a class="dropdown-item" href="#">Ties</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -61,13 +82,33 @@
                         </li>
                     </ul>
                 </div>
-                </div>
-                </nav>
-                
-                </div>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-                    crossorigin="anonymous"></script>
-                </body>
-                
-                </html>
+            </div>
+        </nav>
+
+        <div class="row text-light">
+            <a href="#" class="col-md-6 bg-cover d-flex justify-content-center align-items-center fp-product-card" style="background-image: url(img/shirts_card.jpg);">
+                <h1 style="margin: 9rem auto;">Shirts</h1>
+            </a>
+            <a href="#" class="col-md-6 bg-cover d-flex justify-content-center align-items-center fp-product-card" style="background-image: url(img/shoes_card.jpg);">
+                <h1 style="margin: 9rem auto;">Shoes</h1>
+            </a>
+            <a href="#" class="col-md-6 bg-cover d-flex justify-content-center align-items-center fp-product-card" style="background-image: url(img/suits_card.jpg);">
+                <h1 style="margin: 9rem auto;">Suits</h1>
+            </a>
+            <a href="#" class="col-md-6 bg-cover d-flex justify-content-center align-items-center fp-product-card" style="background-image: url(img/hats_card.jpg);">
+                <h1 style="margin: 9rem auto;">Hats</h1>
+            </a>
+            <a href="#" class="col-md-6 bg-cover d-flex justify-content-center align-items-center fp-product-card" style="background-image: url(img/pants_card.jpg);">
+                <h1 style="margin: 9rem auto;">Pants</h1>
+            </a>
+            <a href="#" class="col-md-6 bg-cover d-flex justify-content-center align-items-center fp-product-card" style="background-image: url(img/ties_card.jpg);">
+                <h1 style="margin: 9rem auto;">Ties</h1>
+            </a>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
