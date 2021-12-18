@@ -1,2 +1,3 @@
 - change style names to something better
 - create a stylesheet (?)
+- refactor grid stuff (repeated code)
