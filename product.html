@@ -42,13 +42,6 @@
             gap: 1rem;
         }
 
-        @media only screen and (max-width: 720px) {
-            .product-page-main {
-                grid-template-columns: 1fr;
-                grid-template-rows: 1fr 1fr;
-            }
-        }
-
 
 
         .product-li {
@@ -60,8 +53,8 @@
             /* remove underline and color from link */
             text-decoration: none;
             color: inherit;
-            min-width: 25%;
-            width: 25%;
+            min-width: 33%;
+            width: 33%;
         }
 
         .product-li:hover {
@@ -75,6 +68,20 @@
             background-repeat: no-repeat;
             background-position: center;
         }
+
+
+        @media only screen and (max-width: 720px) {
+            .product-page-main {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+            }
+
+            .product-li {
+                min-width: 100%;
+                width: 100%;
+            }
+        }
+
     </style>
 
     <title>Dress Shop</title>
@@ -144,7 +151,7 @@
 
         <section class="mt-5">
             <h1 class="mb-3">Related products that you might like</h1>
-            <div class="d-flex flex-nowrap justify-content-center align-items-center"
+            <div class="d-flex flex-nowrap"
                 style="overflow-y: hidden; overflow-x: scroll">
                 <a href="#" class="border mb-1 product-li">
                     <div class="product-li-image" style="background-image: url(img/cuban_collar_shirt.jpg);"></div>
