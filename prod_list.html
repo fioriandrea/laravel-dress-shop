@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <style>
-        .fp-product-card {
+        .product-li {
             display: grid;
             grid-template-columns: 3fr 9fr;
             gap: 1rem;
@@ -24,20 +24,20 @@
             color: inherit;
         }
 
-        .fp-product-image {
+        .product-li-image {
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
         }
 
         @media only screen and (max-width: 720px) {
-            .fp-product-card {
+            .product-li {
                 grid-template-columns: 1fr;
                 grid-template-rows: 1fr 1fr;
             }
         }
 
-        .fp-product-card:hover {
+        .product-li:hover {
             color: inherit;
             /* add shadow to card */
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -49,8 +49,8 @@
 
 <body>
     <div class="container">
-        <a href="#" class="border mb-1 fp-product-card">
-            <div class="fp-product-image" style="background-image: url(img/cuban_collar_shirt.jpg);"></div>
+        <a href="#" class="border mb-1 product-li">
+            <div class="product-li-image" style="background-image: url(img/cuban_collar_shirt.jpg);"></div>
             <div>
                 <h2>Cuban Collar Shirt</h2>
                 <h3 class="small fw-light">Additional information that you might be interested in</h3>
@@ -64,8 +64,8 @@
                 </div>
             </div>
         </a>
-        <a href="#" class="border mb-1 fp-product-card">
-            <div class="fp-product-image" style="background-image: url(img/peak_lapel_suit.webp);"></div>
+        <a href="#" class="border mb-1 product-li">
+            <div class="product-li-image" style="background-image: url(img/peak_lapel_suit.webp);"></div>
             <div>
                 <h2>Cuban Collar Shirt</h2>
                 <h3 class="small fw-light">Additional information that you might be interested in</h3>

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <style>
-        .prod-carousel-image {
+        .product-main-carousel-image {
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -36,14 +36,14 @@
             color: #f9d616;
         }
 
-        .product-main {
+        .product-page-main {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
         }
 
         @media only screen and (max-width: 720px) {
-            .product-main {
+            .product-page-main {
                 grid-template-columns: 1fr;
                 grid-template-rows: 1fr 1fr;
             }
@@ -56,13 +56,13 @@
 
 <body>
     <div class="container">
-        <section class="product-main">
+        <section class="product-page-main">
             <div id="productCarouselControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
                 <div class="carousel-inner h-100">
-                    <div class="carousel-item active prod-carousel-image img-thumbnail"
+                    <div class="carousel-item active product-main-carousel-image img-thumbnail"
                         style="background-image: url(img/cuban_collar_shirt.jpg);">
                     </div>
-                    <div class="carousel-item prod-carousel-image img-thumbnail"
+                    <div class="carousel-item product-main-carousel-image img-thumbnail"
                         style="background-image: url(img/peak_lapel_suit.webp);">
                     </div>
                 </div>
