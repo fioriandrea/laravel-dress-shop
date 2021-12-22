@@ -36,6 +36,10 @@
             color: #f9d616;
         }
 
+        .review-stars {
+            cursor: pointer;
+        }
+
         .product-page-main {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -81,7 +85,6 @@
                 width: 100%;
             }
         }
-
     </style>
 
     <title>Dress Shop</title>
@@ -89,6 +92,61 @@
 
 <body>
     <div class="container">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Dress Shop</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="d-flex w-100 pe-2">
+                        <select class="form-select w-auto">
+                            <option value="all" selected>All Categories</option>
+                            <option value="hats">Hats</option>
+                            <option value="pants">Pants</option>
+                            <option value="shirts">Shirts</option>
+                            <option value="shoes">Shoes</option>
+                            <option value="suits">Suits</option>
+                            <option value="ties">Ties</option>
+                        </select>
+                        <input class="form-control me-2" type="search" placeholder="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <ul class="navbar-nav mb-2 mb-lg-0 d-flex justify-content-center align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown">
+                                Catalogue
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">All Categories</a></li>
+                                <li><a class="dropdown-item" href="#">Hats</a></li>
+                                <li><a class="dropdown-item" href="#">Pants</a></li>
+                                <li><a class="dropdown-item" href="#">Shirts</a></li>
+                                <li><a class="dropdown-item" href="#">Shoes</a></li>
+                                <li><a class="dropdown-item" href="#">Suits</a></li>
+                                <li><a class="dropdown-item" href="#">Ties</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link h3" href="#"><i class="bi bi-person"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link h3" href="#"><i class="bi bi-cart"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+
+
         <section class="product-page-main">
             <div id="productCarouselControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
                 <div class="carousel-inner h-100">
@@ -151,8 +209,7 @@
 
         <section class="mt-5">
             <h1 class="mb-3">Related products that you might like</h1>
-            <div class="d-flex flex-nowrap"
-                style="overflow-y: hidden; overflow-x: scroll">
+            <div class="d-flex flex-nowrap" style="overflow-y: hidden; overflow-x: scroll">
                 <a href="#" class="border mb-1 product-li">
                     <div class="product-li-image" style="background-image: url(img/cuban_collar_shirt.jpg);"></div>
                     <div>
@@ -246,12 +303,173 @@
             </div>
         </section>
 
+        <section class="my-5">
+            <h1>Reviews Section</h1>
+            <form>
+                <p class="lead">
+                    <a class="stars review-stars">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </a>
+                </p>
+                <div class="form-group">
+                    <label for="review-text-area">Write here your review of the product</label>
+                    <textarea class="form-control" id="review-text-area" rows="3"></textarea>
+                    <button type="submit" class="btn btn-outline-success my-2 w-100">Submit</button>
+                </div>
+            </form>
+
+            <hr>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h3>Username</h3>
+                    <p class="small">
+                        Reviewed on <span class="text-muted">12/12/2019</span>
+                    </p>
+                    <a class="stars mb-3">
+                        <i class="bi bi-star checked"></i>
+                        <i class="bi bi-star checked"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </a>
+                    <p class="lead">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <h3>Username</h3>
+                    <p class="small">
+                        Reviewed on <span class="text-muted">12/12/2019</span>
+                    </p>
+                    <a class="stars mb-3">
+                        <i class="bi bi-star checked"></i>
+                        <i class="bi bi-star checked"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </a>
+                    <p class="lead">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <h3>Username</h3>
+                    <p class="small">
+                        Reviewed on <span class="text-muted">12/12/2019</span>
+                    </p>
+                    <a class="stars mb-3">
+                        <i class="bi bi-star checked"></i>
+                        <i class="bi bi-star checked"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </a>
+                    <p class="lead">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <h3>Username</h3>
+                    <p class="small">
+                        Reviewed on <span class="text-muted">12/12/2019</span>
+                    </p>
+                    <a class="stars mb-3">
+                        <i class="bi bi-star checked"></i>
+                        <i class="bi bi-star checked"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </a>
+                    <p class="lead">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
+                        eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                        velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                    </p>
+                </li>
+            </ul>
+
+            <nav class="d-flex justify-content-center align-items-center mt-5">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </section>
+
+
+
+
+
+        <footer class="bg-dark text-light text-center p-3 d-flex mt-5">
+            <p class="lead m-auto">Copyright &copy; 2021 Dress Shop</p>
+            <a href="#"><i class="bi bi-arrow-up-circle h1 d-block"></i></a>
+        </footer>
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+
+    <script>
+        const stars = document.querySelector(".review-stars");
+        for (let i = 0; i < stars.children.length; i++) {
+            stars.children[i].addEventListener("click", () => {
+                for (let j = 0; j <= i; j++) {
+                    stars.children[j].classList.add("checked");
+                }
+                for (let j = i + 1; j < stars.children.length; j++) {
+                    stars.children[j].classList.remove("checked");
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
