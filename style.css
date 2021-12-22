@@ -1,0 +1,123 @@
+/* main page */
+
+.product-categories {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.product-category {
+    display: block;
+    background-size: cover;
+    /* remove underline and color from link */
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-category:hover {
+    color: inherit;
+    /* add shadow to card */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* product page */
+
+.product-page-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.product-main-carousel-image {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+}
+
+.stars {
+    /* remove underline and color from link */
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.stars:hover {
+    color: inherit;
+}
+
+.stars i.checked {
+    color: #f9d616;
+}
+
+.review-stars {
+    cursor: pointer;
+}
+
+.product-li-in-slider {
+    min-width: 33%;
+    width: 33%;
+}
+
+.product-li-in-slider.product-li {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+
+}
+
+/* product-li */
+
+.product-li {
+    display: grid;
+    grid-template-columns: 3fr 9fr;
+    gap: 1rem;
+    padding: 1rem;
+    /* remove underline and color from link */
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-li:hover {
+    /* remove underline and color from link */
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-li-image {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* cart page */
+
+.cart-page-main {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 1rem;
+}
+
+
+@media only screen and (max-width: 720px) {
+    .product-categories {
+        grid-template-columns: 1fr;
+    }
+
+    .product-page-main {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .product-li {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .product-li-in-slider {
+        min-width: 100%;
+        width: 100%;
+    }
+
+    .cart-page-main {
+        grid-template-columns: 1fr;
+    }
+}
