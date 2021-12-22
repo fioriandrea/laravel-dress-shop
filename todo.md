@@ -1,2 +1,0 @@
-- create a stylesheet
-- refactor grid stuff (repeated code) (also, product-li is literally repeated)
