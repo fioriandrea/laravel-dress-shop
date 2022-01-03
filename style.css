@@ -96,6 +96,12 @@
     gap: 1rem;
 }
 
+/* forms */
+
+.user-form > * {
+    margin-top: 1rem;
+}
+
 @media only screen and (max-width: 720px) {
     .product-categories {
         grid-template-columns: 1fr;
