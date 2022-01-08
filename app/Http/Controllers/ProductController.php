@@ -4,38 +4,27 @@ namespace dress_shop\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use dress_shop\DataLayer;
+
 class ProductController extends Controller
 {
     public function getProductList()
     {
         return view('product_list', [
-            'products' => [
-                (object) [
-                    'id' => 1,
-                    "name" => "Cuban Collar Shirt",
-                    "short_description" => "A classic shirt from Cuba",
-                    "picture" => "cuban_collar_shirt.jpg",
-                    "price" => "20.00", 
-                    "shipping" => "0.00",
-                    "available" => "10",
-                ],
-                (object) [
-                    "id" => 2,
-                    "name" => "Peak Lapel Suit",
-                    "short_description" => "A classic suit from Peak",
-                    "picture" => "peak_lapel_suit.webp",
-                    "main_picture" => "peak_lapel_suit.webp",
-                    "price" => "30.40", 
-                    "shipping" => "30.00",
-                    "available" => "2",
-                ],
-            ],
+            'products' => DataLayer::getProductList(),
             'logged' => false,
         ]);
     }
 
     public function getProduct($id)
     {
+        return view('product', [
+            'product' => DataLayer::getProduct($id),
+            'sizes' => DataLayer::getProductSizes($id),
+            'images' => DataLayer::getProductImages($id),
+            'rating' => 3,
+            'logged' => false,
+        ]);
         return view('product', [
             'product' => (object) [
                 "id" => 1,

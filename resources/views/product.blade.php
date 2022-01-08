@@ -6,8 +6,8 @@
 <section class="product-page-main">
     <div id="productCarouselControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-inner h-100">
-            @foreach($product->pictures as $picture)
-                <div class="carousel-item {{ $loop->first ? 'active' : '' }} product-main-carousel-image img-thumbnail" style="background-image: url({{ url('/') }}/img/{{ $picture }});">
+            @foreach($images as $picture)
+                <div class="carousel-item {{ $loop->first ? 'active' : '' }} product-main-carousel-image img-thumbnail" style="background-image: url({{ url('/') }}/img/{{ $picture->url }});">
                 </div>
             @endforeach
         </div>
@@ -27,14 +27,14 @@
         <h1 class="display-4">{{ $product->name }}</h1>
         <p class="lead">
             <a class="stars">
-                @for($i = 0; $i < round($product->rating); $i++)
+                @for($i = 0; $i < round($rating); $i++)
                     <i class="bi bi-star checked"></i>
                 @endfor
-                @for($i = round($product->rating); $i < 5; $i++)
+                @for($i = round($rating); $i < 5; $i++)
                     <i class="bi bi-star"></i>
                 @endfor
             </a>
-            <span class="text-muted">({{ $product->rating }}/5)</span>
+            <span class="text-muted">({{ $rating }}/5)</span>
         </p>
         <p class="h1">EUR {{ $product->price }}</p>
         <p class="lead" data-shipping="{{ $product->shipping }}"></p>
@@ -49,8 +49,8 @@
             Category: {{ $product->category }}
         </p>
         <select id="size-select" class="form-select">
-            @foreach($product->sizes as $size => $available)
-                <option value="{{ $size }}">{{ $size }}</option>
+            @foreach($product->sizes as $size)
+                <option value="{{ $size->name }}">{{ $size->name }}</option>
             @endforeach
         </select>
         <button id="add-to-cart" class="disabled btn btn-outline-success w-100">Add to cart</button>
@@ -298,8 +298,9 @@
 <script>
     const sizeSelectHandler = () => {
         document.querySelector("#add-to-cart").classList.remove("disabled");
-        const sizes = @json($product->sizes);
-        const available = sizes[document.querySelector("#size-select").value];
+        const sizes = @json($sizes);
+        const value = document.querySelector("#size-select").value;
+        const available = sizes.find(size => size.name === value).available;
         const availableElem = document.querySelector("#available");
         setAvailableParagraph(availableElem, available);
         if (available === 0) {

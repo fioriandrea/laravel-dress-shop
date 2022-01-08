@@ -4,6 +4,9 @@ namespace dress_shop\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+// import View class
+use Illuminate\Support\Facades\View;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::share('title', 'Dress Shop');
     }
 }

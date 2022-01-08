@@ -5,7 +5,7 @@
 @section('content')
 @foreach($products as $product)
 <a href="{{ route('product', ['id' => $product->id]) }}" class="border mb-1 product-li">
-    <div class="product-li-image" style="background-image: url({{ url('/') }}/img/{{ $product->picture }});"></div>
+    <div class="product-li-image" style="background-image: url({{ url('/') }}/img/{{ $product->image }});"></div>
     <div>
         <h2>{{ $product->name }}</h2>
         <h3 class="small fw-light">{{ $product->short_description }}</h3>
