@@ -4,9 +4,9 @@
 
 @section('content')
 <section class="product-categories text-light text-center my-5">
-    @foreach($categories as $cid => $cname)
-        <a href="#" class="bg-cover product-category" style="background-image: url(img/{{ $cid }}_card.jpg);">
-            <h1 style="margin: 9rem auto;">{{ $cname }}</h1>
+    @foreach($categories as $category)
+        <a href="#" class="bg-cover product-category" style="background-image: url(img/{{ strtolower($category) }}_card.jpg);">
+            <h1 style="margin: 9rem auto;">{{ $category }}</h1>
         </a>
     @endforeach
 </section>

@@ -9,11 +9,17 @@ class DataLayer {
 
     public static function getProductList() {
         $products = Product::all();
-        foreach ($products as $product) {
-            $product->image = $product->images()->first()->url;
-            $product->sizes = $product->S + $product->M + $product->L + $product->XL;
-        }
         return $products;
+    }
+
+    public static function getProductTotalSizes($id) {
+        $product = Product::find($id);
+        return $product->S + $product->M + $product->L + $product->XL;
+    }
+
+    public static function getProductFirstImage($id) {
+        $product = Product::find($id);
+        return $product->images()->first()->url;
     }
 
     public static function getProduct($id) {

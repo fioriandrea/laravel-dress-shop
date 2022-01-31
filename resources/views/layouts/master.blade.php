@@ -31,8 +31,8 @@
                     <form class="d-flex w-100 pe-2">
                         <select class="form-select w-auto">
                             <option value="all" selected>All Categories</option>
-                            @foreach($categories as $cid => $cname)
-                                <option value="{{ $cid }}">{{ $cname }}</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category }}">{{ $category }}</option>
                             @endforeach
                         </select>
                         <input class="form-control me-2" type="search" placeholder="Search">
@@ -46,8 +46,8 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">All Categories</a></li>
-                                @foreach($categories as $cid => $cname)
-                                    <li><a class="dropdown-item" href="#">{{ $cname }}</a></li>
+                                @foreach($categories as $category)
+                                    <li><a class="dropdown-item" href="#">{{ $category }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
