@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('title', 'Dress Shop');
+        View::share('categories', ['shirts' => 'Shirts', 'shoes' => 'Shoes', 'suits' => 'Suits', 'hats' => 'Hats', 'pants' => 'Pants', 'ties' => 'Ties']);
+        View::share('sizes', ['S', 'M', 'L', 'XL']);
     }
 }

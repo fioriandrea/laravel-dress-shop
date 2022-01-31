@@ -12,7 +12,7 @@
         <div class="d-flex justify-content-center flex-column align-items-start">
             <p class="h1">EUR {{ $product->price }}</p>
             <p class="small m-0" data-shipping="{{ $product->shipping }}"></p>
-            <p class="small m-0" data-available="{{ $product->available }}"></p>
+            <p class="small m-0" data-available="{{ $product->sizes }}"></p>
         </div>
     </div>
 </a>

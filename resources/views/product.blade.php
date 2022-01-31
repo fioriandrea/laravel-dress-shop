@@ -49,8 +49,8 @@
             Category: {{ $product->category }}
         </p>
         <select id="size-select" class="form-select">
-            @foreach($product->sizes as $size)
-                <option value="{{ $size->name }}">{{ $size->name }}</option>
+            @foreach($sizes as $size)
+                <option value="{{ $size }}">{{ $size }}</option>
             @endforeach
         </select>
         <button id="add-to-cart" class="disabled btn btn-outline-success w-100">Add to cart</button>
@@ -298,9 +298,9 @@
 <script>
     const sizeSelectHandler = () => {
         document.querySelector("#add-to-cart").classList.remove("disabled");
-        const sizes = @json($sizes);
-        const value = document.querySelector("#size-select").value;
-        const available = sizes.find(size => size.name === value).available;
+        const product = @json($product);
+        const size = document.querySelector("#size-select").value;
+        const available = product[size]; 
         const availableElem = document.querySelector("#available");
         setAvailableParagraph(availableElem, available);
         if (available === 0) {

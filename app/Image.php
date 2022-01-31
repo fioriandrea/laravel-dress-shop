@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-    protected $table = 'images';
+    protected $table = 'picture';
     protected $fillable = ['product_id', 'url'];
 
     // an image belongs to a product

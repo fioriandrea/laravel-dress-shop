@@ -4,24 +4,11 @@
 
 @section('content')
 <section class="product-categories text-light text-center my-5">
-    <a href="#" class="bg-cover product-category" style="background-image: url(img/shirts_card.jpg);">
-        <h1 style="margin: 9rem auto;">Shirts</h1>
-    </a>
-    <a href="#" class="bg-cover product-category" style="background-image: url(img/shoes_card.jpg);">
-        <h1 style="margin: 9rem auto;">Shoes</h1>
-    </a>
-    <a href="#" class="bg-cover product-category" style="background-image: url(img/suits_card.jpg);">
-        <h1 style="margin: 9rem auto;">Suits</h1>
-    </a>
-    <a href="#" class="bg-cover product-category" style="background-image: url(img/hats_card.jpg);">
-        <h1 style="margin: 9rem auto;">Hats</h1>
-    </a>
-    <a href="#" class="bg-cover product-category" style="background-image: url(img/pants_card.jpg);">
-        <h1 style="margin: 9rem auto;">Pants</h1>
-    </a>
-    <a href="#" class="bg-cover product-category" style="background-image: url(img/ties_card.jpg);">
-        <h1 style="margin: 9rem auto;">Ties</h1>
-    </a>
+    @foreach($categories as $cid => $cname)
+        <a href="#" class="bg-cover product-category" style="background-image: url(img/{{ $cid }}_card.jpg);">
+            <h1 style="margin: 9rem auto;">{{ $cname }}</h1>
+        </a>
+    @endforeach
 </section>
 
 <section class="row g-2">

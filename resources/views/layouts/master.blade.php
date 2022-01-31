@@ -31,12 +31,9 @@
                     <form class="d-flex w-100 pe-2">
                         <select class="form-select w-auto">
                             <option value="all" selected>All Categories</option>
-                            <option value="hats">Hats</option>
-                            <option value="pants">Pants</option>
-                            <option value="shirts">Shirts</option>
-                            <option value="shoes">Shoes</option>
-                            <option value="suits">Suits</option>
-                            <option value="ties">Ties</option>
+                            @foreach($categories as $cid => $cname)
+                                <option value="{{ $cid }}">{{ $cname }}</option>
+                            @endforeach
                         </select>
                         <input class="form-control me-2" type="search" placeholder="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
@@ -49,12 +46,9 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">All Categories</a></li>
-                                <li><a class="dropdown-item" href="#">Hats</a></li>
-                                <li><a class="dropdown-item" href="#">Pants</a></li>
-                                <li><a class="dropdown-item" href="#">Shirts</a></li>
-                                <li><a class="dropdown-item" href="#">Shoes</a></li>
-                                <li><a class="dropdown-item" href="#">Suits</a></li>
-                                <li><a class="dropdown-item" href="#">Ties</a></li>
+                                @foreach($categories as $cid => $cname)
+                                    <li><a class="dropdown-item" href="#">{{ $cname }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
                         <li class="nav-item dropdown">

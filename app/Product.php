@@ -6,16 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $table = 'products';
-    protected $fillable = ['name', 'description', 'short_description', 'category', 'price', 'shipping', 'brand'];
+    protected $table = 'product';
+    protected $fillable = ['id', 'name', 'category', 'brand', 'shipping', 'price', 'description', 'short_description', 'S', 'M', 'L', 'XL'];
 
     // a product has many images
     public function images() {
         return $this->hasMany('dress_shop\Image');
-    }
-
-    // a product has many sizes
-    public function sizes() {
-        return $this->hasMany('dress_shop\Size');
     }
 }
