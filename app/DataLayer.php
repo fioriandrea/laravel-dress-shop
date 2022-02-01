@@ -3,18 +3,10 @@
 namespace dress_shop;
 
 class DataLayer {
-    public static function getProducts() {
-        return Product::all();
-    }
-
-    public static function getProductList() {
+    public static function getProducts($phpPredicate) {
         $products = Product::all();
+        $products = $products->filter($phpPredicate);
         return $products;
-    }
-
-    public static function getProductTotalSizes($id) {
-        $product = Product::find($id);
-        return $product->S + $product->M + $product->L + $product->XL;
     }
 
     public static function getProductFirstImage($id) {

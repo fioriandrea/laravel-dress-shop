@@ -28,14 +28,14 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="d-flex w-100 pe-2">
-                        <select class="form-select w-auto">
+                    <form class="d-flex w-100 pe-2" method="get" action="{{ action('ProductController@getProductList') }}">
+                        <select class="form-select w-auto" name="category">
                             <option value="all" selected>All Categories</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category }}">{{ $category }}</option>
                             @endforeach
                         </select>
-                        <input class="form-control me-2" type="search" placeholder="Search">
+                        <input class="form-control me-2" type="search" placeholder="Search" name="keyword">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                     <ul class="navbar-nav mb-2 mb-lg-0 d-flex justify-content-center align-items-center">
@@ -45,9 +45,9 @@
                                 Catalogue
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">All Categories</a></li>
+                                <li><a class="dropdown-item" href="{{ action('ProductController@getProductList', ['category' => 'all', 'keyword' => '']) }}">All Categories</a></li>
                                 @foreach($categories as $category)
-                                    <li><a class="dropdown-item" href="#">{{ $category }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ action('ProductController@getProductList', ['category' => $category, 'keyword' => '']) }}">{{ $category }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
