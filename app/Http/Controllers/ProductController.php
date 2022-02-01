@@ -8,9 +8,10 @@ use dress_shop\DataLayer;
 
 class ProductController extends Controller
 {
-
     private static function productsFilter($category = 'all', $keyword = '') {
         return function($product) use ($category, $keyword) {
+            $category = $category === null ? 'all' : $category;
+            $keyword = $keyword === null ? '' : $keyword;
             if ($category != 'all' && $category != $product->category)
                 return false;
             $tocheck = [$product->name, $product->description, $product->category, $product->short_description];
@@ -37,6 +38,7 @@ class ProductController extends Controller
             'product' => DataLayer::getProduct($id),
             'images' => DataLayer::getProductImages($id),
             'rating' => 3,
+            'related' => DataLayer::getRandomProducts(DataLayer::getProduct($id), 5),
             'logged' => false,
         ]);
     }

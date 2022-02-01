@@ -61,96 +61,10 @@
 <section class="mt-5">
     <h1 class="mb-3">Related products that you might like</h1>
     <div class="d-flex flex-nowrap" style="overflow-y: hidden; overflow-x: scroll">
-        <a href="#" class="border mb-1 product-li product-li-in-slider">
-            <div class="product-li-image" style="background-image: url(img/cuban_collar_shirt.jpg);"></div>
-            <div>
-                <h2>Cuban Collar Shirt</h2>
-                <h3 class="small fw-light">Additional information that you might be interested in</h3>
-                <div class="d-flex justify-content-center flex-column align-items-start">
-                    <p class="h1">EUR 317.79</p>
-                    <p class="small text-success m-0">Free Shipping</p>
-                    <p class="small fw-light m-0">+25 EUR for Shipping</p>
-                    <p class="small text-danger m-0">Not available at the moment</p>
-                    <p class="small text-warning m-0">3 articles left</p>
-                    <p class="small fw-light m-0">10 articles left</p>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="border mb-1 product-li product-li-in-slider">
-            <div class="product-li-image" style="background-image: url(img/cuban_collar_shirt.jpg);"></div>
-            <div>
-                <h2>Cuban Collar Shirt</h2>
-                <h3 class="small fw-light">Additional information that you might be interested in</h3>
-                <div class="d-flex justify-content-center flex-column align-items-start">
-                    <p class="h1">EUR 317.79</p>
-                    <p class="small text-success m-0">Free Shipping</p>
-                    <p class="small fw-light m-0">+25 EUR for Shipping</p>
-                    <p class="small text-danger m-0">Not available at the moment</p>
-                    <p class="small text-warning m-0">3 articles left</p>
-                    <p class="small fw-light m-0">10 articles left</p>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="border mb-1 product-li product-li-in-slider">
-            <div class="product-li-image" style="background-image: url(img/cuban_collar_shirt.jpg);"></div>
-            <div>
-                <h2>Cuban Collar Shirt</h2>
-                <h3 class="small fw-light">Additional information that you might be interested in</h3>
-                <div class="d-flex justify-content-center flex-column align-items-start">
-                    <p class="h1">EUR 317.79</p>
-                    <p class="small text-success m-0">Free Shipping</p>
-                    <p class="small fw-light m-0">+25 EUR for Shipping</p>
-                    <p class="small text-danger m-0">Not available at the moment</p>
-                    <p class="small text-warning m-0">3 articles left</p>
-                    <p class="small fw-light m-0">10 articles left</p>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="border mb-1 product-li product-li-in-slider">
-            <div class="product-li-image" style="background-image: url(img/cuban_collar_shirt.jpg);"></div>
-            <div>
-                <h2>Cuban Collar Shirt</h2>
-                <h3 class="small fw-light">Additional information that you might be interested in</h3>
-                <div class="d-flex justify-content-center flex-column align-items-start">
-                    <p class="h1">EUR 317.79</p>
-                    <p class="small text-success m-0">Free Shipping</p>
-                    <p class="small fw-light m-0">+25 EUR for Shipping</p>
-                    <p class="small text-danger m-0">Not available at the moment</p>
-                    <p class="small text-warning m-0">3 articles left</p>
-                    <p class="small fw-light m-0">10 articles left</p>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="border mb-1 product-li product-li-in-slider">
-            <div class="product-li-image" style="background-image: url(img/cuban_collar_shirt.jpg);"></div>
-            <div>
-                <h2>Cuban Collar Shirt</h2>
-                <h3 class="small fw-light">Additional information that you might be interested in</h3>
-                <div class="d-flex justify-content-center flex-column align-items-start">
-                    <p class="h1">EUR 317.79</p>
-                    <p class="small text-success m-0">Free Shipping</p>
-                    <p class="small fw-light m-0">+25 EUR for Shipping</p>
-                    <p class="small text-danger m-0">Not available at the moment</p>
-                    <p class="small text-warning m-0">3 articles left</p>
-                    <p class="small fw-light m-0">10 articles left</p>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="border mb-1 product-li product-li-in-slider">
-            <div class="product-li-image" style="background-image: url(img/cuban_collar_shirt.jpg);"></div>
-            <div>
-                <h2>Cuban Collar Shirt</h2>
-                <h3 class="small fw-light">Additional information that you might be interested in</h3>
-                <div class="d-flex justify-content-center flex-column align-items-start">
-                    <p class="h1">EUR 317.79</p>
-                    <p class="small text-success m-0">Free Shipping</p>
-                    <p class="small fw-light m-0">+25 EUR for Shipping</p>
-                    <p class="small text-danger m-0">Not available at the moment</p>
-                    <p class="small text-warning m-0">3 articles left</p>
-                    <p class="small fw-light m-0">10 articles left</p>
-                </div>
-            </div>
-        </a>
+        @foreach($related as $rp)
+        <!-- use product_list_card.blade.php -->
+        @include('product_list_card', ['product' => $rp, 'inslider' => true])
+        @endforeach
     </div>
 </section>
 

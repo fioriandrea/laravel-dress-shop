@@ -45,9 +45,9 @@
                                 Catalogue
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ action('ProductController@getProductList', ['category' => 'all', 'keyword' => '']) }}">All Categories</a></li>
+                                <li><a class="dropdown-item" href="{{ action('ProductController@getProductList', ['category' => 'all']) }}">All Categories</a></li>
                                 @foreach($categories as $category)
-                                    <li><a class="dropdown-item" href="{{ action('ProductController@getProductList', ['category' => $category, 'keyword' => '']) }}">{{ $category }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ action('ProductController@getProductList', ['category' => $category]) }}">{{ $category }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
