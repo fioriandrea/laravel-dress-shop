@@ -1,2 +1,0 @@
-- guarda lezioni del devis (almeno per capire come collegare il routing, controller e tutto con la funzionalità di ricerca)
-- fai autenticazione con authscaffold

@@ -34,11 +34,11 @@ class ProductController extends Controller
 
     public function getProduct($id)
     {
+        $product = DataLayer::getProduct($id);
         return view('product', [
-            'product' => DataLayer::getProduct($id),
-            'images' => DataLayer::getProductImages($id),
+            'product' => $product,
             'rating' => 3,
-            'related' => DataLayer::getRandomProducts(DataLayer::getProduct($id), 5),
+            'related' => DataLayer::getRelatedProducts($product),
             'logged' => false,
         ]);
     }

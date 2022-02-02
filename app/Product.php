@@ -18,6 +18,6 @@ class Product extends Model
     }
 
     public function firstImage() {
-        return $this->images()->first()->url;
+        return $this->images()->first();
     }
 }

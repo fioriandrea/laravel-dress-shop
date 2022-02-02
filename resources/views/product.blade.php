@@ -6,8 +6,8 @@
 <section class="product-page-main">
     <div id="productCarouselControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-inner h-100">
-            @foreach($images as $picture)
-                <div class="carousel-item {{ $loop->first ? 'active' : '' }} product-main-carousel-image img-thumbnail" style="background-image: url({{ url('/') }}/img/{{ $picture->url }});">
+            @foreach($product->images()->get() as $picture)
+                <div class="carousel-item {{ $loop->first ? 'active' : '' }} product-main-carousel-image img-thumbnail" style="background-image: url({{ asset('storage/img/' . $picture->url) }});">
                 </div>
             @endforeach
         </div>
