@@ -14,8 +14,8 @@
 // Define a route for the home page.
 // It will be the default route.
 Route::get('/', [
-    'uses' => 'HomeController@getHome',
-    'as' => 'home'
+    'uses' => 'IndexController@getIndex',
+    'as' => 'index'
 ]);
 
 // Define a route for the user login page.
