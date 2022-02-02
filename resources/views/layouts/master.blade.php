@@ -57,7 +57,7 @@
                                 <i class="bi bi-person h3"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                @if($logged)
+                                @auth
                                     <li><a class="dropdown-item" href="{{ route('orders') }}">Orders</a></li>
                                     <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
                                     <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>

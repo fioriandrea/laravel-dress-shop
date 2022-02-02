@@ -53,7 +53,7 @@
                 <option value="{{ $size }}">{{ $size }}</option>
             @endforeach
         </select>
-        <button id="add-to-cart" class="disabled btn btn-outline-success w-100">Add to cart</button>
+        <a id="add-to-cart" class="disabled btn btn-outline-success w-100" href="#">Add to cart</a>
     </div>
 
 </section>

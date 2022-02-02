@@ -23,7 +23,7 @@
         </ul>
     </div>
     <div class="col-xl-6">
-        <img class="col img-fluid" src="img/contact-us.png">
+        <img class="col img-fluid" src="{{ asset('storage/img/' . 'contact-us.png') }}">
     </div>
 </section>
 @endsection

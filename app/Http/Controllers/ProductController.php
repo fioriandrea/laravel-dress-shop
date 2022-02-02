@@ -28,7 +28,6 @@ class ProductController extends Controller
         $filter = ProductController::productsFilter($request->category, $request->keyword);
         return view('product_list', [
             'products' => DataLayer::getProducts($filter),
-            'logged' => false,
         ]);
     }
 
@@ -39,7 +38,6 @@ class ProductController extends Controller
             'product' => $product,
             'rating' => 3,
             'related' => DataLayer::getRelatedProducts($product),
-            'logged' => false,
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace PW_runningExample_v6_Laravel;
+namespace dress_shop;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;

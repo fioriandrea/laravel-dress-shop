@@ -4,9 +4,9 @@ namespace dress_shop\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class CartController extends Controller
 {
-    public function getIndex()
+    public function getCart()
     {
         return view('index');
     }
