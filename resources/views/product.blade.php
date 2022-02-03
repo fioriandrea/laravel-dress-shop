@@ -54,10 +54,11 @@
             @endforeach
         </select>
         <form method="POST" action="{{ route('add_to_cart') }}">
-                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <input type="hidden" name="size" id="size-form">
-                @csrf
-                <button id="add-to-cart" type="submit" class="disabled btn btn-outline-success w-100">Add to cart</button>
+            <select name="quantity" id="size-number-select" class="form-select"></select>
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input type="hidden" name="size" id="size-form">
+            @csrf
+            <button id="add-to-cart" type="submit" class="disabled btn btn-outline-success w-100">Add to cart</button>
         </form>
     </div>
 
@@ -226,6 +227,25 @@
             document.querySelector("#add-to-cart").classList.add("disabled");
         }
         document.querySelector("#size-form").value = size;
+        const sizeNumberSelect = document.querySelector("#size-number-select");
+        sizeNumberSelect.hidden = false;
+        sizeNumberSelect.innerHTML = "";
+        for (let i = 0; i <= available; i++) {
+            const option = document.createElement("option");
+            if (i === 0) {
+                // hide option
+                option.hidden = true;
+            } else if (i === 1) {
+                option.selected = true;
+            }
+            option.value = i;
+            option.innerText = i;
+            sizeNumberSelect.appendChild(option);
+        }
+        if (available <= 1) {
+            // hide select
+            sizeNumberSelect.hidden = true;
+        }
     };
     sizeSelectHandler();
     document.querySelector("#size-select").addEventListener("change", sizeSelectHandler);

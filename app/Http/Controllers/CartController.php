@@ -21,30 +21,14 @@ class CartController extends Controller
         ]);
     }
 
-    public function updateCart(Request $request)
-    {
-        // find the cart product to update, given the product id and user id and size
-        // and update the quantity
-        $cartProduct = CartProduct::where('user_id', auth()->user()->id)->where('product_id', $request->product_id)->where('size', $request->size)->first();
-        if ($cartProduct != null) {
-            $cartProduct->quantity = $request->quantity;
-            $cartProduct->save();
-        }
-        return redirect('/cart');
-    }
-
     public function addToCart(Request $request)
     {
-        $product = DataLayer::getProduct($request->product_id);
-        if ($product->getSize($request->size) <= 0) {
-            return redirect()->back()->with('error', 'Invalid size');
+        if ($request->quantity <= 0) {
+            return redirect()->back();
         }
-        // check if product is already in cart.
-        // if it is, check that the quantity in the cart is less than or equal the quantity in the database.
-        // if it is not, redirect back with an error.
         $cartProduct = DataLayer::getCartProduct(auth()->user()->id, $request->product_id, $request->size);
         if ($cartProduct != null) {
-            if ($cartProduct->quantity >= $product->getSize($request->size)) {
+            if ($cartProduct->quantity + $request->quantity > $cartProduct->product->getSize($request->size)) {
                 return redirect()->back()->with('error', 'Product is already in cart');
             }
         }

@@ -86,13 +86,6 @@ Route::group(['middleware' => ['auth']], function() {
         'uses' => 'CartController@addToCart',
         'as' => 'add_to_cart'
     ]);
-
-    // Define a route to update the number of items in the cart.
-    // The product will be filtered based on the product id.
-    Route::post('/update_cart', [
-        'uses' => 'CartController@updateCart',
-        'as' => 'update_cart'
-    ]);
     
     // Define a route for remove_from_cart. It will be used to remove a product from the cart.
     // The product will be filtered based on the product id.

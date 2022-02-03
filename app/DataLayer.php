@@ -26,10 +26,10 @@ class DataLayer {
             $cartProduct->user_id = auth()->user()->id;
             $cartProduct->product_id = $request->product_id;
             $cartProduct->size = $request->size;
-            $cartProduct->quantity = 1;
+            $cartProduct->quantity = $request->quantity;
             $cartProduct->save();
         } else {
-            $cartProduct->quantity++;
+            $cartProduct->quantity += $request->quantity;
             $cartProduct->save();
         }
     }

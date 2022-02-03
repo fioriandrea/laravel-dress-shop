@@ -15,24 +15,8 @@
                     <p class="h1">EUR {{ $cp->product->price }}</p>
                     <p class="small m-0" data-available="{{ $cp->product->getSize($cp->size) }}"></p>
                     <p class="small m-0" data-shipping="{{ $cp->product->shipping }}"></p>
+                    <p class="small m-0">Quantity: {{ $cp->quantity }}</p>
                     <p class="small m-0">Size: {{ $cp->size }}</p>
-                    <form class="d-flex" action="{{ route('update_cart') }}" method="POST">
-                        @csrf
-                        <div class="form-group mr-2 d-flex justify-content-center align-items-center">
-                            <label for="quantity" class="pe-4">Quantity:</label>
-                            <select name="quantity" class="form-select" onchange="this.form.submit()">
-                                @for($i = 1; $i <= $cp->product->getSize($cp->size); $i++)
-                                    @if($i == $cp->quantity)
-                                        <option value="{{ $i }}" selected>{{ $i }}</option>
-                                    @else
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                    @endif
-                                @endfor
-                            </select>
-                        </div>
-                        <input type="hidden" name="product_id" value="{{ $cp->product->id }}">
-                        <input type="hidden" name="size" value="{{ $cp->size }}">
-                    </form>
                     <form class="d-flex" action="{{ route('remove_from_cart', ['id' => $cp->id]) }}" method="POST">
                         <input type="hidden" name="product_id" value="{{ $cp->product->id }}">
                         <input type="hidden" name="size" value="{{ $cp->size }}">
