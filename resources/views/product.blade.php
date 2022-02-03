@@ -53,7 +53,12 @@
                 <option value="{{ $size }}">{{ $size }}</option>
             @endforeach
         </select>
-        <a id="add-to-cart" class="disabled btn btn-outline-success w-100" href="#">Add to cart</a>
+        <form method="POST" action="{{ route('add_to_cart') }}">
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <input type="hidden" name="size" id="size-form">
+                @csrf
+                <button id="add-to-cart" type="submit" class="disabled btn btn-outline-success w-100">Add to cart</button>
+        </form>
     </div>
 
 </section>
@@ -220,6 +225,7 @@
         if (available === 0) {
             document.querySelector("#add-to-cart").classList.add("disabled");
         }
+        document.querySelector("#size-form").value = size;
     };
     sizeSelectHandler();
     document.querySelector("#size-select").addEventListener("change", sizeSelectHandler);

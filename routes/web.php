@@ -80,6 +80,27 @@ Route::group(['middleware' => ['auth']], function() {
         'as' => 'cart'
     ]);
 
+    // Define a route for add_to_cart. It will be used to add a product to the cart.
+    // The product will be filtered based on the product id.
+    Route::post('/add_to_cart', [
+        'uses' => 'CartController@addToCart',
+        'as' => 'add_to_cart'
+    ]);
+
+    // Define a route to update the number of items in the cart.
+    // The product will be filtered based on the product id.
+    Route::post('/update_cart', [
+        'uses' => 'CartController@updateCart',
+        'as' => 'update_cart'
+    ]);
+    
+    // Define a route for remove_from_cart. It will be used to remove a product from the cart.
+    // The product will be filtered based on the product id.
+    Route::post('/remove_from_cart', [
+        'uses' => 'CartController@removeFromCart',
+        'as' => 'remove_from_cart'
+    ]);
+
     // Define a route to get the user's orders.
     Route::get('/orders', [
         'uses' => 'OrderController@getOrders',
@@ -91,70 +112,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/profile', [
         'uses' => 'UserController@getProfile',
         'as' => 'profile'
-    ]);
-
-    // Define a route to change user's email.
-    // The email will be associated with a logged in user.
-    // The page will bring up a form to change the email.
-    Route::get('/change_email', [
-        'uses' => 'UserController@getChangeEmail',
-        'as' => 'change_email'
-    ]);
-
-    // Define a route to change user's password.
-    // The password will be associated with a logged in user.
-    // The page will bring up a form to change the password.
-    Route::get('/change_password', [
-        'uses' => 'UserController@getChangePassword',
-        'as' => 'change_password'
-    ]);
-
-    // Define a route to add a new address.
-    // The address will be associated with a logged in user.
-    // The page will bring up a form to add an address.
-    Route::get('/add_address', [
-        'uses' => 'UserController@getAddAddress',
-        'as' => 'add_address'
-    ]);
-
-    // Define a route to change one of the user's addresses.
-    // The address will be associated with a logged in user.
-    // The page will bring up a form to change the specified address.
-    Route::get('/change_address/{id}', [
-        'uses' => 'UserController@getChangeAddress',
-        'as' => 'change_address'
-    ]);
-
-    // Define a route to delete an address.
-    // The address will be associated with a logged in user.
-    // The page will bring up a form to delete the specified address.
-    // The address cannot be deleted if it is the only address for the user.
-    Route::get('/delete_address/{id}', [
-        'uses' => 'UserController@getDeleteAddress',
-        'as' => 'delete_address'
-    ]);
-
-    // Define a route to add a new payment method.
-    // The payment method will be associated with a logged in user.
-    // The page will bring up a form to add a payment method.
-    Route::get('/add_payment_method', [
-        'uses' => 'UserController@getAddPaymentMethod',
-        'as' => 'add_payment_method'
-    ]);
-
-    // Define a route to change one of the user's payment method.
-    // The payment method will be associated with a logged in user.
-    // The page will bring up a form to change a payment method.
-    Route::get('/change_payment_method/{id}', [
-        'uses' => 'UserController@getChangePaymentMethod',
-        'as' => 'change_payment_method'
-    ]);
-
-    // Define a route to delete a payment method.
-    // The payment method will be associated with a logged in user.
-    // The page will bring up a form to delete a payment method.
-    Route::get('/delete_payment_method/{id}', [
-        'uses' => 'UserController@getDeletePaymentMethod',
-        'as' => 'delete_payment_method'
     ]);
 });

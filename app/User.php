@@ -36,4 +36,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // A user has many cart products
+    public function cartProducts()
+    {
+        return $this->hasMany('dress_shop\CartProduct');
+    }
 }

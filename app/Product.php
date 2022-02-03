@@ -17,7 +17,16 @@ class Product extends Model
         return $this->S + $this->M + $this->L + $this->XL;
     }
 
+    public function getSize($size) {
+        return $this->{$size};
+    }
+
     public function firstImage() {
         return $this->images()->first();
+    }
+
+    // a product has many cart products
+    public function cartProducts() {
+        return $this->hasMany('dress_shop\CartProduct');
     }
 }
