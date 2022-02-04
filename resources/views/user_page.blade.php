@@ -19,9 +19,8 @@
             <p>{{ $address->country }}</p>
             <div class="d-flex justify-content-between">
                 <!--remove address button-->
-                <form method="post" action="{{ route('remove_address') }}">
+                <form method="post" action="{{ route('remove_address', ['id' => $address->id]) }}">
                     @csrf
-                    <input type="hidden" name="id" value="{{ $address->id }}">
                     <button type="submit" class="btn btn-outline-danger">
                         Remove Address
                         <i class="bi bi-trash"></i>
@@ -54,7 +53,6 @@
             <div class="d-flex justify-content-between">
                 <form method="post" action="{{ route('remove_payment_method', ['id' => $paymentMethod->id]) }}">
                     @csrf
-                    <input type="hidden" name="id" value="{{ $paymentMethod->id }}">
                     <button type="submit" class="btn btn-outline-danger">
                         Remove Payment
                         <i class="bi bi-trash"></i>

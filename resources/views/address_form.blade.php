@@ -4,9 +4,8 @@
 
 @section('content')
     <!-- form to use post add_address -->
-    <form method="post" action="{{ $add ? route('add_address') : route('modify_address') }}" class="mt-3 form-horizontal">
+    <form method="post" action="{{ $add ? route('add_address') : route('modify_address', ['id' => $address->id]) }}" class="mt-3 form-horizontal">
         @csrf
-        <input type="hidden" name="id" value="{{ $address->id ?? '' }}">
         <div class="form-group">
             <label for="street">Street</label>
             <input required type="text" class="form-control" id="street" name="street" placeholder="1234 Main St" maxlength="40" value="{{ $address->street }}">

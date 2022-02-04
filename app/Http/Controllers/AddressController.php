@@ -20,13 +20,13 @@ class AddressController extends Controller
         ]);
     }
 
-    public function getModifyAddress(Request $request)
+    public function getModifyAddress($id)
     {
-        if (!$this->checkExists($request->id)) {
+        if (!$this->checkExists($id)) {
             return redirect()->back()->with('error', 'Address not found');
         }
         // find the address with the given id
-        $address = Address::find($request->id);
+        $address = Address::find($id);
         return view('address_form', [
             'user' => auth()->user(),
             'address' => $address,
@@ -59,27 +59,27 @@ class AddressController extends Controller
         return true;
     }
 
-    public function postRemoveAddress(Request $request)
+    public function postRemoveAddress($id)
     {
-        if (!$this->checkExists($request->id)) {
+        if (!$this->checkExists($id)) {
             return redirect()->back()->with('error', 'Address not found');
         }
-        if (!$this->checkOwns($request->id)) {
+        if (!$this->checkOwns($id)) {
             return redirect()->back()->with('error', 'You do not own this address');
         }
-        DataLayer::postRemoveAddress($request);
+        DataLayer::postRemoveAddress($id);
         return redirect('/profile');
     }
 
-    public function postModifyAddress(Request $request)
+    public function postModifyAddress(Request $request, $id)
     {
-        if (!$this->checkExists($request->id)) {
+        if (!$this->checkExists($id)) {
             return redirect()->back()->with('error', 'Address not found');
         }
-        if (!$this->checkOwns($request->id)) {
+        if (!$this->checkOwns($id)) {
             return redirect()->back()->with('error', 'You do not own this address');
         }
-        DataLayer::postModifyAddress($request);
+        DataLayer::postModifyAddress($id, $request);
         return redirect('/profile');
     }
 }

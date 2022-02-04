@@ -11,7 +11,6 @@ class PaymentController extends Controller
 {
     public function getAddPaymentMethod()
     {
-        // create an address object with empty fields
         $payment = new PaymentMethod();
         return view('payment_form', [
             'user' => auth()->user(),
@@ -45,25 +44,25 @@ class PaymentController extends Controller
         return redirect('/profile');
     }
 
-    public function postRemovePaymentMethod(Request $request)
+    public function postRemovePaymentMethod($id)
     {
-        if (!$this->checkExists($request->id)) {
+        if (!$this->checkExists($id)) {
             return redirect()->back()->with('error', 'Payment method not found');
         }
-        if (!$this->checkOwns($request->id)) {
+        if (!$this->checkOwns($id)) {
             return redirect()->back()->with('error', 'You do not own this payment method');
         }
 
-        DataLayer::postRemovePaymentMethod($request);
+        DataLayer::postRemovePaymentMethod($id);
         return redirect('/profile');
     }
 
-    public function getModifyPaymentMethod(Request $request)
+    public function getModifyPaymentMethod($id)
     {
-        if (!$this->checkExists($request->id)) {
+        if (!$this->checkExists($id)) {
             return redirect()->back()->with('error', 'Payment method not found');
         }
-        $payment = PaymentMethod::find($request->id);
+        $payment = PaymentMethod::find($id);
         return view('payment_form', [
             'user' => auth()->user(),
             'payment' => $payment,
@@ -71,15 +70,15 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function postModifyPaymentMethod(Request $request)
+    public function postModifyPaymentMethod(Request $request, $id)
     {
-        if (!$this->checkExists($request->id)) {
+        if (!$this->checkExists($id)) {
             return redirect()->back()->with('error', 'Payment method not found');
         }
-        if (!$this->checkOwns($request->id)) {
+        if (!$this->checkOwns($id)) {
             return redirect()->back()->with('error', 'You do not own this payment method');
         }
-        DataLayer::postModifyPaymentMethod($request);
+        DataLayer::postModifyPaymentMethod($id, $request);
         return redirect('/profile');
     }
 }

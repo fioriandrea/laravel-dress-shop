@@ -4,55 +4,55 @@ namespace dress_shop;
 
 class DataLayer {
 
-    public static function postModifyPaymentMethod($request) {
+    public static function postModifyPaymentMethod($id, $data) {
         $user = auth()->user();
-        $payment = PaymentMethod::find($request->id);
-        $payment->cc_number = $request->cc_number;
-        $payment->expiration_date = $request->expiration_date;
-        $payment->owner_first_name = $request->owner_first_name;
-        $payment->owner_second_name = $request->owner_second_name;
+        $payment = PaymentMethod::find($id);
+        $payment->cc_number = $data->cc_number;
+        $payment->expiration_date = $data->expiration_date;
+        $payment->owner_first_name = $data->owner_first_name;
+        $payment->owner_second_name = $data->owner_second_name;
         $payment->user_id = $user->id;
         $payment->save();
     }
 
-    public static function postRemovePaymentMethod($request) {
-        $paymentMethod = PaymentMethod::find($request->id);
+    public static function postRemovePaymentMethod($id) {
+        $paymentMethod = PaymentMethod::find($id);
         $paymentMethod->delete();
     }
 
-    public static function postNewPaymentMethod($request) {
+    public static function postNewPaymentMethod($data) {
         $payment = new PaymentMethod();
         $payment->user_id = auth()->user()->id;
-        $payment->owner_first_name = $request->owner_first_name;
-        $payment->owner_second_name = $request->owner_second_name;
-        $payment->cc_number = $request->cc_number;
-        $payment->expiration_date = $request->expiration_date;
+        $payment->owner_first_name = $data->owner_first_name;
+        $payment->owner_second_name = $data->owner_second_name;
+        $payment->cc_number = $data->cc_number;
+        $payment->expiration_date = $data->expiration_date;
         $payment->save();
     }
 
-    public static function postNewAddress($request) {
+    public static function postNewAddress($data) {
         $address = new Address();
-        $address->user_id = $request->user()->id;
-        $address->street = $request->street;
-        $address->city = $request->city;
-        $address->province = $request->province;
-        $address->country = $request->country;
-        $address->zip = $request->zip;
+        $address->user_id = auth()->user()->id;
+        $address->street = $data->street;
+        $address->city = $data->city;
+        $address->province = $data->province;
+        $address->country = $data->country;
+        $address->zip = $data->zip;
         $address->save();
     }
 
-    public static function postRemoveAddress($request) {
-        $address = Address::find($request->id);
+    public static function postRemoveAddress($id) {
+        $address = Address::find($id);
         $address->delete();
     }
 
-    public static function postModifyAddress($request) {
-        $address = Address::find($request->id);
-        $address->street = $request->street;
-        $address->city = $request->city;
-        $address->province = $request->province;
-        $address->country = $request->country;
-        $address->zip = $request->zip;
+    public static function postModifyAddress($id, $data) {
+        $address = Address::find($id);
+        $address->street = $data->street;
+        $address->city = $data->city;
+        $address->province = $data->province;
+        $address->country = $data->country;
+        $address->zip = $data->zip;
         $address->save();
     }
 
@@ -70,28 +70,28 @@ class DataLayer {
         return $cartProduct;
     }
 
-    public static function addToCart($request)
+    public static function addToCart($data)
     {
-        $product = Product::find($request->product_id);
-        $cartProduct = CartProduct::where('user_id', auth()->user()->id)->where('product_id', $request->product_id)->where('size', $request->size)->first();
+        $product = Product::find($data->product_id);
+        $cartProduct = CartProduct::where('user_id', auth()->user()->id)->where('product_id', $data->product_id)->where('size', $data->size)->first();
         if ($cartProduct == null) {
             $cartProduct = new CartProduct();
             $cartProduct->user_id = auth()->user()->id;
-            $cartProduct->product_id = $request->product_id;
-            $cartProduct->size = $request->size;
-            $cartProduct->quantity = $request->quantity;
+            $cartProduct->product_id = $data->product_id;
+            $cartProduct->size = $data->size;
+            $cartProduct->quantity = $data->quantity;
             $cartProduct->save();
         } else {
-            $cartProduct->quantity += $request->quantity;
+            $cartProduct->quantity += $data->quantity;
             $cartProduct->save();
         }
     }
 
     // remove a product from the cart
-    public static function removeFromCart($request)
+    public static function removeFromCart($data)
     {
         // find the cart product to remove, given the product id and user id
-        $cartProduct = CartProduct::where('user_id', auth()->user()->id)->where('product_id', $request->product_id)->where('size', $request->size)->first();
+        $cartProduct = CartProduct::where('user_id', auth()->user()->id)->where('product_id', $data->product_id)->where('size', $data->size)->first();
         // if the cart product exists, delete it
         if ($cartProduct != null) {
             $cartProduct->delete();

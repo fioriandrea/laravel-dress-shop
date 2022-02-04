@@ -90,7 +90,7 @@ Route::group(['middleware' => ['auth']], function() {
     ]);
 
     // Define a route to remove an existing address.
-    Route::post('/profile/remove_address', [
+    Route::post('/profile/remove_address/{id}', [
         'uses' => 'AddressController@postRemoveAddress',
         'as' => 'remove_address'
     ]);
@@ -102,7 +102,7 @@ Route::group(['middleware' => ['auth']], function() {
     ]);
 
     // Define a route to modify an existing address.
-    Route::post('/profile/modify_address', [
+    Route::post('/profile/modify_address/{id}', [
         'uses' => 'AddressController@postModifyAddress',
         'as' => 'modify_address'
     ]);
@@ -120,13 +120,13 @@ Route::group(['middleware' => ['auth']], function() {
     ]);
 
     // Define a route to modify an existing payment method.
-    Route::post('/profile/modify_payment_method', [
+    Route::post('/profile/modify_payment_method/{id}', [
         'uses' => 'PaymentController@postModifyPaymentMethod',
         'as' => 'modify_payment_method'
     ]);
 
     // Define a route to remove a payment method
-    Route::post('/profile/remove_payment_method', [
+    Route::post('/profile/remove_payment_method/{id}', [
         'uses' => 'PaymentController@postRemovePaymentMethod',
         'as' => 'remove_payment_method'
     ]);

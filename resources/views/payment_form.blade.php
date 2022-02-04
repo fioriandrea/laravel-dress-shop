@@ -4,9 +4,8 @@
 
 @section('content')
     <!--an owner, credit card number, expiration date-->
-    <form method="post" action="{{ $add ? route('add_payment_method') : route('modify_payment_method') }}" id="payment-form" class="mt-3 form-horizontal">
+    <form method="post" action="{{ $add ? route('add_payment_method') : route('modify_payment_method', ['id' => $payment->id]) }}" id="payment-form" class="mt-3 form-horizontal">
         @csrf
-        <input type="hidden" name="id" value="{{ $payment->id ?? '' }}">
         <div class="form-group">
             <label for="owner_first_name">Owner's First Name</label>
             <input name="owner_first_name" required type="text" class="form-control" id="owner-first-name" value="{{ $payment->owner_first_name }}">
