@@ -56,3 +56,15 @@ document.querySelectorAll("[data-available]").forEach((element) => {
 document.querySelectorAll("[data-shipping]").forEach((element) => {
     setShippingParagraph(element, +element.dataset.shipping);
 });
+
+
+const formatCardNumber = (value, delim = ' ') => {
+    const res = [];
+    for (let i = 0; i < value.length; i++) {
+        if (i % 4 === 0 && i !== 0) {
+            res.push(delim);
+        }
+        res.push(value[i]);
+    }
+    return res.join('');
+};

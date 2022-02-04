@@ -106,4 +106,34 @@ Route::group(['middleware' => ['auth']], function() {
         'uses' => 'AddressController@postModifyAddress',
         'as' => 'modify_address'
     ]);
+
+    // Define a route to get to the form to add a new payment method.
+    Route::get('/profile/add_payment_method', [
+        'uses' => 'PaymentController@getAddPaymentMethod',
+        'as' => 'get_add_payment_method'
+    ]);
+
+    // Define a route to add a new payment method.
+    Route::post('/profile/add_payment_method', [
+        'uses' => 'PaymentController@postAddPaymentMethod',
+        'as' => 'add_payment_method'
+    ]);
+
+    // Define a route to modify an existing payment method.
+    Route::post('/profile/modify_payment_method', [
+        'uses' => 'PaymentController@postModifyPaymentMethod',
+        'as' => 'modify_payment_method'
+    ]);
+
+    // Define a route to remove a payment method
+    Route::post('/profile/remove_payment_method', [
+        'uses' => 'PaymentController@postRemovePaymentMethod',
+        'as' => 'remove_payment_method'
+    ]);
+
+    // Define a route to get to the form to modify an existing payment method.
+    Route::get('/profile/modify_payment_method/{id}', [
+        'uses' => 'PaymentController@getModifyPaymentMethod',
+        'as' => 'get_modify_payment_method'
+    ]);
 });

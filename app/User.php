@@ -48,4 +48,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('dress_shop\Address');
     }
+
+    // A user has many payment methods
+    public function paymentMethods()
+    {
+        return $this->hasMany('dress_shop\PaymentMethod');
+    }
 }

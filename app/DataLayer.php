@@ -3,6 +3,33 @@
 namespace dress_shop;
 
 class DataLayer {
+
+    public static function postModifyPaymentMethod($request) {
+        $user = auth()->user();
+        $payment = PaymentMethod::find($request->id);
+        $payment->cc_number = $request->cc_number;
+        $payment->expiration_date = $request->expiration_date;
+        $payment->owner_first_name = $request->owner_first_name;
+        $payment->owner_second_name = $request->owner_second_name;
+        $payment->user_id = $user->id;
+        $payment->save();
+    }
+
+    public static function postRemovePaymentMethod($request) {
+        $paymentMethod = PaymentMethod::find($request->id);
+        $paymentMethod->delete();
+    }
+
+    public static function postNewPaymentMethod($request) {
+        $payment = new PaymentMethod();
+        $payment->user_id = auth()->user()->id;
+        $payment->owner_first_name = $request->owner_first_name;
+        $payment->owner_second_name = $request->owner_second_name;
+        $payment->cc_number = $request->cc_number;
+        $payment->expiration_date = $request->expiration_date;
+        $payment->save();
+    }
+
     public static function postNewAddress($request) {
         $address = new Address();
         $address->user_id = $request->user()->id;
@@ -12,7 +39,6 @@ class DataLayer {
         $address->country = $request->country;
         $address->zip = $request->zip;
         $address->save();
-        return $address;
     }
 
     public static function postRemoveAddress($request) {
