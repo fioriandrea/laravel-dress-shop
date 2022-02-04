@@ -18,36 +18,6 @@ Route::get('/', [
     'as' => 'index'
 ]);
 
-// Define a route for the user login page.
-Route::get('/login', [
-    'uses' => 'AuthController@getLogin',
-    'as' => 'login'
-]);
-
-// Define a route to login a user.
-Route::post('/login', [
-    'uses' => 'AuthController@postLogin',
-    'as' => 'login'
-]);
-
-// Define a route for the registration page.
-Route::get('/register', [
-    'uses' => 'AuthController@getRegister',
-    'as' => 'register'
-]);
-
-// Define a route to register a user.
-Route::post('/register', [
-    'uses' => 'AuthController@postRegister',
-    'as' => 'register'
-]);
-
-// Define a route to logout a user.
-Route::post('/logout', [
-    'uses' => 'AuthController@postLogout',
-    'as' => 'logout'
-]);
-
 // Define a route for product_list. It will be used to show a list of products.
 // This list will not, in general, have all the products in it.
 // The products will be filtered based on search criteria.
@@ -105,5 +75,35 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/profile', [
         'uses' => 'UserController@getProfile',
         'as' => 'profile'
+    ]);
+
+    // Define a route to get to the form to add a new address.
+    Route::get('/profile/add_address', [
+        'uses' => 'AddressController@getAddAddress',
+        'as' => 'get_add_address'
+    ]);
+
+    // Define route to add a new address.
+    Route::post('/profile/add_address', [
+        'uses' => 'AddressController@postAddAddress',
+        'as' => 'add_address'
+    ]);
+
+    // Define a route to remove an existing address.
+    Route::post('/profile/remove_address', [
+        'uses' => 'AddressController@postRemoveAddress',
+        'as' => 'remove_address'
+    ]);
+
+    // Define a route to get to the form to modify an existing address.
+    Route::get('/profile/modify_address/{id}', [
+        'uses' => 'AddressController@getModifyAddress',
+        'as' => 'get_modify_address'
+    ]);
+
+    // Define a route to modify an existing address.
+    Route::post('/profile/modify_address', [
+        'uses' => 'AddressController@postModifyAddress',
+        'as' => 'modify_address'
     ]);
 });

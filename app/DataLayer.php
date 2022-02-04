@@ -3,6 +3,33 @@
 namespace dress_shop;
 
 class DataLayer {
+    public static function postNewAddress($request) {
+        $address = new Address();
+        $address->user_id = $request->user()->id;
+        $address->street = $request->street;
+        $address->city = $request->city;
+        $address->province = $request->province;
+        $address->country = $request->country;
+        $address->zip = $request->zip;
+        $address->save();
+        return $address;
+    }
+
+    public static function postRemoveAddress($request) {
+        $address = Address::find($request->id);
+        $address->delete();
+    }
+
+    public static function postModifyAddress($request) {
+        $address = Address::find($request->id);
+        $address->street = $request->street;
+        $address->city = $request->city;
+        $address->province = $request->province;
+        $address->country = $request->country;
+        $address->zip = $request->zip;
+        $address->save();
+    }
+
     public static function getProducts($phpPredicate) {
         $products = Product::all();
         $products = $products->filter($phpPredicate);
