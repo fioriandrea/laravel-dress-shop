@@ -42,7 +42,7 @@
     </div>
     @if($cartCount > 0)
     <div class="m-3 border p-3 h-auto">
-        <h1>Delivery date</h1>
+        <h1>Estimated Delivery Date</h1>
         <p class="lead">
             <!-- get current date + 2 weeks -->
             <span class="text-muted">{{ date('d.m.Y', strtotime('+2 weeks')) }}</span>

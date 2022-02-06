@@ -8,5 +8,6 @@
             <p class="small m-0" data-available="{{ $product->sizes() }}"></p>
             <p class="small m-0" data-shipping="{{ $product->shipping }}"></p>
         </div>
+        @yield('product-li-extra')
     </div>
 </a>

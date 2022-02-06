@@ -3,13 +3,31 @@
 namespace dress_shop;
 
 class DataLayer {
+
+    public static function getUserOrders() {
+        // get orders sorted by date, from most recent to least recent
+        return auth()->user()->orders()->orderBy('created_at', 'desc')->get();
+    }
+
+    public static function deleteOrder($id) {
+        $order = Order::find($id);
+        // for each product in the order, add it back to the inventory using the right size
+        foreach ($order->orderProducts as $op) {
+            $product = $op->product;
+            $size = $op->size;
+            $product->{$size} += $op->quantity;
+            $product->save();
+        }
+        // delete the order
+        $order->delete();
+    }
+
     public static function postCreateOrder($data) {
         $order = new Order();
         $order->user_id = auth()->user()->id;
         $order->address_id = $data->address_id;
         $order->payment_method_id = $data->payment_method_id;
         $order->total = DataLayer::getCartTotal(auth()->user());
-        $order->order_date = date('Y-m-d H:i:s');
         $order->status = 'pending';
         $order->save();
         foreach (auth()->user()->cartProducts as $cartProduct) {
@@ -18,6 +36,7 @@ class DataLayer {
             $orderProduct->user_id = auth()->user()->id;
             $orderProduct->product_id = $cartProduct->product_id;
             $orderProduct->quantity = $cartProduct->quantity;
+            $orderProduct->size = $cartProduct->size;
             $orderProduct->save();
         }
         foreach (auth()->user()->cartProducts as $cartProduct) {

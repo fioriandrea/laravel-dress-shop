@@ -148,4 +148,15 @@ Route::group(['middleware' => ['auth']], function() {
         'uses' => 'CheckoutController@postCheckout',
         'as' => 'post_checkout'
     ]);
+
+    // Define a route to get to the user's orders page
+    Route::get('/orders', [
+        'uses' => 'OrderController@getOrders',
+        'as' => 'orders'
+    ]);
+
+    Route::post('/delete_order/{id}', [
+        'uses' => 'OrderController@postDeleteOrder',
+        'as' => 'delete_order'
+    ]);
 });

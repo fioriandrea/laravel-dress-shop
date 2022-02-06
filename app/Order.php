@@ -8,8 +8,6 @@ class Order extends Model
 {
     // table = user_order
     protected $table = 'user_order';
-    // no time stamps
-    public $timestamps = false;
 
     // A user has many orders
     public function user()
