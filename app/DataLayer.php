@@ -139,7 +139,11 @@ class DataLayer {
         // find the cart product to remove, given the product id and user id
         $cartProduct = CartProduct::where('user_id', auth()->user()->id)->where('product_id', $data->product_id)->where('size', $data->size)->first();
         // if the cart product exists, delete it
+        // find corresponding product and add it back to the inventory
         if ($cartProduct != null) {
+            $product = Product::find($data->product_id);
+            $product->{$data->size} += $cartProduct->quantity;
+            $product->save();
             $cartProduct->delete();
         }
     }
