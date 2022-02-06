@@ -9,7 +9,7 @@ class CheckoutController extends Controller
 {
     public function getCheckout() {
         if (auth()->user()->cartProducts->count() == 0) {
-            return redirect()->route('error', ['message' => 'Your cart is empty']);
+            return redirect()->route('error', ['messages' => ['Your cart is empty']]);
         }
         if (auth()->user()->addresses->count() == 0) {
             return redirect()->route('get_add_address');
@@ -22,7 +22,10 @@ class CheckoutController extends Controller
         foreach (auth()->user()->cartProducts as $cartProduct) {
             if ($cartProduct->product->{$cartProduct->size} < $cartProduct->quantity) {
                 // redirect to 'error' route with error message (specify the product name and size)
-                return redirect()->route('error', ['message' => 'Not enough stock for product: ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . ')']);
+                return redirect()->route('error', ['messages' => [
+                    'Not enough stock for product: ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . ')',
+                    'Only ' . $cartProduct->product->{$cartProduct->size} . ' left in stock and you requested ' . $cartProduct->quantity,
+                ]]);
             }
         }
         return view('checkout', [

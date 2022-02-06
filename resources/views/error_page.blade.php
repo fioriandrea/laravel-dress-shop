@@ -15,7 +15,9 @@
     <body>
         <div class="h-100 d-flex flex-column  justify-content-center align-items-center">
             <h1 class="card-title">Error</h1>
-            <h2 class="card-subtitle m-4">{{ $message }}</h2>
+            @foreach($messages as $message)
+                <h2 class="card-subtitle {{ $loop->last ? 'mb-4' : '' }} m-2">{{ $message }}</h2>
+            @endforeach
             <div class="buttons d-flex justify-content-center align-items-center w-100">
                 <!-- back to home button with icon -->
                 <a href="{{ route('index') }}" class="btn btn-outline-success">

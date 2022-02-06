@@ -30,8 +30,19 @@ class CartController extends Controller
         $cartProduct = DataLayer::getCartProduct(auth()->user()->id, $request->product_id, $request->size);
         if ($cartProduct != null) {
             if ($cartProduct->quantity + $request->quantity > $cartProduct->product->{$request->size}) {
+                $submessage = '';
+                if ($cartProduct->quantity == 0) {
+                    $submessage = 'Only ' . $cartProduct->product->{$cartProduct->size} . ' left in stock';
+                } else if ($cartProduct->quantity == $cartProduct->product->{$cartProduct->size}) {
+                    $submessage = 'Every item is in your cart';
+                } else {
+                    $submessage = 'Only ' . $cartProduct->product->{$cartProduct->size} . ' left in stock and ' . $cartProduct->quantity . ' already in cart';
+                }
                 // redirect to 'error' route with error message (specify the product name and size)
-                return redirect()->route('error', ['message' => 'Not enough stock for product: ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . ')']);
+                return redirect()->route('error', ['messages' => [
+                    'Not enough stock for product: ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . ')',
+                    $submessage,
+                ]]);
             }
         }
         DataLayer::addToCart($request);

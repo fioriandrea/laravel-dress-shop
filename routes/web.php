@@ -161,7 +161,7 @@ Route::group(['middleware' => ['auth']], function() {
     ]);
 
     // Error page route.
-    Route::get('/error/{message}', [
+    Route::get('/error', [
         'uses' => 'ErrorController@getError',
         'as' => 'error'
     ]);
