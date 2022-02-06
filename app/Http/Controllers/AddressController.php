@@ -23,7 +23,8 @@ class AddressController extends Controller
     public function getModifyAddress($id)
     {
         if (!$this->checkExists($id)) {
-            return redirect()->back()->with('error', 'Address not found');
+            // redirect to error page
+            return redirect()->route('error', ['message' => 'Address does not exist']);
         }
         // find the address with the given id
         $address = Address::find($id);
@@ -62,10 +63,10 @@ class AddressController extends Controller
     public function postRemoveAddress($id)
     {
         if (!$this->checkExists($id)) {
-            return redirect()->back()->with('error', 'Address not found');
+            return redirect()->route('error', ['message' => 'Address does not exist']);
         }
         if (!$this->checkOwns($id)) {
-            return redirect()->back()->with('error', 'You do not own this address');
+            return redirect()->route('error', ['message' => 'You do not own this address']);
         }
         DataLayer::postRemoveAddress($id);
         return redirect('/profile');
@@ -74,10 +75,10 @@ class AddressController extends Controller
     public function postModifyAddress(Request $request, $id)
     {
         if (!$this->checkExists($id)) {
-            return redirect()->back()->with('error', 'Address not found');
+            return redirect()->route('error', ['message' => 'Address does not exist']);
         }
         if (!$this->checkOwns($id)) {
-            return redirect()->back()->with('error', 'You do not own this address');
+            return redirect()->route('error', ['message' => 'You do not own this address']);
         }
         DataLayer::postModifyAddress($id, $request);
         return redirect('/profile');

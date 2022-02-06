@@ -42,7 +42,7 @@ class DataLayer {
         foreach (auth()->user()->cartProducts as $cartProduct) {
             // update product quantity (based on size (e.g. L, XL, etc.))
             $product = Product::find($cartProduct->product_id);
-            //$product->{$cartProduct->size} -= $cartProduct->quantity;
+            $product->{$cartProduct->size} -= $cartProduct->quantity;
             $product->save();
         }
         auth()->user()->cartProducts()->delete();
@@ -116,9 +116,6 @@ class DataLayer {
 
     public static function addToCart($data)
     {
-        $product = Product::find($data->product_id);
-        $product->{$data->size} -= $data->quantity;
-        $product->save();
         $cartProduct = CartProduct::where('user_id', auth()->user()->id)->where('product_id', $data->product_id)->where('size', $data->size)->first();
         if ($cartProduct == null) {
             $cartProduct = new CartProduct();
@@ -139,11 +136,7 @@ class DataLayer {
         // find the cart product to remove, given the product id and user id
         $cartProduct = CartProduct::where('user_id', auth()->user()->id)->where('product_id', $data->product_id)->where('size', $data->size)->first();
         // if the cart product exists, delete it
-        // find corresponding product and add it back to the inventory
         if ($cartProduct != null) {
-            $product = Product::find($data->product_id);
-            $product->{$data->size} += $cartProduct->quantity;
-            $product->save();
             $cartProduct->delete();
         }
     }

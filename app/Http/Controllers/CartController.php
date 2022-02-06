@@ -24,12 +24,15 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         if ($request->quantity <= 0) {
-            return redirect()->back();
+            // redirect to error page
+            return redirect()->route('error', ['message' => 'Quantity must be greater than 0']);
         }
-        // get the product
-        $product = Product::find($request->product_id);
-        if ($request->quantity > $product->{$request->size}) {
-            return redirect()->back()->with('error', 'There are only ' . $request->product->sizes() . ' available for this product.');
+        $cartProduct = DataLayer::getCartProduct(auth()->user()->id, $request->product_id, $request->size);
+        if ($cartProduct != null) {
+            if ($cartProduct->quantity + $request->quantity > $cartProduct->product->{$request->size}) {
+                // redirect to 'error' route with error message (specify the product name and size)
+                return redirect()->route('error', ['message' => 'Not enough stock for product: ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . ')']);
+            }
         }
         DataLayer::addToCart($request);
         return redirect('/cart');

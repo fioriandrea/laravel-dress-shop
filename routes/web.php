@@ -159,4 +159,10 @@ Route::group(['middleware' => ['auth']], function() {
         'uses' => 'OrderController@postDeleteOrder',
         'as' => 'delete_order'
     ]);
+
+    // Error page route.
+    Route::get('/error/{message}', [
+        'uses' => 'ErrorController@getError',
+        'as' => 'error'
+    ]);
 });

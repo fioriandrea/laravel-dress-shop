@@ -9,13 +9,21 @@ class CheckoutController extends Controller
 {
     public function getCheckout() {
         if (auth()->user()->cartProducts->count() == 0) {
-            return redirect()->route('home')->with('error', 'Your cart is empty');
+            return redirect()->route('error', ['message' => 'Your cart is empty']);
         }
         if (auth()->user()->addresses->count() == 0) {
             return redirect()->route('get_add_address');
         }
         if (auth()->user()->paymentMethods->count() == 0) {
             return redirect()->route('get_add_payment_method');
+        }
+        // for each product in the cart, check if there is enough stock
+        // use error route to redirect to error page
+        foreach (auth()->user()->cartProducts as $cartProduct) {
+            if ($cartProduct->product->{$cartProduct->size} < $cartProduct->quantity) {
+                // redirect to 'error' route with error message (specify the product name and size)
+                return redirect()->route('error', ['message' => 'Not enough stock for product: ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . ')']);
+            }
         }
         return view('checkout', [
             'user' => auth()->user(),

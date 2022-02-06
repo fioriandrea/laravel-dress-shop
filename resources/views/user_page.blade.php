@@ -3,6 +3,11 @@
 @section('title', auth()->user()->name . '\'s Page')
 
 @section('content')
+
+<h1 class="mt-3">{{ auth()->user()->name }}'s Page</h1>
+
+<hr>
+
 <div class="container border my-5 py-3">
     <h3>Addresses</h3>
     <!--add address button with plus icon-->

@@ -47,10 +47,10 @@ class PaymentController extends Controller
     public function postRemovePaymentMethod($id)
     {
         if (!$this->checkExists($id)) {
-            return redirect()->back()->with('error', 'Payment method not found');
+            return redirect()->route('error', ['message' => 'Payment method does not exist']);
         }
         if (!$this->checkOwns($id)) {
-            return redirect()->back()->with('error', 'You do not own this payment method');
+            return redirect()->route('error', ['message' => 'You do not own this payment method']);
         }
 
         DataLayer::postRemovePaymentMethod($id);
@@ -60,7 +60,7 @@ class PaymentController extends Controller
     public function getModifyPaymentMethod($id)
     {
         if (!$this->checkExists($id)) {
-            return redirect()->back()->with('error', 'Payment method not found');
+            return redirect()->route('error', ['message' => 'Payment method does not exist']);
         }
         $payment = PaymentMethod::find($id);
         return view('payment_form', [
@@ -73,10 +73,10 @@ class PaymentController extends Controller
     public function postModifyPaymentMethod(Request $request, $id)
     {
         if (!$this->checkExists($id)) {
-            return redirect()->back()->with('error', 'Payment method not found');
+            return redirect()->route('error', ['message' => 'Payment method does not exist']);
         }
         if (!$this->checkOwns($id)) {
-            return redirect()->back()->with('error', 'You do not own this payment method');
+            return redirect()->route('error', ['message' => 'You do not own this payment method']);
         }
         DataLayer::postModifyPaymentMethod($id, $request);
         return redirect('/profile');

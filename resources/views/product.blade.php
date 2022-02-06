@@ -53,7 +53,7 @@
                 <option value="{{ $size }}">{{ $size }}</option>
             @endforeach
         </select>
-        <form method="POST" action="{{ route('add_to_cart') }}">
+        <form method="post" action="{{ route('add_to_cart') }}">
             <select name="quantity" id="size-number-select" class="form-select"></select>
             <input type="hidden" name="product_id" value="{{ $product->id }}">
             <input type="hidden" name="size" id="size-form">
