@@ -102,6 +102,20 @@
     margin-top: 1rem;
 }
 
+/* checkout page */
+
+.checkout-radio:hover {
+    cursor: pointer;
+}
+
+.checkout-radio input[type="radio"] {
+    display: none;
+}
+
+.checkout-radio.checkout-radio-active {
+    box-shadow: 0 0 1px 1px #2ecc71;
+}
+
 @media only screen and (max-width: 720px) {
     .product-categories {
         grid-template-columns: 1fr;

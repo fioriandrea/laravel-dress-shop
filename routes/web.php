@@ -136,4 +136,16 @@ Route::group(['middleware' => ['auth']], function() {
         'uses' => 'PaymentController@getModifyPaymentMethod',
         'as' => 'get_modify_payment_method'
     ]);
+
+    // Define a route to get to the checkout page
+    Route::get('/checkout', [
+        'uses' => 'CheckoutController@getCheckout',
+        'as' => 'get_checkout'
+    ]);
+
+    // Define a route to process the checkout page
+    Route::post('/checkout', [
+        'uses' => 'CheckoutController@postCheckout',
+        'as' => 'post_checkout'
+    ]);
 });

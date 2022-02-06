@@ -3,6 +3,31 @@
 namespace dress_shop;
 
 class DataLayer {
+    public static function postCreateOrder($data) {
+        $order = new Order();
+        $order->user_id = auth()->user()->id;
+        $order->address_id = $data->address_id;
+        $order->payment_method_id = $data->payment_method_id;
+        $order->total = DataLayer::getCartTotal(auth()->user());
+        $order->order_date = date('Y-m-d H:i:s');
+        $order->status = 'pending';
+        $order->save();
+        foreach (auth()->user()->cartProducts as $cartProduct) {
+            $orderProduct = new OrderProduct();
+            $orderProduct->order_id = $order->id;
+            $orderProduct->user_id = auth()->user()->id;
+            $orderProduct->product_id = $cartProduct->product_id;
+            $orderProduct->quantity = $cartProduct->quantity;
+            $orderProduct->save();
+        }
+        foreach (auth()->user()->cartProducts as $cartProduct) {
+            // update product quantity (based on size (e.g. L, XL, etc.))
+            $product = Product::find($cartProduct->product_id);
+            $product->{$cartProduct->size} -= $cartProduct->quantity;
+            $product->save();
+        }
+        auth()->user()->cartProducts()->delete();
+    }
 
     public static function postModifyPaymentMethod($id, $data) {
         $user = auth()->user();
@@ -129,8 +154,12 @@ class DataLayer {
         return count($cart);
     }
 
-    // given a user, return the total price of all products in the user's cart
     public static function getCartTotal($user) {
+        return DataLayer::getCartTotalPrices($user) + DataLayer::getCartShipping($user);
+    }
+
+    // given a user, return the total price of all products in the user's cart
+    public static function getCartTotalPrices($user) {
         $cartProducts = $user->cartProducts;
         $total = 0;
         foreach ($cartProducts as $cartProduct) {

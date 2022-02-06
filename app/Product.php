@@ -8,6 +8,7 @@ class Product extends Model
 {
     protected $table = 'product';
     protected $fillable = ['id', 'name', 'category', 'brand', 'shipping', 'price', 'description', 'short_description', 'S', 'M', 'L', 'XL'];
+    public $timestamps = false;
 
     public function images() {
         return $this->hasMany('dress_shop\Image');
@@ -28,5 +29,10 @@ class Product extends Model
     // a product has many cart products
     public function cartProducts() {
         return $this->hasMany('dress_shop\CartProduct');
+    }
+
+    // a product may have an order product
+    public function orderProducts() {
+        return $this->hasMany('dress_shop\OrderProduct');
     }
 }

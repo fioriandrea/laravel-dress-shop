@@ -54,4 +54,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('dress_shop\PaymentMethod');
     }
+
+    // A user has many orders
+    public function orders()
+    {
+        return $this->hasMany('dress_shop\Order');
+    }
 }

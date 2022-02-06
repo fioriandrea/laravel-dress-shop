@@ -12,7 +12,7 @@ class UserController extends Controller
         return view('user_page', [
             'user' => auth()->user(),
             'addresses' => auth()->user()->addresses,
-            'paymentMethods' => auth()->user()->paymentMethods,
+            'payments' => auth()->user()->paymentMethods,
         ]);
     }
 }

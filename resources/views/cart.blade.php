@@ -35,10 +35,7 @@
         <p class="lead">Shipping: <span class="text-muted float-end">EUR {{ $totalShipping }}</span></p>
         <hr>
         <p class="lead">Total: <span class="text-muted float-end">EUR {{ $total + $totalShipping }}</span></p>
-        <form>
-            <!--submit button-->
-            <button class="btn btn-outline-success btn-lg btn-block w-100" type="submit">Checkout</button>
-        </form>
+        <a href="{{ route('get_checkout') }}" class="btn btn-outline-success btn-lg btn-block w-100">Checkout</a>
         @else
         <h1 class="lead m-auto">Your cart is empty.</h1>
         @endif

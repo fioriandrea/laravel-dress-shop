@@ -13,10 +13,7 @@
     <div class="row g-3 lead mt-3">
         @foreach($addresses as $address)
         <div class="border p-3 col-lg-4">
-            <p>{{ $address->street }}</p>
-            <p>{{ $address->city }}, {{ $address->province }}</p>
-            <p>ZIP {{ $address->zip }}</p>
-            <p>{{ $address->country }}</p>
+            @include('address_card_content', ['address' => $address])
             <div class="d-flex justify-content-between">
                 <!--remove address button-->
                 <form method="post" action="{{ route('remove_address', ['id' => $address->id]) }}">
@@ -45,20 +42,18 @@
         <i class="bi bi-plus"></i>
     </a>
     <div class="row g-3 lead mt-3">
-        @foreach($paymentMethods as $paymentMethod)
+        @foreach($payments as $payment)
         <div class="border p-3 col-lg-4">
-            <p>VISA **** **** **** {{ substr($paymentMethod->cc_number, -4) }}</p>
-            <!-- format expiration date -->
-            <p>Expires {{ substr($paymentMethod->expiration_date, 0, 2) }}/{{ substr($paymentMethod->expiration_date, 2, 2) }}</p>
+            @include('payment_card_content', ['payment' => $payment])
             <div class="d-flex justify-content-between">
-                <form method="post" action="{{ route('remove_payment_method', ['id' => $paymentMethod->id]) }}">
+                <form method="post" action="{{ route('remove_payment_method', ['id' => $payment->id]) }}">
                     @csrf
                     <button type="submit" class="btn btn-outline-danger">
                         Remove Payment
                         <i class="bi bi-trash"></i>
                     </button>
                 </form>
-                <a href="{{ route('get_modify_payment_method', ['id' => $paymentMethod->id]) }}" class="btn btn-outline-primary">
+                <a href="{{ route('get_modify_payment_method', ['id' => $payment->id]) }}" class="btn btn-outline-primary">
                     Modify Payment
                     <i class="bi bi-pencil"></i>
                 </a>

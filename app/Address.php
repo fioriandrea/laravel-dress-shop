@@ -14,4 +14,10 @@ class Address extends Model
     {
         return $this->belongsTo('dress_shop\User');
     }
+
+    // An order has a shipping address
+    public function order()
+    {
+        return $this->belongsTo('dress_shop\Order');
+    }
 }
