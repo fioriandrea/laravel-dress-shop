@@ -4,10 +4,7 @@
         <h2>{{ $product->name }}</h2>
         <h3 class="small fw-light">{{ $product->short_description }}</h3>
         <div class="d-flex justify-content-center flex-column align-items-start">
-            <p class="h1">EUR {{ $product->price }}</p>
-            <p class="small m-0" data-available="{{ $product->sizes() }}"></p>
-            <p class="small m-0" data-shipping="{{ $product->shipping }}"></p>
+            @yield('product-li-content')
         </div>
-        @yield('product-li-extra')
     </div>
 </a>

@@ -28,11 +28,10 @@
                 @endif
             </div>
             @foreach($order->orderProducts as $op)
-                @section('product-li-extra')
-                <div>
+                @section('product-li-content')
+                    <p class="h1">EUR {{ $op->product->price }}</p>
                     <p class="small m-0">Size: <span class="fw-bold">{{ $op->size }}</span></p>
                     <p class="small m-0">Quantity: <span class="fw-bold">{{ $op->quantity }}</span></p>
-                </div>
                 @endsection
                 @include('product_list_card', ['product' => $op->product, 'inslider' => false])
             @endforeach

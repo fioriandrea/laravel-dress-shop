@@ -69,6 +69,11 @@
     <div class="d-flex flex-nowrap" style="overflow-y: hidden; overflow-x: scroll">
         @foreach($related as $rp)
         <!-- use product_list_card.blade.php -->
+        @section('product-li-content')
+            <p class="h1">EUR {{ $product->price }}</p>
+            <p class="small m-0" data-available="{{ $product->sizes() }}"></p>
+            <p class="small m-0" data-shipping="{{ $product->shipping }}"></p>
+        @endsection
         @include('product_list_card', ['product' => $rp, 'inslider' => true])
         @endforeach
     </div>

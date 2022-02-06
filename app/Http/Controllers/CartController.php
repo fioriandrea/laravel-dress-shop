@@ -26,11 +26,10 @@ class CartController extends Controller
         if ($request->quantity <= 0) {
             return redirect()->back();
         }
-        $cartProduct = DataLayer::getCartProduct(auth()->user()->id, $request->product_id, $request->size);
-        if ($cartProduct != null) {
-            if ($cartProduct->quantity + $request->quantity > $cartProduct->product->getSize($request->size)) {
-                return redirect()->back()->with('error', 'Product is already in cart');
-            }
+        // get the product
+        $product = Product::find($request->product_id);
+        if ($request->quantity > $product->{$request->size}) {
+            return redirect()->back()->with('error', 'There are only ' . $request->product->sizes() . ' available for this product.');
         }
         DataLayer::addToCart($request);
         return redirect('/cart');

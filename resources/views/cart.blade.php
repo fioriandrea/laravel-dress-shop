@@ -6,26 +6,19 @@
 <div class="cart-page-main">
     <div class="m-3">
         @foreach($cartProducts as $cp)
-        <a href="{{ route('product', ['id' => $cp->product->id]) }}" class="border mb-1 product-li">
-            <div class="product-li-image" style="background-image: url({{ asset('storage/img/' . $cp->product->firstImage()->url) }});"></div>
-            <div>
-                <h2>{{ $cp->product->name }}</h2>
-                <h3 class="small fw-light">{{ $cp->product->short_description }}</h3>
-                <div class="d-flex justify-content-center flex-column align-items-start">
-                    <p class="h1">EUR {{ $cp->product->price }}</p>
-                    <p class="small m-0" data-available="{{ $cp->product->getSize($cp->size) }}"></p>
-                    <p class="small m-0" data-shipping="{{ $cp->product->shipping }}"></p>
-                    <p class="small m-0">Quantity: {{ $cp->quantity }}</p>
-                    <p class="small m-0">Size: {{ $cp->size }}</p>
-                    <form class="d-flex" action="{{ route('remove_from_cart', ['id' => $cp->id]) }}" method="POST">
-                        <input type="hidden" name="product_id" value="{{ $cp->product->id }}">
-                        <input type="hidden" name="size" value="{{ $cp->size }}">
-                        @csrf
-                        <button class="btn btn-outline-danger btn-sm" type="submit">Remove</button>
-                    </form>
-                </div>
-            </div>
-        </a>
+            @section('product-li-content')
+                <p class="h1">EUR {{ $cp->product->price }}</p>
+                <p class="small m-0" data-shipping="{{ $cp->product->shipping }}"></p>
+                <p class="small m-0">Quantity: {{ $cp->quantity }}</p>
+                <p class="small m-0">Size: {{ $cp->size }}</p>
+                <form class="d-flex" action="{{ route('remove_from_cart', ['id' => $cp->id]) }}" method="POST">
+                    <input type="hidden" name="product_id" value="{{ $cp->product->id }}">
+                    <input type="hidden" name="size" value="{{ $cp->size }}">
+                    @csrf
+                    <button class="btn btn-outline-danger btn-sm" type="submit">Remove</button>
+                </form>
+            @endsection
+            @include('product_list_card', ['product' => $cp->product, 'inslider' => false])
         @endforeach
     </div>
     <div class="border m-3 p-3 h-auto">
