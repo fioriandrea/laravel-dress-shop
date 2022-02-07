@@ -168,23 +168,37 @@ Route::group(['middleware' => ['auth']], function() {
         'as' => 'delete_order'
     ]);
 
-    Route::group(['middleware' => ['product_checks', 'admin_checks']], function() {
-        // Define a route to get to the form to edit an existing product.
-        Route::get('/product/edit/{id}', [
-            'uses' => 'ProductController@getEditProduct',
-            'as' => 'get_edit_product'
+    Route::group(['middleware' => ['admin_checks']], function() {
+        // Define a route to get to the form to add a new product.
+        Route::get('/admin/add_product', [
+            'uses' => 'ProductController@getAddProduct',
+            'as' => 'get_add_product'
         ]);
 
-        // Define a route to edit an existing product.
-        Route::post('/product/edit/{id}', [
-            'uses' => 'ProductController@postEditProduct',
-            'as' => 'post_edit_product'
+        // Define a route to add a new product.
+        Route::post('/admin/add_product', [
+            'uses' => 'ProductController@postAddProduct',
+            'as' => 'post_add_product'
         ]);
 
-        // Define a route to unlist an existing product.
-        Route::post('/product/delete/{id}', [
-            'uses' => 'ProductController@postUnlistProduct',
-            'as' => 'post_unlist_product'
-        ]);
+        Route::group(['middleware' => ['product_checks']], function() {
+            // Define a route to get to the form to edit an existing product.
+            Route::get('/product/edit/{id}', [
+                'uses' => 'ProductController@getEditProduct',
+                'as' => 'get_edit_product'
+            ]);
+
+            // Define a route to edit an existing product.
+            Route::post('/product/edit/{id}', [
+                'uses' => 'ProductController@postEditProduct',
+                'as' => 'post_edit_product'
+            ]);
+
+            // Define a route to unlist an existing product.
+            Route::post('/product/delete/{id}', [
+                'uses' => 'ProductController@postUnlistProduct',
+                'as' => 'post_unlist_product'
+            ]);
+        });
     });
 });

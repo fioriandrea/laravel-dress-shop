@@ -3,15 +3,15 @@
 @section('title', $add ? 'Add Product' : 'Edit Product')
 
 @section('content')
-    <form method="post" action="{{ $add ? route('post_add_product') : route('post_edit_product', ['id' => $product->id]) }}" class="mt-3 form-horizontal user-form">
+    <form method="post" action="{{ $add ? route('post_add_product') : route('post_edit_product', ['id' => $product->id]) }}" class="mt-3 form-horizontal user-form" enctype="multipart/form-data">
         @csrf
         <!-- checkbox list with current images. Those images will be deleted if the user unchecks the checkbox -->
         @if((!isset($add) || !$add) && $product->images->count() > 0)
         <div class="form-group">
-            <label for="images">Images (uncheck those you want to delete)</label>
+            <label for="images">Images (check those you want to delete)</label>
             @foreach ($product->images as $image)
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="images[]" value="{{ $image->id }}" checked>
+                    <input class="form-check-input" type="checkbox" name="todelete_images[]" value="{{ $image->id }}">
                     <a href="{{ asset('storage/img/' . $image->url) }}">{{ $image->url }}</a>
                 </div>
             @endforeach
@@ -19,8 +19,8 @@
         @endif
         <!-- add multiple images -->
         <div class="form-group">
-            <label for="images">Images (add multiple images)</label>
-            <input type="file" name="images[]" multiple>
+            <label for="new_images">Images (add multiple images)</label>
+            <input type="file" id="new_images" name="new_images[]" accept="image/*" multiple>
         </div>
         <div class="form-group">
             <label for="name">Name</label>
@@ -36,7 +36,7 @@
         </div>
         <div class="form-group">
             <label for="category">Category</label>
-            <select required class="form-select">
+            <select required class="form-select" name="category">
             @foreach($categories as $category)
                 <option value="{{ $category }}">{{ $category }}</option>
             @endforeach

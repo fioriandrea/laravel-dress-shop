@@ -3,6 +3,15 @@
 @section('title', 'Product List')
 
 @section('content')
+@auth
+@if(auth()->user()->isAdmin())
+<!-- use icon-plus to add product -->
+<a href="{{ route('get_add_product') }}" class="btn btn-outline-success my-2">
+    <i class="bi bi-plus"></i>
+    Add Product
+</a> 
+@endif
+@endauth
 @foreach($products as $product)
     @section('product-li-content')
         <p class="h1">EUR {{ $product->price }}</p>

@@ -4,6 +4,64 @@ namespace dress_shop;
 
 class DataLayer {
 
+    public static function saveImages($images) {
+        $img_names = [];
+        if ($images != null) {
+            foreach ($images as $image) {
+                // get a temp name based on the current time
+                $temp_name = time() . rand() . '.' . $image->getClientOriginalExtension();
+                // save the image with the temp name into the img folder
+                $image->storeAs('public/img/', $temp_name);
+                // append the temp name to the img_names array
+                array_push($img_names, $temp_name);
+            }
+        }
+        return $img_names;
+    }
+
+    public static function newProduct($data) {
+        $product = new Product();
+        DataLayer::editProductObj($product, $data);
+    }
+
+    public static function editProduct($data, $id) {
+        $product = Product::find($id);
+        DataLayer::editProductObj($product, $data);
+    }
+
+    private static function editProductObj($product, $data) {
+        $product->name = $data->name;
+        $product->description = $data->description;
+        $product->short_description = $data->short_description;
+        $product->category = $data->category;
+        $product->brand = $data->brand;
+        $product->shipping = $data->shipping;
+        $product->price = $data->price;
+        $product->S = $data->S;
+        $product->M = $data->M;
+        $product->L = $data->L;
+        $product->XL = $data->XL;
+        // delete all the images with id in $data->todelete_images
+        // use a foreach
+        if ($data->todelete_images != null) {
+            foreach ($data->todelete_images as $image_id) {
+                $image = Image::find($image_id);
+                $image->delete();
+            }
+        }
+        $product->save();
+        // add new images, given as files in $data->new_images_names
+        // use a foreach
+        if ($data->new_images_names != null) {
+            foreach ($data->new_images_names as $image_name) {
+                $image = new Image();
+                $image->product_id = $product->id;
+                $image->url = $image_name;
+                $image->save();
+            }
+        }
+    }
+
     public static function unlistProduct($id) {
         $product = DataLayer::getProduct($id);
         $product->status = 'unlisted';
@@ -57,14 +115,8 @@ class DataLayer {
     }
 
     public static function postModifyPaymentMethod($id, $data) {
-        $user = auth()->user();
         $payment = PaymentMethod::find($id);
-        $payment->cc_number = $data->cc_number;
-        $payment->expiration_date = $data->expiration_date;
-        $payment->owner_first_name = $data->owner_first_name;
-        $payment->owner_second_name = $data->owner_second_name;
-        $payment->user_id = $user->id;
-        $payment->save();
+        DataLayer::editPaymentMethodObj($payment, $data);
     }
 
     public static function postRemovePaymentMethod($id) {
@@ -74,6 +126,10 @@ class DataLayer {
 
     public static function postNewPaymentMethod($data) {
         $payment = new PaymentMethod();
+        DataLayer::editPaymentMethodObj($payment, $data);
+    }
+
+    private static function editPaymentMethodObj($payment, $data) {
         $payment->user_id = auth()->user()->id;
         $payment->owner_first_name = $data->owner_first_name;
         $payment->owner_second_name = $data->owner_second_name;
@@ -84,13 +140,7 @@ class DataLayer {
 
     public static function postNewAddress($data) {
         $address = new Address();
-        $address->user_id = auth()->user()->id;
-        $address->street = $data->street;
-        $address->city = $data->city;
-        $address->province = $data->province;
-        $address->country = $data->country;
-        $address->zip = $data->zip;
-        $address->save();
+        DataLayer::editAddressObj($address, $data);
     }
 
     public static function postRemoveAddress($id) {
@@ -100,6 +150,11 @@ class DataLayer {
 
     public static function postModifyAddress($id, $data) {
         $address = Address::find($id);
+        DataLayer::editAddressObj($address, $data);
+    }
+
+    private static function editAddressObj($address, $data) {
+        $address->user_id = auth()->user()->id;
         $address->street = $data->street;
         $address->city = $data->city;
         $address->province = $data->province;
@@ -138,7 +193,6 @@ class DataLayer {
         }
     }
 
-    // remove a product from the cart
     public static function removeFromCart($data)
     {
         // find the cart product to remove, given the product id and user id
@@ -149,14 +203,11 @@ class DataLayer {
         }
     }
 
-    // get a user's cart products
     public static function getCartProducts($user) {
         $cartProducts = CartProduct::where('user_id', $user->id)->get();
         return $cartProducts;
     }
 
-    // return n random products (they should all be different from each other and from the given product)
-    // the products should have the same category as the given product
     public static function getRelatedProducts($_product, $n = 7) {
         $products = DataLayer::getProducts(function ($product) use ($_product) {
             return $product->category == $_product->category && $product->id != $_product->id && $product->status != 'unlisted';
@@ -170,7 +221,6 @@ class DataLayer {
         return $product;
     }
 
-    // given a user, return the number of items in the user's cart
     public static function getCartCount($user) {
         $cart = CartProduct::where('user_id', $user->id)->get();
         return count($cart);
@@ -180,7 +230,6 @@ class DataLayer {
         return DataLayer::getCartTotalPrices($user) + DataLayer::getCartShipping($user);
     }
 
-    // given a user, return the total price of all products in the user's cart
     public static function getCartTotalPrices($user) {
         $cartProducts = $user->cartProducts;
         $total = 0;
@@ -190,7 +239,6 @@ class DataLayer {
         return $total;
     }
 
-    // given a user, return the total shipping of all products in the user's cart
     public static function getCartShipping($user) {
         $cartProducts = $user->cartProducts;
         $total = 0;

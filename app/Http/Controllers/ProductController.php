@@ -5,6 +5,7 @@ namespace dress_shop\Http\Controllers;
 use Illuminate\Http\Request;
 
 use dress_shop\DataLayer;
+use dress_shop\Product;
 
 class ProductController extends Controller
 {
@@ -46,6 +47,7 @@ class ProductController extends Controller
 
     public function getEditProduct($id)
     {
+        $product = DataLayer::getProduct($id);
         return view('product_form', [
             'product' => $product,
             'add' => false,
@@ -57,5 +59,29 @@ class ProductController extends Controller
         $product = DataLayer::getProduct($id);
         DataLayer::unlistProduct($id);
         return redirect()->route('product_list');
+    }
+
+    public function postEditProduct(Request $request, $id)
+    {
+        $request->new_images_names = DataLayer::saveImages($request->new_images);
+        // save the product
+        DataLayer::editProduct($request, $id);
+        return redirect()->route('product', ['id' => $id]);
+    }
+
+    public function postAddProduct(Request $request)
+    {
+        $request->new_images_names = DataLayer::saveImages($request->new_images);
+        // save the product
+        DataLayer::newProduct($request);
+        return redirect()->route('product_list');
+    }
+
+    public function getAddProduct()
+    {
+        return view('product_form', [
+            'product' => new Product(),
+            'add' => true,
+        ]);
     }
 }

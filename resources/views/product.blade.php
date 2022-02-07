@@ -25,6 +25,7 @@
 
     <div>
         <h1 class="display-4">{{ $product->name }}</h1>
+        <h3 class="small fw-light text-muted">{{ $product->short_description }}</h3>
         <p class="lead">
             <a class="stars">
                 @for($i = 0; $i < round($rating); $i++)
