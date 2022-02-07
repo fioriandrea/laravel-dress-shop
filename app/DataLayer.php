@@ -10,12 +10,6 @@ class DataLayer {
         $product->save();
     }
 
-    public static function relistProduct($id) {
-        $product = DataLayer::getProduct($id);
-        $product->status = 'listed';
-        $product->save();
-    }
-
     public static function getUserOrders() {
         // get orders sorted by date, from most recent to least recent
         return auth()->user()->orders()->orderBy('created_at', 'desc')->get();

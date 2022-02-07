@@ -15,17 +15,10 @@
                     @csrf
                     <button class="me-2 btn btn-outline-success">Edit</button>
                 </form>
-                @if($product->status != 'unlisted')
                 <form method="post" action="{{ route('post_unlist_product', $product->id) }}">
                     @csrf
                     <button class="me-2 btn btn-outline-danger">Unlist</button>
                 </form>
-                @else
-                <form method="post" action="{{ route('post_relist_product', $product->id) }}">
-                    @csrf
-                    <button class="me-2 btn btn-outline-warning">Relist</button>
-                </form>
-                @endif
             </div>
         @endif
         @endauth

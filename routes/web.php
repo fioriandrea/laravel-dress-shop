@@ -26,11 +26,19 @@ Route::get('/product_list', [
     'as' => 'product_list'
 ]);
 
-// Define a route for product, which will be used to show a single product.
-// The product will be filtered based on the product id.
-Route::get('/product/{id}', [
-    'uses' => 'ProductController@getProduct',
-    'as' => 'product'
+Route::group(['middleware' => ['product_checks']], function() {
+    // Define a route for product, which will be used to show a single product.
+    // The product will be filtered based on the product id.
+    Route::get('/product/{id}', [
+        'uses' => 'ProductController@getProduct',
+        'as' => 'product'
+    ]);
+});
+
+// Error page route.
+Route::get('/error', [
+    'uses' => 'ErrorController@getError',
+    'as' => 'error'
 ]);
 
 Auth::routes();
@@ -160,33 +168,23 @@ Route::group(['middleware' => ['auth']], function() {
         'as' => 'delete_order'
     ]);
 
-    // Error page route.
-    Route::get('/error', [
-        'uses' => 'ErrorController@getError',
-        'as' => 'error'
-    ]);
+    Route::group(['middleware' => ['product_checks', 'admin_checks']], function() {
+        // Define a route to get to the form to edit an existing product.
+        Route::get('/product/edit/{id}', [
+            'uses' => 'ProductController@getEditProduct',
+            'as' => 'get_edit_product'
+        ]);
 
-    // Define a route to get to the form to edit an existing product.
-    Route::get('/product/edit/{id}', [
-        'uses' => 'ProductController@getEditProduct',
-        'as' => 'get_edit_product'
-    ]);
+        // Define a route to edit an existing product.
+        Route::post('/product/edit/{id}', [
+            'uses' => 'ProductController@postEditProduct',
+            'as' => 'post_edit_product'
+        ]);
 
-    // Define a route to edit an existing product.
-    Route::post('/product/edit/{id}', [
-        'uses' => 'ProductController@postEditProduct',
-        'as' => 'post_edit_product'
-    ]);
-
-    // Define a route to unlist an existing product.
-    Route::post('/product/delete/{id}', [
-        'uses' => 'ProductController@postUnlistProduct',
-        'as' => 'post_unlist_product'
-    ]);
-
-    // Define a route to relist an existing product.
-    Route::post('/product/relist/{id}', [
-        'uses' => 'ProductController@postRelistProduct',
-        'as' => 'post_relist_product'
-    ]);
+        // Define a route to unlist an existing product.
+        Route::post('/product/delete/{id}', [
+            'uses' => 'ProductController@postUnlistProduct',
+            'as' => 'post_unlist_product'
+        ]);
+    });
 });

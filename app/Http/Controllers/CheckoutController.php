@@ -12,16 +12,16 @@ class CheckoutController extends Controller
             return redirect()->route('error', ['messages' => ['Your cart is empty']]);
         }
         if (auth()->user()->addresses->count() == 0) {
-            return redirect()->route('get_add_address');
+            return redirect()->route('error', ['messages' => ['You have no addresses']]);
         }
         if (auth()->user()->paymentMethods->count() == 0) {
-            return redirect()->route('get_add_payment_method');
+            return redirect()->route('error', ['messages' => ['You have no payment methods']]);
         }
         // for each product in the cart, check if there is enough stock
         // use error route to redirect to error page
         foreach (auth()->user()->cartProducts as $cartProduct) {
             if ($cartProduct->product->status == 'unlisted') {
-                return redirect()->route('error', ['messages' => ['Product: ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . ') is unlisted']]);
+                return redirect()->route('error', ['messages' => ['Product: ' . $cartProduct->product->name . ' is unlisted']]);
             }
             if ($cartProduct->product->{$cartProduct->size} < $cartProduct->quantity) {
                 // redirect to 'error' route with error message (specify the product name and size)

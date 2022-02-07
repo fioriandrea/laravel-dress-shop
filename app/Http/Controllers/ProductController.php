@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     private static function productsFilter($category = 'all', $keyword = '') {
         return function($product) use ($category, $keyword) {
-            if ($product->status == 'unlisted' && auth()->user()->type != 'admin') {
+            if ($product->status == 'unlisted') {
                 return false;
             }
             $category = $category === null ? 'all' : $category;
@@ -37,12 +37,6 @@ class ProductController extends Controller
     public function getProduct($id)
     {
         $product = DataLayer::getProduct($id);
-        if ($product == null) {
-            return redirect()->route('error', ['messages' => ['Product not found']]);
-        }
-        if ($product->status == 'unlisted') {
-            return redirect()->route('error', ['messages' => ['Product is unlisted']]);
-        }
         return view('product', [
             'product' => $product,
             'rating' => 3,
@@ -52,13 +46,6 @@ class ProductController extends Controller
 
     public function getEditProduct($id)
     {
-        if (auth()->user()->type != 'admin') {
-            return redirect()->route('error', ['messages' => ['You are not authorized to edit products']]);
-        }
-        $product = DataLayer::getProduct($id);
-        if ($product == null) {
-            return redirect()->route('error', ['messages' => ['Product not found']]);
-        }
         return view('product_form', [
             'product' => $product,
             'add' => false,
@@ -67,27 +54,8 @@ class ProductController extends Controller
 
     public function postUnlistProduct($id)
     {
-        if (auth()->user()->type != 'admin') {
-            return redirect()->route('error', ['messages' => ['You are not authorized to edit products']]);
-        }
         $product = DataLayer::getProduct($id);
-        if ($product == null) {
-            return redirect()->route('error', ['messages' => ['Product not found']]);
-        }
         DataLayer::unlistProduct($id);
-        return redirect()->route('product_list');
-    }
-
-    public function postRelistProduct($id)
-    {
-        if (auth()->user()->type != 'admin') {
-            return redirect()->route('error', ['messages' => ['You are not authorized to edit products']]);
-        }
-        $product = DataLayer::getProduct($id);
-        if ($product == null) {
-            return redirect()->route('error', ['messages' => ['Product not found']]);
-        }
-        DataLayer::relistProduct($id);
         return redirect()->route('product_list');
     }
 }
