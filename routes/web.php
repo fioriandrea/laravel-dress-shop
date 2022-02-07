@@ -165,4 +165,28 @@ Route::group(['middleware' => ['auth']], function() {
         'uses' => 'ErrorController@getError',
         'as' => 'error'
     ]);
+
+    // Define a route to get to the form to edit an existing product.
+    Route::get('/product/edit/{id}', [
+        'uses' => 'ProductController@getEditProduct',
+        'as' => 'get_edit_product'
+    ]);
+
+    // Define a route to edit an existing product.
+    Route::post('/product/edit/{id}', [
+        'uses' => 'ProductController@postEditProduct',
+        'as' => 'post_edit_product'
+    ]);
+
+    // Define a route to unlist an existing product.
+    Route::post('/product/delete/{id}', [
+        'uses' => 'ProductController@postUnlistProduct',
+        'as' => 'post_unlist_product'
+    ]);
+
+    // Define a route to relist an existing product.
+    Route::post('/product/relist/{id}', [
+        'uses' => 'ProductController@postRelistProduct',
+        'as' => 'post_relist_product'
+    ]);
 });

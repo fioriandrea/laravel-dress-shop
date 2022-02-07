@@ -4,6 +4,18 @@ namespace dress_shop;
 
 class DataLayer {
 
+    public static function unlistProduct($id) {
+        $product = DataLayer::getProduct($id);
+        $product->status = 'unlisted';
+        $product->save();
+    }
+
+    public static function relistProduct($id) {
+        $product = DataLayer::getProduct($id);
+        $product->status = 'listed';
+        $product->save();
+    }
+
     public static function getUserOrders() {
         // get orders sorted by date, from most recent to least recent
         return auth()->user()->orders()->orderBy('created_at', 'desc')->get();
@@ -37,6 +49,8 @@ class DataLayer {
             $orderProduct->product_id = $cartProduct->product_id;
             $orderProduct->quantity = $cartProduct->quantity;
             $orderProduct->size = $cartProduct->size;
+            $orderProduct->price = $cartProduct->product->price;
+            $orderProduct->shipping = $cartProduct->product->shipping;
             $orderProduct->save();
         }
         foreach (auth()->user()->cartProducts as $cartProduct) {
@@ -150,12 +164,8 @@ class DataLayer {
     // return n random products (they should all be different from each other and from the given product)
     // the products should have the same category as the given product
     public static function getRelatedProducts($_product, $n = 7) {
-        $products = Product::all();
-        $products = $products->filter(function($product) use ($_product) {
-            return $product->category == $_product->category;
-        });
-        $products = $products->filter(function($product) use ($_product) {
-            return $product->id != $_product->id;
+        $products = DataLayer::getProducts(function ($product) use ($_product) {
+            return $product->category == $_product->category && $product->id != $_product->id && $product->status != 'unlisted';
         });
         $products = $products->shuffle();
         return $products->take($n);

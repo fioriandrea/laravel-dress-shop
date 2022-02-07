@@ -73,7 +73,7 @@
             <p class="h1">EUR {{ $product->price }}</p>
             <p class="small m-0" data-available="{{ $product->sizes() }}"></p>
             <p class="small m-0" data-shipping="{{ $product->shipping }}"></p>
-        @endsection
+        @overwrite
         @include('product_list_card', ['product' => $rp, 'inslider' => true])
         @endforeach
     </div>

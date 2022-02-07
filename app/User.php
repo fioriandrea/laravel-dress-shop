@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('dress_shop\Order');
     }
+
+    public function isAdmin()
+    {
+        return $this->type == 'admin';
+    }
 }

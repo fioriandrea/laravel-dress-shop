@@ -29,7 +29,8 @@
             </div>
             @foreach($order->orderProducts as $op)
                 @section('product-li-content')
-                    <p class="h1">EUR {{ $op->product->price }}</p>
+                    <p class="h1">EUR {{ $op->price }}</p>
+                    <p class="small m-0" data-shipping="{{ $op->shipping }}"></p>
                     <p class="small m-0">Size: <span class="fw-bold">{{ $op->size }}</span></p>
                     <p class="small m-0">Quantity: <span class="fw-bold">{{ $op->quantity }}</span></p>
                 @endsection
