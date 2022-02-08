@@ -46,10 +46,12 @@
                             </a>
                             <ul class="dropdown-menu">
                                 @auth
+                                    @if(Auth::user()->isAdmin())
+                                    <li><a class="dropdown-item" href="{{ route('admin_orders') }}">Manage Orders</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('product_list') }}">Manage Products</a></li>
+                                    @else
                                     <li><a class="dropdown-item" href="{{ route('orders') }}">Orders</a></li>
                                     <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
-                                    @if(Auth::user()->isAdmin())
-                                    <li><a class="dropdown-item" href="{{ route('admin_orders') }}">Admin Orders</a></li>
                                     @endif
                                     <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                                 @else
@@ -58,9 +60,11 @@
                                 @endif
                             </ul>
                         </li>
+                        @if(!Auth::user()->isAdmin())
                         <li class="nav-item">
                             <a class="nav-link h3" href="{{ route('cart') }}"><i class="bi bi-cart"></i></a>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </div>

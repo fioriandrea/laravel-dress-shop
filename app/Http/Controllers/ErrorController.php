@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 
 class ErrorController extends Controller
 {
-    public function getError(Request $request)
+    public function getUserError(Request $request)
     {
-        return view('error_page', ['messages' => $request->messages]);
+        return view('user_error_page', ['messages' => $request->messages]);
+    }
+
+    public function getAdminError(Request $request)
+    {
+        return view('admin_error_page', ['messages' => $request->messages]);
     }
 }

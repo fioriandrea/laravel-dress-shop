@@ -25,7 +25,7 @@ class CartController extends Controller
     {
         if ($request->quantity <= 0) {
             // redirect to error page
-            return redirect()->route('error', ['message' => 'Quantity must be greater than 0']);
+            return redirect()->route('user_error', ['message' => 'Quantity must be greater than 0']);
         }
         $cartProduct = DataLayer::getCartProduct(auth()->user()->id, $request->product_id, $request->size);
         if ($cartProduct != null) {
@@ -38,8 +38,8 @@ class CartController extends Controller
                 } else {
                     $submessage = 'Only ' . $cartProduct->product->{$cartProduct->size} . ' left in stock and ' . $cartProduct->quantity . ' already in cart';
                 }
-                // redirect to 'error' route with error message (specify the product name and size)
-                return redirect()->route('error', ['messages' => [
+                // redirect to 'user_error' route with error message (specify the product name and size)
+                return redirect()->route('user_error', ['messages' => [
                     'Not enough stock for product: ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . ')',
                     $submessage,
                 ]]);

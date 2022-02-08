@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
-@section('title', $admin ? 'Admin Order Page' : auth()->user()->name . '\'s Orders')
+@section('title', auth()->user()->isAdmin() ? 'Admin Order Page' : auth()->user()->name . '\'s Orders')
 
 @section('content')
 <section class="mt-3">
-        <h1>{{ $admin ? 'Admin Order Page' : auth()->user()->name . '\'s Orders' }}</h1>
+        <h1>{{ auth()->user()->isAdmin() ? 'Admin Order Page' : auth()->user()->name . '\'s Orders' }}</h1>
 
         <hr>
 
@@ -21,7 +21,7 @@
                 <p>Order Total: <span class="fw-bold">EUR {{ $order->total }}</span></p>
                 <!-- address -->
                 @include('address_card_content', ['address' => $order->address])
-                @if(!$admin)
+                @if(!auth()->user()->isAdmin())
                     <!--cancel order button-->
                     @if($order->status == 'pending')
                         <form action="{{ route('delete_order', ['id' => $order->id]) }}" method="post">

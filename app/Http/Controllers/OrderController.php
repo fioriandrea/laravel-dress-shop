@@ -14,7 +14,6 @@ class OrderController extends Controller
         $orders = DataLayer::getUserOrders();
         return view('orders_page', [
             'orders' => $orders,
-            'admin' => false,
         ]);
     }
 
@@ -29,7 +28,6 @@ class OrderController extends Controller
         $orders = DataLayer::getPendingOrders();
         return view('orders_page', [
             'orders' => $orders,
-            'admin' => true,
         ]);
     }
 
@@ -37,7 +35,7 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         if ($order == null) {
-            return redirect()->route('error', ['messages' => ['Order not found.']]);
+            return redirect()->route('user_error', ['messages' => ['Order not found.']]);
         }
         DataLayer::confirmOrder($id);
         return redirect()->route('admin_orders');

@@ -4,7 +4,7 @@ namespace dress_shop\Http\Middleware;
 
 use Closure;
 
-class AdminChecks
+class NonAdminChecks
 {
     /**
      * Handle an incoming request.
@@ -15,8 +15,8 @@ class AdminChecks
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->type != 'admin') {
-            return redirect()->route('user_error', ['messages' => ['You are not authorized to edit products']]);
+        if (auth()->user()->isAdmin()) {
+            return redirect()->route('admin_error', ['messages' => ['Admins cannot perform such an action.']]);
         }
         return $next($request);
     }
