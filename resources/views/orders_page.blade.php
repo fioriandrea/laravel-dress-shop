@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
-@section('title', auth()->user()->name . '\'s Orders')
+@section('title', $admin ? 'Admin Order Page' : auth()->user()->name . '\'s Orders')
 
 @section('content')
 <section class="mt-3">
-        <h1>{{ auth()->user()->name }}'s Orders</h1>
+        <h1>{{ $admin ? 'Admin Order Page' : auth()->user()->name . '\'s Orders' }}</h1>
 
         <hr>
 
@@ -19,11 +19,20 @@
                 <!-- status capitalized -->
                 <p>Order Status: <span class="fw-bold">{{ ucfirst($order->status) }}</span></p>
                 <p>Order Total: <span class="fw-bold">EUR {{ $order->total }}</span></p>
-                <!--cancel order button-->
-                @if($order->status == 'pending')
-                    <form action="{{ route('delete_order', ['id' => $order->id]) }}" method="post">
+                <!-- address -->
+                @include('address_card_content', ['address' => $order->address])
+                @if(!$admin)
+                    <!--cancel order button-->
+                    @if($order->status == 'pending')
+                        <form action="{{ route('delete_order', ['id' => $order->id]) }}" method="post">
+                            @csrf
+                            <button class="btn btn-outline-danger" type="submit">Cancel Order</button>
+                        </form>
+                    @endif
+                @else
+                    <form action="{{ route('confirm_order', ['id' => $order->id]) }}" method="post">
                         @csrf
-                        <button class="btn btn-outline-danger" type="submit">Cancel Order</button>
+                        <button class="btn btn-outline-success" type="submit">Confirm Order</button>
                     </form>
                 @endif
             </div>

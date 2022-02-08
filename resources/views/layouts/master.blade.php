@@ -48,6 +48,9 @@
                                 @auth
                                     <li><a class="dropdown-item" href="{{ route('orders') }}">Orders</a></li>
                                     <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                                    @if(Auth::user()->isAdmin())
+                                    <li><a class="dropdown-item" href="{{ route('admin_orders') }}">Admin Orders</a></li>
+                                    @endif
                                     <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                                 @else
                                     <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>

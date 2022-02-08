@@ -4,6 +4,17 @@ namespace dress_shop;
 
 class DataLayer {
 
+    public static function confirmOrder($id) {
+        $order = Order::find($id);
+        $order->status = 'confirmed';
+        $order->save();
+    }
+
+    public static function getPendingOrders() {
+        $orders = Order::where('status', '=', 'pending')->get();
+        return $orders;
+    }
+
     public static function saveImages($images) {
         $img_names = [];
         if ($images != null) {

@@ -181,6 +181,18 @@ Route::group(['middleware' => ['auth']], function() {
             'as' => 'post_add_product'
         ]);
 
+        // Define a route to get to the admin orders page.
+        Route::get('/admin/orders', [
+            'uses' => 'OrderController@getAdminOrders',
+            'as' => 'admin_orders'
+        ]);
+
+        // Define a route to confirm an order.
+        Route::post('/admin/confirm_order/{id}', [
+            'uses' => 'OrderController@postConfirmOrder',
+            'as' => 'confirm_order'
+        ]);
+
         Route::group(['middleware' => ['product_checks']], function() {
             // Define a route to get to the form to edit an existing product.
             Route::get('/product/edit/{id}', [
