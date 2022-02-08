@@ -1,6 +1,7 @@
 <?php
 
 namespace dress_shop;
+use Illuminate\Support\Facades\File; 
 
 class DataLayer {
 
@@ -15,7 +16,7 @@ class DataLayer {
         return $orders;
     }
 
-    public static function saveImages($images) {
+    public static function saveImageFiles($images) {
         $img_names = [];
         if ($images != null) {
             foreach ($images as $image) {
@@ -28,6 +29,22 @@ class DataLayer {
             }
         }
         return $img_names;
+    }
+
+    public static function deleteImageFiles($image_ids) {
+        if ($image_ids != null) {
+            foreach ($image_ids as $id) {
+                // Get image from database
+                $image = Image::find($id);
+                if ($image != null) {
+                    $path = storage_path('app/public/img/' . $image->url);
+                    // if file exists, unlink it
+                    if (file_exists($path)) {
+                        unlink($path);
+                    }
+                }
+            }
+        }
     }
 
     public static function newProduct($data) {

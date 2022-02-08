@@ -60,11 +60,13 @@
                                 @endif
                             </ul>
                         </li>
+                        @auth
                         @if(!Auth::user()->isAdmin())
                         <li class="nav-item">
                             <a class="nav-link h3" href="{{ route('cart') }}"><i class="bi bi-cart"></i></a>
                         </li>
                         @endif
+                        @endauth
                     </ul>
                 </div>
             </div>

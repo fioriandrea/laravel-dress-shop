@@ -4,6 +4,7 @@
 
 @section('content')
 <section class="product-page-main">
+    @if($product->images->count() > 0)
     <div id="productCarouselControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-inner h-100">
             @foreach($product->images()->get() as $picture)
@@ -22,6 +23,7 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+    @endif
 
     <div>
         <h1 class="display-4">{{ $product->name }}</h1>
@@ -71,9 +73,9 @@
         @foreach($related as $rp)
         <!-- use product_list_card.blade.php -->
         @section('product-li-content')
-            <p class="h1">EUR {{ $product->price }}</p>
-            <p class="small m-0" data-available="{{ $product->sizes() }}"></p>
-            <p class="small m-0" data-shipping="{{ $product->shipping }}"></p>
+            <p class="h1">EUR {{ $rp->price }}</p>
+            <p class="small m-0" data-available="{{ $rp->sizes() }}"></p>
+            <p class="small m-0" data-shipping="{{ $rp->shipping }}"></p>
         @overwrite
         @include('product_list_card', ['product' => $rp, 'inslider' => true])
         @endforeach

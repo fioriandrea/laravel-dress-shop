@@ -19,7 +19,13 @@ class Product extends Model
     }
 
     public function firstImage() {
-        return $this->images()->first();
+        $img = $this->images()->first();
+        if ($img == null) {
+            $img = new Image();
+            $img->url = 'image_not_found.jpeg';
+            $img->product_id = $this->id;
+        }
+        return $img;
     }
 
     // a product has many cart products

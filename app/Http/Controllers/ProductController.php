@@ -63,7 +63,8 @@ class ProductController extends Controller
 
     public function postEditProduct(Request $request, $id)
     {
-        $request->new_images_names = DataLayer::saveImages($request->new_images);
+        DataLayer::deleteImageFiles($request->todelete_images);
+        $request->new_images_names = DataLayer::saveImageFiles($request->new_images);
         // save the product
         DataLayer::editProduct($request, $id);
         return redirect()->route('product', ['id' => $id]);
@@ -71,7 +72,11 @@ class ProductController extends Controller
 
     public function postAddProduct(Request $request)
     {
-        $request->new_images_names = DataLayer::saveImages($request->new_images);
+        if ($request->todelete_images != null) {
+            // there is an error
+            return redirect()->route('admin_error', ['messages' => ['Cannot delete images while adding a product']]);
+        }
+        $request->new_images_names = DataLayer::saveImageFiles($request->new_images);
         // save the product
         DataLayer::newProduct($request);
         return redirect()->route('product_list');
