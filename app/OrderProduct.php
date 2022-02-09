@@ -23,4 +23,10 @@ class OrderProduct extends Model
         return $this->belongsTo('dress_shop\Product');
     }
 
+    // A OrderProduct belongs to a user
+    public function user()
+    {
+        return $this->belongsTo('dress_shop\User');
+    }
+
 }

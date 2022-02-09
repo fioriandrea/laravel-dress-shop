@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use dress_shop\DataLayer;
 use dress_shop\Product;
+use dress_shop\Review;
 
 class ProductController extends Controller
 {
@@ -40,7 +41,7 @@ class ProductController extends Controller
         $product = DataLayer::getProduct($id);
         return view('product', [
             'product' => $product,
-            'rating' => 3,
+            'rating' => $product->getRating(),
             'related' => DataLayer::getRelatedProducts($product),
         ]);
     }
@@ -95,5 +96,46 @@ class ProductController extends Controller
             'product' => new Product(),
             'add' => true,
         ]);
+    }
+
+    public function postAddReview(Request $request, $prodid)
+    {
+        $user = auth()->user();
+        if ($user->hasReviewed($prodid)) {
+            return redirect()->route('product', ['id' => $prodid])->with('error', 'You have already reviewed this product');
+        }
+        if (!$user->hasBought($prodid)) {
+            return redirect()->route('product', ['id' => $prodid])->with('error', 'You have to buy this product before you can review it');
+        }
+        $request->product_id = $prodid;
+        DataLayer::addReview($request);
+        return redirect()->route('product', ['id' => $prodid])->with('success', 'Review added succesfully');
+    }
+
+    public function postUpdateReview(Request $request, $prodid)
+    {
+        $user = auth()->user();
+        if (!$user->hasReviewed($prodid)) {
+            return redirect()->route('product', ['id' => $prodid])->with('error', 'You have not reviewed this product');
+        }
+        $request->product_id = $prodid;
+        DataLayer::updateReview($request, $user->reviewId($prodid));
+        return redirect()->route('product', ['id' => $prodid])->with('success', 'Review updated succesfully');
+    }
+
+    public function postDeleteReview($id) {
+        // check that review exists
+        $review = Review::find($id);
+        if ($review == null) {
+            return redirect()->route('user_error', ['messages' => ['Review does not exist'], 'status' => 404]);
+        }
+        $prodid = $review->product_id;
+        // check that user is the owner of the review or admin
+        $user = auth()->user();
+        if ($user->id != $review->user_id && !$user->isAdmin()) {
+            return redirect()->route('user_error', ['messages' => ['You are not the owner of this review'], 'status' => 403]);
+        }
+        DataLayer::deleteReview($id);
+        return redirect()->route('product', ['id' => $prodid])->with('success', 'Review deleted succesfully');
     }
 }

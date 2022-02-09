@@ -38,6 +38,6 @@ class OrderController extends Controller
             return redirect()->route('user_error', ['messages' => ['Order not found.'], 'status' => 404]);
         }
         DataLayer::confirmOrder($id);
-        return redirect()->route('admin_orders')->with('success', 'Order confirmed successfully');
+        return response()->json(['success' => true, 'message' => 'Order confirmed successfully']);
     }
 }

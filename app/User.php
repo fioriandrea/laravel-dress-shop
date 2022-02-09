@@ -77,4 +77,41 @@ class User extends Authenticatable
     {
         return $this->type == 'admin';
     }
+
+    // A user has many order products
+    public function orderProducts()
+    {
+        return $this->hasMany('dress_shop\OrderProduct');
+    }
+
+    // A user has many reviews
+    public function reviews()
+    {
+        return $this->hasMany('dress_shop\Review');
+    }
+
+    public function hasReviewed($productId)
+    {
+        return $this->reviews->contains('product_id', $productId);
+    }
+
+    public function reviewId($productId)
+    {
+        $review = $this->reviews->where('product_id', $productId)->first();
+        if ($review == null) {
+            return null;
+        }
+        return $review->id;
+    }
+
+    public function hasBought($productId)
+    {
+        $orderProducts = $this->orderProducts->where('product_id', $productId);
+        foreach ($orderProducts as $orderProduct) {
+            if ($orderProduct->order->status == 'confirmed') {
+                return true;
+            }
+        }
+        return false;
+    }
 }

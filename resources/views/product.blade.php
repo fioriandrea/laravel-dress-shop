@@ -84,7 +84,10 @@
 
 <section class="my-5">
     <h1>Reviews Section</h1>
-    <form>
+    @auth
+    @if(!auth()->user()->isAdmin())
+    <form method="post" action="{{ auth()->user()->hasReviewed($product->id) ? route('update_review', ['id' => $product->id]) : route('add_review', ['id' => $product->id]) }}">
+        @csrf
         <p class="lead">
             <a class="stars review-stars" data-reviewstars="1">
                 <i class="bi bi-star"></i>
@@ -94,120 +97,46 @@
                 <i class="bi bi-star"></i>
             </a>
         </p>
+        <input type="hidden" name="stars" id="stars-hidden">
         <div class="form-group">
-            <label for="review-text-area">Write here your review of the product</label>
-            <textarea class="form-control" id="review-text-area" rows="3"></textarea>
-            <button type="submit" class="btn btn-outline-success my-2 w-100">Submit</button>
+            <label for="review-text-area">{{ auth()->user()->hasReviewed($product->id) ? 'Update the review of the product' :  'Write here your review of the product' }}</label>
+            <textarea class="form-control" id="review-text-area" rows="3" name="text" minlength="5" required></textarea>
+            <button type="submit" class="btn btn-outline-success my-2 w-100">{{ auth()->user()->hasReviewed($product->id) ? 'Update Review' : 'Add Review' }}</button>
         </div>
     </form>
-
+    @endif
+    @endauth
     <hr>
 
     <ul class="list-group">
+        @foreach($product->reviews as $review)
         <li class="list-group-item">
-            <h3>Username</h3>
+            <h3>{{ $review->user->name }}</h3>
             <p class="small">
-                Reviewed on <span class="text-muted">12/12/2019</span>
+                Reviewed on <span class="text-muted">{{ $review->review_date }}</span>
             </p>
             <a class="stars mb-3">
-                <i class="bi bi-star checked"></i>
-                <i class="bi bi-star checked"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
+                @for($i = 0; $i < round($review->rating); $i++)
+                    <i class="bi bi-star checked"></i>
+                @endfor
+                @for($i = round($review->rating); $i < 5; $i++)
+                    <i class="bi bi-star"></i>
+                @endfor
             </a>
             <p class="lead">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
+                {{ $review->text }}
             </p>
+            @if(auth()->user() && (auth()->user()->isAdmin() || auth()->user()->id == $review->user_id))
+                <form method="post" action="{{ route('delete_review', ['id' => $review->id]) }}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-trash"></i>
+                        Delete Review
+                    </button>
+                </form>
+            @endif
         </li>
-        <li class="list-group-item">
-            <h3>Username</h3>
-            <p class="small">
-                Reviewed on <span class="text-muted">12/12/2019</span>
-            </p>
-            <a class="stars mb-3">
-                <i class="bi bi-star checked"></i>
-                <i class="bi bi-star checked"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-            </a>
-            <p class="lead">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-            </p>
-        </li>
-        <li class="list-group-item">
-            <h3>Username</h3>
-            <p class="small">
-                Reviewed on <span class="text-muted">12/12/2019</span>
-            </p>
-            <a class="stars mb-3">
-                <i class="bi bi-star checked"></i>
-                <i class="bi bi-star checked"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-            </a>
-            <p class="lead">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-            </p>
-        </li>
-        <li class="list-group-item">
-            <h3>Username</h3>
-            <p class="small">
-                Reviewed on <span class="text-muted">12/12/2019</span>
-            </p>
-            <a class="stars mb-3">
-                <i class="bi bi-star checked"></i>
-                <i class="bi bi-star checked"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-            </a>
-            <p class="lead">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec velit ipsum, egestas eget nisi
-                eu, consectetur vehicula nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                velit ipsum, egestas eget nisi eu, consectetur vehicula nisi.
-            </p>
-        </li>
+        @endforeach
     </ul>
 </section>
 
@@ -248,5 +177,7 @@
     };
     sizeSelectHandler();
     document.querySelector("#size-select").addEventListener("change", sizeSelectHandler);
+
+    makeReviewStars(document.querySelector("[data-reviewstars]"), document.querySelector("#stars-hidden"));
 </script>
 @endsection

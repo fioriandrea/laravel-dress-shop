@@ -57,6 +57,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 // This will be used to prevent users from accessing pages that require
 // a logged in user.
 Route::group(['middleware' => ['auth']], function() {
+    Route::post('/delete_review/{id}', [
+        'uses' => 'ProductController@postDeleteReview',
+        'as' => 'delete_review'
+    ]);
+
     Route::group(['middleware' => ['non_admin_checks']], function() {
         // Define a route for cart. It will be used to show the cart.
         // The cart is associeted with a logged in user.
@@ -173,6 +178,17 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('/delete_order/{id}', [
             'uses' => 'OrderController@postDeleteOrder',
             'as' => 'delete_order'
+        ]);
+
+        // Define a route to add a review
+        Route::post('/add_review/{prodid}', [
+            'uses' => 'ProductController@postAddReview',
+            'as' => 'add_review'
+        ]);
+
+        Route::post('/update_review/{prodid}', [
+            'uses' => 'ProductController@postUpdateReview',
+            'as' => 'update_review'
         ]);
     });
 

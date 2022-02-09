@@ -4,8 +4,33 @@ namespace dress_shop;
 use Illuminate\Support\Facades\File; 
 
 class DataLayer {
+
+    public static function deleteReview($id) {
+        $review = Review::find($id);
+        $review->delete();
+    } 
+
+    public static function editReviewObj($review, $data) {
+        $review->product_id = $data->product_id;
+        $review->user_id = auth()->user()->id;
+        $review->rating = $data->stars;
+        $review->text = $data->text;
+        $review->review_date = date('Y-m-d');
+    }
+
+    public static function updateReview($data, $id) {
+        $review = Review::find($id);
+        self::editReviewObj($review, $data);
+        $review->save();
+    }
     
-      public static function confirmOrder($id) {
+    public static function addReview($data) {
+        $review = new Review();
+        DataLayer::editReviewObj($review, $data);
+        $review->save();
+    }
+    
+    public static function confirmOrder($id) {
         $order = Order::find($id);
         $order->status = 'confirmed';
         $order->save();

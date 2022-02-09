@@ -1,5 +1,6 @@
-const makeReviewStars = (stars) => {
+const makeReviewStars = (stars, hidden) => {
     const updateStars = (i) => {
+        hidden.value = i + 1;
         for (let j = 0; j <= i; j++) {
             stars.children[j].classList.add("checked");
         }
@@ -44,10 +45,6 @@ const setShippingParagraph = (p, shipping) => {
         p.classList.add("fw-light");
     }
 };
-
-document.querySelectorAll("[data-reviewstars]").forEach((stars) => {
-    makeReviewStars(stars);
-});
 
 document.querySelectorAll("[data-available]").forEach((element) => {
     setAvailableParagraph(element, +element.dataset.available);
