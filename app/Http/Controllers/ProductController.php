@@ -76,6 +76,13 @@ class ProductController extends Controller
             // there is an error
             return redirect()->route('admin_error', ['messages' => ['Cannot delete images while adding a product']]);
         }
+        // check that all the $request->new_images are valid images
+        foreach ($request->new_images as $image) {
+            if (!DataLayer::isValidImage($image)) {
+                return redirect()->route('admin_error', ['messages' => ['Invalid image while adding a product']]);
+            }
+        }
+
         $request->new_images_names = DataLayer::saveImageFiles($request->new_images);
         // save the product
         DataLayer::newProduct($request);

@@ -16,6 +16,10 @@ class DataLayer {
         return $orders;
     }
 
+    public static function isValidImage($image) {
+        return substr($image->getMimeType(), 0, 5) == 'image';
+    }
+
     public static function saveImageFiles($images) {
         $img_names = [];
         if ($images != null) {
