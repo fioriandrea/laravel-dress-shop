@@ -34,6 +34,7 @@ class DataLayer {
     public static function refuseOrder($id) {
         $order = Order::find($id);
         $order->status = 'refused';
+        DataLayer::addOrderBackToStock($order);
         $order->save();
     }
 
@@ -44,7 +45,8 @@ class DataLayer {
     }
 
     public static function getPendingOrders() {
-        $orders = Order::where('status', '=', 'pending')->get();
+        // get pending orders ordered by date, from the most recent to the oldest
+        $orders = Order::where('status', 'pending')->orderBy('created_at', 'desc')->get(); 
         return $orders;
     }
 
@@ -133,21 +135,38 @@ class DataLayer {
     }
 
     public static function getUserOrders() {
-        // get orders sorted by date, from most recent to least recent
-        return auth()->user()->orders()->orderBy('created_at', 'desc')->get();
+        // get user orders sorted by date, from the most recent to the oldest
+        $orders = Order::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        return $orders;
     }
 
-    public static function deleteOrder($id) {
-        $order = Order::find($id);
-        // for each product in the order, add it back to the inventory using the right size
+    private static function addOrderBackToStock($order) {
         foreach ($order->orderProducts as $op) {
             $product = $op->product;
             $size = $op->size;
             $product->{$size} += $op->quantity;
             $product->save();
         }
-        // delete the order
+    }
+
+    public static function deleteOrder($id) {
+        $order = Order::find($id);
+        DataLayer::addOrderBackToStock($order);
         $order->delete();
+    }
+
+    public static function deleteRefusedOrder($id) {
+        $order = Order::find($id);
+        $order->delete();
+    }
+
+    private static function removeCartProductsFromStock($cartProducts) {
+        foreach ($cartProducts as $cp) {
+            $product = $cp->product;
+            $size = $cp->size;
+            $product->{$size} -= $cp->quantity;
+            $product->save();
+        }
     }
 
     public static function postCreateOrder($data) {
@@ -169,12 +188,7 @@ class DataLayer {
             $orderProduct->shipping = $cartProduct->product->shipping;
             $orderProduct->save();
         }
-        foreach (auth()->user()->cartProducts as $cartProduct) {
-            // update product quantity (based on size (e.g. L, XL, etc.))
-            $product = Product::find($cartProduct->product_id);
-            $product->{$cartProduct->size} -= $cartProduct->quantity;
-            $product->save();
-        }
+        DataLayer::removeCartProductsFromStock(auth()->user()->cartProducts);
         auth()->user()->cartProducts()->delete();
     }
 

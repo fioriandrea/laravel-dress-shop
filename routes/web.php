@@ -180,6 +180,11 @@ Route::group(['middleware' => ['auth']], function() {
             'as' => 'delete_order'
         ]);
 
+        Route::post('/delete_refused_order/{id}', [
+            'uses' => 'OrderController@postDeleteRefusedOrder',
+            'as' => 'delete_refused_order'
+        ]);
+
         // Define a route to add a review
         Route::post('/add_review/{prodid}', [
             'uses' => 'ProductController@postAddReview',
