@@ -12,7 +12,7 @@ class ErrorController extends Controller
         if ($status == null) {
             $status = 500;
         }
-        return view('user_error_page', ['messages' => $request->messages, 'status' => $status]);
+        return response()->view('user_error_page', ['messages' => $request->messages, 'status' => $status])->setStatusCode($status);
     }
 
     public function getAdminError(Request $request)
@@ -21,6 +21,6 @@ class ErrorController extends Controller
         if ($status == null) {
             $status = 500;
         }
-        return view('admin_error_page', ['messages' => $request->messages, 'status' => $status]);
+        return response()->view('admin_error_page', ['messages' => $request->messages, 'status' => $status])->setStatusCode($status);
     }
 }
