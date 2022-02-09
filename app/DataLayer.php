@@ -155,11 +155,6 @@ class DataLayer {
         $order->delete();
     }
 
-    public static function deleteRefusedOrder($id) {
-        $order = Order::find($id);
-        $order->delete();
-    }
-
     private static function removeCartProductsFromStock($cartProducts) {
         foreach ($cartProducts as $cp) {
             $product = $cp->product;

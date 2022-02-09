@@ -23,10 +23,10 @@
                 @include('address_card_content', ['address' => $order->address])
                 @if(!auth()->user()->isAdmin())
                     <!--cancel order button-->
-                    @if($order->status == 'pending' || $order->status == 'refused')
-                        <form action="{{ route($order->status == 'pending' ? 'delete_order' : 'delete_refused_order', ['id' => $order->id]) }}" method="post">
+                    @if($order->status == 'pending')
+                        <form action="{{ route('delete_order', ['id' => $order->id]) }}" method="post">
                             @csrf
-                            <button class="btn btn-outline-danger" type="submit" data-remove-order="{{ $order->id }}">{{ $order->status == 'pending' ? 'Cancel Order' : 'Remove From List' }}</button>
+                            <button class="btn btn-outline-danger" type="submit" data-remove-order="{{ $order->id }}">Cancel Order</button>
                         </form>
                     @endif
                 @else

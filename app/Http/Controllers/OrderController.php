@@ -23,12 +23,6 @@ class OrderController extends Controller
         return response()->json(['success' => true, 'message' => 'Order deleted successfully']);
     }
 
-    public function postDeleteRefusedOrder($id)
-    {
-        DataLayer::deleteRefusedOrder($id);
-        return response()->json(['success' => true, 'message' => 'Refused order removed successfully']);
-    }
-
     public function getAdminOrders()
     {
         $orders = DataLayer::getPendingOrders();
