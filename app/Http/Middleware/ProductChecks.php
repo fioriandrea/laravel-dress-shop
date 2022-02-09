@@ -21,7 +21,7 @@ class ProductChecks
         if ($product == null) {
             return redirect()->route('user_error', ['messages' => ['Product not found'], 'status' => 404]);
         }
-        if ($product->status == 'unlisted') {
+        if ($product->unlisted == 1) {
             return redirect()->route('user_error', ['messages' => ['Product ' . $product->name . ' is unlisted'], 'status' => 404]);
         }
         return $next($request);

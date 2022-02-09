@@ -12,9 +12,6 @@ class ProductController extends Controller
 {
     private static function productsFilter($category = 'all', $keyword = '') {
         return function($product) use ($category, $keyword) {
-            if ($product->unlisted == 1) {
-                return false;
-            }
             $category = $category === null ? 'all' : $category;
             $keyword = $keyword === null ? '' : $keyword;
             if ($category != 'all' && $category != $product->category)
@@ -64,11 +61,36 @@ class ProductController extends Controller
 
     public function postEditProduct(Request $request, $id)
     {
+        $this->checkProductForm($request);
         DataLayer::deleteImageFiles($request->todelete_images);
         $request->new_images_names = DataLayer::saveImageFiles($request->new_images);
         // save the product
         DataLayer::editProduct($request, $id);
         return redirect()->route('product', ['id' => $id])->with('success', 'Product edited succesfully');
+    }
+
+    public function checkProductForm(Request $request)
+    {
+        // check that all the $request->new_images are valid images
+        if ($request->new_images != null) {
+            foreach ($request->new_images as $image) {
+                if (!DataLayer::isValidImage($image)) {
+                    return redirect()->route('admin_error', ['messages' => ['Invalid image while adding a product'], 'status' => 415]);
+                }
+            }
+        }
+
+        // if $request->category not in $this->categories
+        if (!in_array($request->category, $this->categories)) {
+            return redirect()->route('admin_error', ['messages' => ['Invalid category while adding a product'], 'status' => 400]);
+        }
+
+        // for each $this->sizes as $size; if $request->{$size} == null
+        foreach ($this->sizes as $size) {
+            if ($request->{$size} == null) {
+                return redirect()->route('admin_error', ['messages' => ['Invalid size while adding a product'], 'status' => 400]);
+            }
+        }
     }
 
     public function postAddProduct(Request $request)
@@ -77,12 +99,8 @@ class ProductController extends Controller
             // there is an error
             return redirect()->route('admin_error', ['messages' => ['Cannot delete images while adding a product'], 'status' => 400]);
         }
-        // check that all the $request->new_images are valid images
-        foreach ($request->new_images as $image) {
-            if (!DataLayer::isValidImage($image)) {
-                return redirect()->route('admin_error', ['messages' => ['Invalid image while adding a product'], 'status' => 415]);
-            }
-        }
+
+        $this->checkProductForm($request);
 
         $request->new_images_names = DataLayer::saveImageFiles($request->new_images);
         // save the product

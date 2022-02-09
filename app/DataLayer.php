@@ -245,7 +245,9 @@ class DataLayer {
 
     public static function getProducts($phpPredicate) {
         $products = Product::all();
-        $products = $products->filter($phpPredicate);
+        $products = $products->filter(function ($product) use ($phpPredicate) {
+            return $product->unlisted == 0 && $phpPredicate($product);
+        });
         return $products;
     }
 
@@ -290,7 +292,7 @@ class DataLayer {
 
     public static function getRelatedProducts($_product, $n = 7) {
         $products = DataLayer::getProducts(function ($product) use ($_product) {
-            return $product->category == $_product->category && $product->id != $_product->id && $product->cancelled == 0;
+            return $product->category == $_product->category && $product->id != $_product->id;
         });
         $products = $products->shuffle();
         return $products->take($n);
