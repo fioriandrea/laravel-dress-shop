@@ -96,7 +96,7 @@ class DataLayer {
 
     public static function unlistProduct($id) {
         $product = DataLayer::getProduct($id);
-        $product->status = 'unlisted';
+        $product->unlisted = 1;
         $product->save();
     }
 
@@ -244,7 +244,7 @@ class DataLayer {
 
     public static function getRelatedProducts($_product, $n = 7) {
         $products = DataLayer::getProducts(function ($product) use ($_product) {
-            return $product->category == $_product->category && $product->id != $_product->id && $product->status != 'unlisted';
+            return $product->category == $_product->category && $product->id != $_product->id && $product->cancelled == 0;
         });
         $products = $products->shuffle();
         return $products->take($n);

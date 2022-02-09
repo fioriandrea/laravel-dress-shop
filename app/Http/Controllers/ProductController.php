@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     private static function productsFilter($category = 'all', $keyword = '') {
         return function($product) use ($category, $keyword) {
-            if ($product->status == 'unlisted') {
+            if ($product->unlisted == 1) {
                 return false;
             }
             $category = $category === null ? 'all' : $category;
