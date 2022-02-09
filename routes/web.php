@@ -217,6 +217,11 @@ Route::group(['middleware' => ['auth']], function() {
             'as' => 'confirm_order'
         ]);
 
+        Route::post('/admin/refuse_order/{id}', [
+            'uses' => 'OrderController@postRefuseOrder',
+            'as' => 'refuse_order'
+        ]);
+
         Route::group(['middleware' => ['product_checks']], function() {
             // Define a route to get to the form to edit an existing product.
             Route::get('/product/edit/{id}', [

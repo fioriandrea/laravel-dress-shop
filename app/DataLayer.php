@@ -30,6 +30,13 @@ class DataLayer {
         $review->save();
     }
     
+
+    public static function refuseOrder($id) {
+        $order = Order::find($id);
+        $order->status = 'refused';
+        $order->save();
+    }
+
     public static function confirmOrder($id) {
         $order = Order::find($id);
         $order->status = 'confirmed';

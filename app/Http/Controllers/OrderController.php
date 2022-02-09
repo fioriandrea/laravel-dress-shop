@@ -40,4 +40,14 @@ class OrderController extends Controller
         DataLayer::confirmOrder($id);
         return response()->json(['success' => true, 'message' => 'Order confirmed successfully']);
     }
+
+    public function postRefuseOrder($id)
+    {
+        $order = Order::find($id);
+        if ($order == null) {
+            return redirect()->route('user_error', ['messages' => ['Order not found.'], 'status' => 404]);
+        }
+        DataLayer::refuseOrder($id);
+        return response()->json(['success' => true, 'message' => 'Order refused successfully']);
+    }
 }

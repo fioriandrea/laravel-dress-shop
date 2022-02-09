@@ -61,7 +61,7 @@
             <input type="hidden" name="product_id" value="{{ $product->id }}">
             <input type="hidden" name="size" id="size-form">
             @csrf
-            <button {{ auth()->user() != null && !auth()->user()->isAdmin() ? '' : 'hidden' }} id="add-to-cart" type="submit" class="disabled btn btn-outline-success w-100">Add to cart</button>
+            <button {{ (auth()->user() == null || !auth()->user()->isAdmin()) ? '' : 'hidden' }} id="add-to-cart" type="submit" class="disabled btn btn-outline-success w-100">Add to cart</button>
         </form>
     </div>
 

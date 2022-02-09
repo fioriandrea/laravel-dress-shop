@@ -9,7 +9,7 @@
         <hr>
 
         @foreach($orders as $order)
-        <div class="border p-3 my-3" data-card-order="{{ $order->id }}">
+        <div class="border p-3 my-3 {{ $order->status == 'refused' ? 'border-danger' : '' }} {{ $order->status == 'confirmed' ? 'border-success' : '' }} {{ $order->status == 'pending' ? 'border-warning' : '' }}" data-card-order="{{ $order->id }}">
             <div class="pb-3">
                 <h2 class="fw-bold">Order Number: {{ $order->id }}</span></h2>
                 <!-- format order created_at date -->
@@ -30,10 +30,16 @@
                         </form>
                     @endif
                 @else
-                    <form action="{{ route('confirm_order', ['id' => $order->id]) }}" method="post">
-                        @csrf
-                        <button class="btn btn-outline-success" type="submit" data-confirm-order="{{ $order->id }}">Confirm Order</button>
-                    </form>
+                    <div class="d-flex">
+                        <form action="{{ route('confirm_order', ['id' => $order->id]) }}" method="post" class="me-2">
+                            @csrf
+                            <button class="btn btn-outline-success" type="submit" data-confirm-order="{{ $order->id }}">Confirm Order</button>
+                        </form>
+                        <form action="{{ route('refuse_order', ['id' => $order->id]) }}" method="post">
+                            @csrf
+                            <button class="btn btn-outline-danger" type="submit" data-refuse-order="{{ $order->id }}">Refuse Order</button>
+                        </form>
+                    </div>
                 @endif
             </div>
             @foreach($order->orderProducts as $op)
@@ -45,6 +51,7 @@
                 @overwrite
                 @include('product_list_card', ['product' => $op->product, 'inslider' => false])
             @endforeach
+        </div>
         @endforeach
 </section>
 @endsection
@@ -53,5 +60,6 @@
 <script>
     createAjaxDelete("remove-order", "card-order")();
     createAjaxDelete("confirm-order", "card-order")();
+    createAjaxDelete("refuse-order", "card-order")();
 </script>
 @endsection
