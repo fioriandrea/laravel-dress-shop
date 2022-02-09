@@ -54,7 +54,7 @@ class PaymentController extends Controller
         }
 
         DataLayer::postRemovePaymentMethod($id);
-        return redirect('/profile')->with('success', 'Payment method removed successfully');
+        return response()->json(['success' => true, 'message' => 'Payment method removed successfully']);
     }
 
     public function getModifyPaymentMethod($id)

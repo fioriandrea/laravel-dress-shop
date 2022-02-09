@@ -17,13 +17,13 @@
     </a>
     <div class="row g-3 lead mt-3">
         @foreach($addresses as $address)
-        <div class="border p-3 col-lg-4">
+        <div class="border p-3 col-lg-4" data-card-address="{{ $address->id }}">
             @include('address_card_content', ['address' => $address])
             <div class="d-flex justify-content-between">
                 <!--remove address button-->
                 <form method="post" action="{{ route('remove_address', ['id' => $address->id]) }}">
                     @csrf
-                    <button type="submit" class="btn btn-outline-danger">
+                    <button type="submit" class="btn btn-outline-danger" data-remove-address="{{ $address->id }}">
                         Remove Address
                         <i class="bi bi-trash"></i>
                     </button>
@@ -48,12 +48,12 @@
     </a>
     <div class="row g-3 lead mt-3">
         @foreach($payments as $payment)
-        <div class="border p-3 col-lg-4">
+        <div class="border p-3 col-lg-4" data-card-payment="{{ $payment->id }}">
             @include('payment_card_content', ['payment' => $payment])
             <div class="d-flex justify-content-between">
                 <form method="post" action="{{ route('remove_payment_method', ['id' => $payment->id]) }}">
                     @csrf
-                    <button type="submit" class="btn btn-outline-danger">
+                    <button data-remove-payment="{{ $payment->id }}" type="submit" class="btn btn-outline-danger">
                         Remove Payment
                         <i class="bi bi-trash"></i>
                     </button>
@@ -67,4 +67,11 @@
         @endforeach
     </div>
 </div>
+@endsection
+
+@section('after')
+<script>
+    createAjaxDelete("remove-payment", "card-payment")();
+    createAjaxDelete("remove-address", "card-address")();
+</script>
 @endsection

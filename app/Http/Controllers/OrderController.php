@@ -20,7 +20,7 @@ class OrderController extends Controller
     public function postDeleteOrder($id)
     {
         DataLayer::deleteOrder($id);
-        return redirect()->route('orders')->with('success', 'Order deleted successfully');
+        return response()->json(['success' => true, 'message' => 'Order deleted successfully']);
     }
 
     public function getAdminOrders()

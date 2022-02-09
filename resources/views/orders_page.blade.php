@@ -9,7 +9,7 @@
         <hr>
 
         @foreach($orders as $order)
-        <div class="border p-3 my-3">
+        <div class="border p-3 my-3" data-card-order="{{ $order->id }}">
             <div class="pb-3">
                 <h2 class="fw-bold">Order Number: {{ $order->id }}</span></h2>
                 <!-- format order created_at date -->
@@ -26,13 +26,13 @@
                     @if($order->status == 'pending')
                         <form action="{{ route('delete_order', ['id' => $order->id]) }}" method="post">
                             @csrf
-                            <button class="btn btn-outline-danger" type="submit">Cancel Order</button>
+                            <button class="btn btn-outline-danger" type="submit" data-remove-order="{{ $order->id }}">Cancel Order</button>
                         </form>
                     @endif
                 @else
                     <form action="{{ route('confirm_order', ['id' => $order->id]) }}" method="post">
                         @csrf
-                        <button class="btn btn-outline-success" type="submit">Confirm Order</button>
+                        <button class="btn btn-outline-success" type="submit" data-confirm-order="{{ $order->id }}">Confirm Order</button>
                     </form>
                 @endif
             </div>
@@ -47,4 +47,11 @@
             @endforeach
         @endforeach
 </section>
+@endsection
+
+@section('after')
+<script>
+    createAjaxDelete("remove-order", "card-order")();
+    createAjaxDelete("confirm-order", "card-order")();
+</script>
 @endsection

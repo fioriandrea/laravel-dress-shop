@@ -58,7 +58,7 @@ class ProductController extends Controller
     {
         $product = DataLayer::getProduct($id);
         DataLayer::unlistProduct($id);
-        return redirect()->back()->with('success', 'Product ' . $product->name . ' deleted succesfully');
+        return response()->json(['success' => true, 'message' => 'Product ' . $product->name . ' deleted successfully']);
     }
 
     public function postEditProduct(Request $request, $id)

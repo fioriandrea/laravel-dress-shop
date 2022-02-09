@@ -71,6 +71,7 @@
                 </div>
             </div>
         </nav>
+        <div id="alert-ajax">
         @if(session('error'))
             <div class="alert alert-danger text-center msg">
                 <strong>{{ session('error') }}</strong>
@@ -80,6 +81,7 @@
                 <strong>{{ session('success') }}</strong>
             </div>
         @endif
+        </div>
 
         @yield('content')
 

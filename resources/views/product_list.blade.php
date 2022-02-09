@@ -26,7 +26,7 @@
                 </form>
                 <form method="post" action="{{ route('post_unlist_product', $product->id) }}">
                     @csrf
-                    <button class="me-2 btn btn-outline-danger">Unlist</button>
+                    <button data-remove-product="{{ $product->id }}" class="me-2 btn btn-outline-danger">Unlist</button>
                 </form>
             </div>
         @endif
@@ -35,3 +35,13 @@
     @include('product_list_card', ['product' => $product])
 @endforeach
 @endsection
+
+@auth
+@if(auth()->user()->isAdmin())
+@section('after')
+<script>
+    createAjaxDelete("remove-product", "card-product")();
+</script>
+@endsection
+@endif
+@endauth

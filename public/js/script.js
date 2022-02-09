@@ -68,3 +68,66 @@ const formatCardNumber = (value, delim = ' ') => {
     }
     return res.join('');
 };
+
+const tag = (tagname, props = {}, children = []) => {
+    const element = document.createElement(tagname);
+    for (let prop in props) {
+        if (!props.hasOwnProperty(prop))
+            continue;
+        const val = props[prop];
+        if (prop.startsWith('on') && prop in window) {
+            element.addEventListener(prop.substr(2), val);
+            continue;
+        }
+        element.setAttribute(prop, val.toString())
+    }   
+    children.forEach((child) => {
+        element.appendChild(child.nodeType === undefined ? 
+            document.createTextNode(child.toString()) :
+            child);
+    }); 
+    return element;
+};
+
+const createAlertAjax = (message, type = "success") => {
+    return tag("div", {class: `alert alert-${type} text-center msg`}, [
+        tag("strong", {}, [message]),
+    ]);
+};
+
+const kebabToCamel = (str) => {
+    return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+};
+
+const createAjaxDelete = (buttonDataStr, cardDataStr) => {
+    return () => {
+        const alertAjax = document.querySelector("#alert-ajax");
+        const buttons = document.querySelectorAll(`[data-${buttonDataStr}]`);
+        buttons.forEach(button => {
+            button.addEventListener("click", (event) => {
+                event.preventDefault();
+                alertAjax.innerHTML = "";
+                const form = button.parentElement;
+                const id = button.dataset[kebabToCamel(buttonDataStr)];
+                const card = document.querySelector(`[data-${cardDataStr}="${id}"]`);
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: "POST",
+                    body: formData,
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.json();
+                }).then(json => {
+                    alertAjax.appendChild(createAlertAjax(json.message, json.success ? "success" : "danger"));
+                    if (json.success) {
+                        card.remove();
+                    }
+                }).catch(error => {
+                    alertAjax.appendChild(createAlertAjax(error));
+                });
+            });
+        });
+    };
+};
