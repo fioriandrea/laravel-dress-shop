@@ -8,11 +8,19 @@ class ErrorController extends Controller
 {
     public function getUserError(Request $request)
     {
-        return view('user_error_page', ['messages' => $request->messages]);
+        $status = $request->status;
+        if ($status == null) {
+            $status = 500;
+        }
+        return view('user_error_page', ['messages' => $request->messages, 'status' => $status]);
     }
 
     public function getAdminError(Request $request)
     {
-        return view('admin_error_page', ['messages' => $request->messages]);
+        $status = $request->status;
+        if ($status == null) {
+            $status = 500;
+        }
+        return view('admin_error_page', ['messages' => $request->messages, 'status' => $status]);
     }
 }

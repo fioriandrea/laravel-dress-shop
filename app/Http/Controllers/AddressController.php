@@ -24,7 +24,7 @@ class AddressController extends Controller
     {
         if (!$this->checkExists($id)) {
             // redirect to error page
-            return redirect()->route('user_error', ['messages' => ['Address does not exist']]);
+            return redirect()->route('user_error', ['messages' => ['Address does not exist'], 'status' => 404]);
         }
         // find the address with the given id
         $address = Address::find($id);
@@ -38,7 +38,7 @@ class AddressController extends Controller
     public function postAddAddress(Request $request)
     {
         DataLayer::postNewAddress($request);
-        return redirect('/profile');
+        return redirect('/profile')->with('success', 'Address added successfully');
     }
 
     public function checkExists($id) {
@@ -46,7 +46,7 @@ class AddressController extends Controller
         if ($address == null) {
             return false;
         }
-        return true;
+        return $address->deleted == 0;
     }
 
     public function checkOwns($id) {
@@ -63,22 +63,22 @@ class AddressController extends Controller
     public function postRemoveAddress($id)
     {
         if (!$this->checkExists($id)) {
-            return redirect()->route('user_error', ['messages' => ['Address does not exist']]);
+            return redirect()->route('user_error', ['messages' => ['Address does not exist'], 'status' => 404]);
         }
         if (!$this->checkOwns($id)) {
-            return redirect()->route('user_error', ['messages' => ['You do not own this address']]);
+            return redirect()->route('user_error', ['messages' => ['You do not own this address'], 'status' => 403]);
         }
         DataLayer::postRemoveAddress($id);
-        return redirect('/profile');
+        return redirect('/profile')->with('success', 'Address removed successfully');
     }
 
     public function postModifyAddress(Request $request, $id)
     {
         if (!$this->checkExists($id)) {
-            return redirect()->route('user_error', ['messages' => ['Address does not exist']]);
+            return redirect()->route('user_error', ['messages' => ['Address does not exist'], 'status' => 404]);
         }
         if (!$this->checkOwns($id)) {
-            return redirect()->route('user_error', ['messages' => ['You do not own this address']]);
+            return redirect()->route('user_error', ['messages' => ['You do not own this address'], 'status' => 403]);
         }
         DataLayer::postModifyAddress($id, $request);
         return redirect('/profile');

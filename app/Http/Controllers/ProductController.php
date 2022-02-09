@@ -58,7 +58,7 @@ class ProductController extends Controller
     {
         $product = DataLayer::getProduct($id);
         DataLayer::unlistProduct($id);
-        return redirect()->route('product_list');
+        return redirect()->route('product_list')->with('success', 'Product ' . $product->name . ' deleted succesfully');
     }
 
     public function postEditProduct(Request $request, $id)
@@ -67,26 +67,26 @@ class ProductController extends Controller
         $request->new_images_names = DataLayer::saveImageFiles($request->new_images);
         // save the product
         DataLayer::editProduct($request, $id);
-        return redirect()->route('product', ['id' => $id]);
+        return redirect()->route('product', ['id' => $id])->with('success', 'Product edited succesfully');
     }
 
     public function postAddProduct(Request $request)
     {
         if ($request->todelete_images != null) {
             // there is an error
-            return redirect()->route('admin_error', ['messages' => ['Cannot delete images while adding a product']]);
+            return redirect()->route('admin_error', ['messages' => ['Cannot delete images while adding a product'], 'status' => 400]);
         }
         // check that all the $request->new_images are valid images
         foreach ($request->new_images as $image) {
             if (!DataLayer::isValidImage($image)) {
-                return redirect()->route('admin_error', ['messages' => ['Invalid image while adding a product']]);
+                return redirect()->route('admin_error', ['messages' => ['Invalid image while adding a product'], 'status' => 415]);
             }
         }
 
         $request->new_images_names = DataLayer::saveImageFiles($request->new_images);
         // save the product
         DataLayer::newProduct($request);
-        return redirect()->route('product_list');
+        return redirect()->route('product_list')->with('success', 'Product added succesfully');
     }
 
     public function getAddProduct()

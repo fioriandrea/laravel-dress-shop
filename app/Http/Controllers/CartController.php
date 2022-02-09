@@ -25,7 +25,7 @@ class CartController extends Controller
     {
         if ($request->quantity <= 0) {
             // redirect to error page
-            return redirect()->route('user_error', ['message' => 'Quantity must be greater than 0']);
+            return redirect()->route('user_error', ['messages' => ['Quantity must be greater than 0'], 'status' => 400]);
         }
         $cartProduct = DataLayer::getCartProduct(auth()->user()->id, $request->product_id, $request->size);
         if ($cartProduct != null) {
@@ -42,7 +42,7 @@ class CartController extends Controller
                 return redirect()->route('user_error', ['messages' => [
                     'Not enough stock for product: ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . ')',
                     $submessage,
-                ]]);
+                ], 'status' => 400]);
             }
         }
         DataLayer::addToCart($request);
@@ -52,6 +52,6 @@ class CartController extends Controller
     public function removeFromCart(Request $request)
     {
         DataLayer::removeFromCart($request);
-        return redirect('/cart');
+        return redirect('/cart')->with('success', 'Item removed from cart');
     }
 }

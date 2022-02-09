@@ -20,7 +20,7 @@ class OrderController extends Controller
     public function postDeleteOrder($id)
     {
         DataLayer::deleteOrder($id);
-        return redirect()->route('orders');
+        return redirect()->route('orders')->with('success', 'Order deleted successfully');
     }
 
     public function getAdminOrders()
@@ -35,9 +35,9 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         if ($order == null) {
-            return redirect()->route('user_error', ['messages' => ['Order not found.']]);
+            return redirect()->route('user_error', ['messages' => ['Order not found.'], 'status' => 404]);
         }
         DataLayer::confirmOrder($id);
-        return redirect()->route('admin_orders');
+        return redirect()->route('admin_orders')->with('success', 'Order confirmed successfully');
     }
 }

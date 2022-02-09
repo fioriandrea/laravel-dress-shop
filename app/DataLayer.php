@@ -4,8 +4,8 @@ namespace dress_shop;
 use Illuminate\Support\Facades\File; 
 
 class DataLayer {
-
-    public static function confirmOrder($id) {
+    
+      public static function confirmOrder($id) {
         $order = Order::find($id);
         $order->status = 'confirmed';
         $order->save();
@@ -153,7 +153,8 @@ class DataLayer {
 
     public static function postRemovePaymentMethod($id) {
         $paymentMethod = PaymentMethod::find($id);
-        $paymentMethod->delete();
+        $paymentMethod->cancelled = 1;
+        $paymentMethod->save();
     }
 
     public static function postNewPaymentMethod($data) {
@@ -177,7 +178,8 @@ class DataLayer {
 
     public static function postRemoveAddress($id) {
         $address = Address::find($id);
-        $address->delete();
+        $address->cancelled = 1;
+        $address->save();
     }
 
     public static function postModifyAddress($id, $data) {

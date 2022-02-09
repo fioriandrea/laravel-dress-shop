@@ -42,7 +42,7 @@
                     <p class="small m-0" data-shipping="{{ $op->shipping }}"></p>
                     <p class="small m-0">Size: <span class="fw-bold">{{ $op->size }}</span></p>
                     <p class="small m-0">Quantity: <span class="fw-bold">{{ $op->quantity }}</span></p>
-                @endsection
+                @overwrite
                 @include('product_list_card', ['product' => $op->product, 'inslider' => false])
             @endforeach
         @endforeach

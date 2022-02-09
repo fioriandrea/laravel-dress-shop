@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="h-100 d-flex flex-column  justify-content-center align-items-center">
-            <h1 class="card-title">Error</h1>
+            <h1 class="card-title">Error ({{ $status }})</h1>
             @foreach($messages as $message)
                 <h2 class="card-subtitle {{ $loop->last ? 'mb-4' : '' }} m-2">{{ $message }}</h2>
             @endforeach

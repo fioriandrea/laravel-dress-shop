@@ -14,10 +14,4 @@ class PaymentMethod extends Model
     {
         return $this->belongsTo('dress_shop\User');
     }
-
-    // An order has a payment method
-    public function order()
-    {
-        return $this->belongsTo('dress_shop\Order');
-    }
 }

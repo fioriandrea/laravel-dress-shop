@@ -17,7 +17,7 @@
                     @csrf
                     <button class="btn btn-outline-danger btn-sm" type="submit">Remove</button>
                 </form>
-            @endsection
+            @overwrite
             @include('product_list_card', ['product' => $cp->product, 'inslider' => false])
         @endforeach
     </div>

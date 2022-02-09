@@ -16,7 +16,7 @@ class NonAdminChecks
     public function handle($request, Closure $next)
     {
         if (auth()->user()->isAdmin()) {
-            return redirect()->route('admin_error', ['messages' => ['Admins cannot perform such an action.']]);
+            return redirect()->route('admin_error', ['messages' => ['Admins cannot perform such an action.'], 'status' => 403]);
         }
         return $next($request);
     }

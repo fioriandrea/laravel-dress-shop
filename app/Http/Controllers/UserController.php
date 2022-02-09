@@ -11,8 +11,8 @@ class UserController extends Controller
     {
         return view('user_page', [
             'user' => auth()->user(),
-            'addresses' => auth()->user()->addresses,
-            'payments' => auth()->user()->paymentMethods,
+            'addresses' => auth()->user()->validAddresses(),
+            'payments' => auth()->user()->validPaymentMethods(),
         ]);
     }
 }

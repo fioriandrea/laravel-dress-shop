@@ -71,6 +71,15 @@
                 </div>
             </div>
         </nav>
+        @if(session('error'))
+            <div class="alert alert-danger text-center msg">
+                <strong>{{ session('error') }}</strong>
+            </div>
+        @elseif(session('success'))
+            <div class="alert alert-success text-center msg" id="success">
+                <strong>{{ session('success') }}</strong>
+            </div>
+        @endif
 
         @yield('content')
 

@@ -49,6 +49,18 @@ class User extends Authenticatable
         return $this->hasMany('dress_shop\Address');
     }
 
+    public function validAddresses() {
+        return $this->addresses->filter(function($address) {
+            return $address->cancelled == 0;
+        });
+    }
+
+    public function validPaymentMethods() {
+        return $this->paymentMethods->filter(function($paymentMethod) {
+            return $paymentMethod->cancelled == 0;
+        });
+    }
+
     // A user has many payment methods
     public function paymentMethods()
     {
