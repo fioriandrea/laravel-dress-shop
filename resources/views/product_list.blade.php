@@ -40,11 +40,7 @@
 
 @section('after')
 <script>
-    @auth
-    @if(auth()->user()->isAdmin())
     createAjaxDelete("remove-product", "card-product")();
-    @endif
-    @endauth
     paginate(document.getElementById("products"));
 </script>
 @endsection

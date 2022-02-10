@@ -1,4 +1,6 @@
 const makeReviewStars = (stars, hidden) => {
+    if (!stars || !hidden)
+        return;
     const updateStars = (i) => {
         hidden.value = i + 1;
         for (let j = 0; j <= i; j++) {
@@ -166,12 +168,17 @@ const paginate = (parent, itemsPerPage = 5, maxButtons = 3, initialPage = 0) => 
             }
         });
         list.appendChild(prev);
-        for (let i = 0; i < pages; i++) {
+        const startButton = Math.max(0, currentPage - Math.floor(maxButtons / 2));
+        const endButton = Math.min(currentPage + Math.floor(maxButtons / 2), pages - 1);
+        for (let i = startButton; i <= endButton; i++) {
             const li = createButton(i + 1);
             li.addEventListener("click", (event) => {
                 event.preventDefault();
                 formatPage(i);
             });
+            if (i === currentPage) {
+                li.classList.add("active");
+            }
             list.appendChild(li);
         }
         const succ = createButton(">");
@@ -183,21 +190,6 @@ const paginate = (parent, itemsPerPage = 5, maxButtons = 3, initialPage = 0) => 
             }
         });
         list.appendChild(succ);
-        const buttons = Array.from(list.children);
-        buttons.pop();
-        buttons.shift();
-        buttons.forEach((li, i) => {
-            if (i === currentPage) {
-                li.classList.add("active");
-            } else {
-                li.classList.remove("active");
-            }
-        });
-        const startButton = Math.max(0, currentPage - Math.floor(maxButtons / 2));
-        const endButton = Math.min(currentPage + Math.floor(maxButtons / 2), buttons.length - 1);
-        for (let i = 0; i < buttons.length; i++) {
-            buttons[i].hidden = !(i >= startButton && i <= endButton);
-        }
         return list;
     };
     formatPage(initialPage);
