@@ -85,6 +85,8 @@
 
         @yield('content')
 
+        <nav id="pagination-nav" class="d-flex justify-content-center align-items-center mt-5"></nav>
+
         <footer class="bg-dark text-light text-center p-3 d-flex mt-5">
             <p class="lead m-auto">Copyright &copy; 2021 Dress Shop</p>
             <a href="#"><i class="bi bi-arrow-up-circle h1 d-block"></i></a>

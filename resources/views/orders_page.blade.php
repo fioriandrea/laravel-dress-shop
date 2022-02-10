@@ -8,6 +8,7 @@
 
         <hr>
 
+        <div id="orders">
         @foreach($orders as $order)
         <div class="border p-3 my-3 {{ $order->status == 'refused' ? 'border-danger' : '' }} {{ $order->status == 'confirmed' ? 'border-success' : '' }} {{ $order->status == 'pending' ? 'border-warning' : '' }}" data-card-order="{{ $order->id }}">
             <div class="pb-3">
@@ -53,6 +54,7 @@
             @endforeach
         </div>
         @endforeach
+        </div>
 </section>
 @endsection
 
@@ -61,5 +63,8 @@
     createAjaxDelete("remove-order", "card-order")();
     createAjaxDelete("confirm-order", "card-order")();
     createAjaxDelete("refuse-order", "card-order")();
+
+
+    paginate(document.getElementById("orders"), 3);
 </script>
 @endsection

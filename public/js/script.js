@@ -128,3 +128,82 @@ const createAjaxDelete = (buttonDataStr, cardDataStr) => {
         });
     };
 };
+
+const paginate = (parent, itemsPerPage = 5, maxButtons = 3) => {
+    const items = Array.from(parent.children);
+    const paginationNav = document.querySelector("#pagination-nav");
+    if (!paginationNav) {
+        throw new Error("No pagination nav found");
+    }
+    paginationNav.innerHTML = "";
+    if (items.length <= itemsPerPage) {
+        return;
+    }
+    const buttons = [];
+    let currentPage = 0;
+    const formatPage = (page) => {
+        parent.innerHTML = "";
+        const startItem = page * itemsPerPage;
+        const endItem = Math.min(startItem + itemsPerPage, items.length);
+        for (let i = startItem; i < endItem; i++) {
+            parent.appendChild(items[i]);
+        }
+        buttons.forEach((button) => {
+            if (button !== buttons[page]) {
+                button.classList.remove("active");
+            } else {
+                button.classList.add("active");
+            }
+        });
+        const startButton = Math.max(0, page - Math.floor(maxButtons / 2));
+        const endButton = Math.min(page + Math.floor(maxButtons / 2), buttons.length - 1);
+        for (let i = 0; i < buttons.length; i++) {
+            if (i >= startButton && i <= endButton) {
+                buttons[i].style.display = "inline-block";
+            } else {
+                buttons[i].style.display = "none";
+            }
+        }
+        currentPage = page;
+    };
+    const createButton = (text) => {
+        return tag("li", {class: "page-item"}, [
+            tag("button", {class: "page-link"}, [text]),
+        ]);
+    };
+    const pages = Math.ceil(items.length / itemsPerPage);
+    const paginationList = ((pages) => {
+        const list = tag("ul", {class: "pagination"});
+        const prev = createButton("<");
+        prev.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (currentPage > 0) {
+                currentPage--;
+                formatPage(currentPage);
+            }
+        });
+        list.appendChild(prev);
+        for (let i = 0; i < pages; i++) {
+            const li = createButton(i + 1);
+            li.addEventListener("click", (event) => {
+                event.preventDefault();
+                formatPage(i);
+            });
+            list.appendChild(li);
+            buttons.push(li);
+        }
+        const succ = createButton(">");
+        succ.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (currentPage < pages - 1) {
+                currentPage++;
+                formatPage(currentPage);
+            }
+        });
+        list.appendChild(succ);
+        return list;
+    })(pages);
+    formatPage(0);
+    paginationNav.innerHTML = "";
+    paginationNav.appendChild(paginationList);
+};

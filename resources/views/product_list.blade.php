@@ -12,6 +12,7 @@
 </a> 
 @endif
 @endauth
+<div id="products">
 @foreach($products as $product)
     @section('product-li-content')
         <p class="h1">EUR {{ $product->price }}</p>
@@ -34,6 +35,7 @@
     @overwrite
     @include('product_list_card', ['product' => $product])
 @endforeach
+</div>
 @endsection
 
 @auth
@@ -41,6 +43,7 @@
 @section('after')
 <script>
     createAjaxDelete("remove-product", "card-product")();
+    paginate(document.getElementById("products"));
 </script>
 @endsection
 @endif
