@@ -200,4 +200,23 @@ const paginate = (parent, itemsPerPage = 5, maxButtons = 3, initialPage = 0) => 
     obs.observe(parent, {
         childList: true,
     });
+
+    const res = {
+        get itemsPerPage() {
+            return itemsPerPage;
+        },
+        set itemsPerPage(ipp) {
+            itemsPerPage = Math.max(0, ipp);
+            formatPage(parent.dataset.currentPage);
+        },
+        get maxButtons() {
+            return maxButtons;
+        },
+        set maxButtons(mbs) {
+            maxButtons = Math.max(0, mbs);
+            formatPage(parent.dataset.currentPage);
+        },
+    };
+
+    return res
 };
