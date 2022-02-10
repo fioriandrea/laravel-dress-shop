@@ -64,12 +64,17 @@ class CheckoutController extends Controller
             'payment_method_id' => 'required',
         ]);
         $paymentMethod = PaymentMethod::find($request->payment_method_id);
+        if ($paymentMethod == null) {
+            return redirect()->route('user_error', ['messages' => ['Payment method not found'], 'status' => 404]);
+        }
         if (!$this->externPaymentCheck($paymentMethod->cc_number)) {
             $formattedNumber = substr($paymentMethod->cc_number, 0, 4) . ' ' . substr($paymentMethod->cc_number, 4, 4) . ' ' . substr($paymentMethod->cc_number, 8, 4) . ' ' . substr($paymentMethod->cc_number, 12, 4);
             return redirect()->route('user_error', ['messages' => [
                 'Payment method refused',
-                'Card: ' . $formattedNumber
-            ]]);
+                'Card: ' . $formattedNumber,
+                'Owner: ' . $paymentMethod->owner_first_name . ' ' . $paymentMethod->owner_second_name,
+                'Expiration Date: ' . $paymentMethod->expiration_date,
+            ], 'status' => 400]);
         } 
         DataLayer::postCreateOrder($request);
         return redirect()->route('index')->with('success', 'Order placed successfully');

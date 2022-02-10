@@ -69,7 +69,7 @@ class AddressController extends Controller
             return redirect()->route('user_error', ['messages' => ['You do not own this address'], 'status' => 403]);
         }
         DataLayer::postRemoveAddress($id);
-        return redirect('/profile')->with('success', 'Address removed successfully');
+        return response()->json(['success' => true, 'message' => 'Address removed successfully']);
     }
 
     public function postModifyAddress(Request $request, $id)
