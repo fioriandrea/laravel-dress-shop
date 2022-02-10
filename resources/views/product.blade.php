@@ -83,9 +83,8 @@
 </section>
 
 <section class="my-5">
-    @if(count($product->reviews) != 0)
     <h1>Reviews Section</h1>
-    @endif
+    @include('pagination_select')
     @auth
     @if(!auth()->user()->isAdmin())
     <form method="post" action="{{ auth()->user()->hasReviewed($product->id) ? route('update_review', ['id' => $product->id]) : route('add_review', ['id' => $product->id]) }}">
@@ -174,6 +173,10 @@
 
     makeReviewStars(document.querySelector("[data-reviewstars]"), document.querySelector("#stars-hidden"));
 
-    paginate(document.getElementById("comments"));
+    const sizeSelect = document.querySelector("#pagination-select");
+    const paginator = paginate(document.getElementById("comments"), +sizeSelect.value);
+    sizeSelect.addEventListener("change", (event) => {
+        paginator.itemsPerPage = +event.target.value;
+    });
 </script>
 @endsection

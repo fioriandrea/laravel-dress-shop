@@ -13,9 +13,7 @@
 </a> 
 @endif
 @endauth
-@if(count($products) > 0)
 @include('pagination_select')
-@endif
 </div>
 <div id="products">
 @foreach($products as $product)
@@ -47,8 +45,8 @@
 <script>
     createAjaxDelete("remove-product", "card-product")();
     const sizeSelect = document.querySelector("#pagination-select");
-    const paginator = paginate(document.getElementById("products"), +sizeSelect?.value);
-    sizeSelect?.addEventListener("change", (event) => {
+    const paginator = paginate(document.getElementById("products"), +sizeSelect.value);
+    sizeSelect.addEventListener("change", (event) => {
         paginator.itemsPerPage = +event.target.value;
     });
 </script>

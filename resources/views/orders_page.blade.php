@@ -8,9 +8,7 @@
 
         <hr>
 
-        @if(count($orders) > 0)
         @include('pagination_select')
-        @endif
 
         <div id="orders">
         @foreach($orders as $order)
@@ -69,8 +67,8 @@
     createAjaxDelete("refuse-order", "card-order")();
 
     const sizeSelect = document.querySelector("#pagination-select");
-    const paginator = paginate(document.getElementById("orders"), +sizeSelect?.value);
-    sizeSelect?.addEventListener("change", (event) => {
+    const paginator = paginate(document.getElementById("orders"), +sizeSelect.value);
+    sizeSelect.addEventListener("change", (event) => {
         paginator.itemsPerPage = +event.target.value;
     });
 </script>
