@@ -135,36 +135,20 @@ const paginate = (parent, itemsPerPage = 5, maxButtons = 3, initialPage = 0) => 
         throw new Error("No pagination nav found");
     }
     function formatPage(page) {
+        paginationNav.innerHTML = "";
         const items = Array.from(parent.children);
-        if (items.length <= itemsPerPage) {
-            return;
-        }
         const pages = Math.ceil(items.length / itemsPerPage);
         page = Math.max(0, Math.min(page, pages - 1));
-        paginationNav.dataset.currentPage = page;
+        parent.dataset.currentPage = page;
         const startItem = page * itemsPerPage;
         const endItem = Math.min(startItem + itemsPerPage, items.length);
         items.forEach((child, i) => {
             child.hidden = !(i >= startItem && i < endItem);
         });
-        const paginationList = createPaginationList(pages, page);
-        const buttons = Array.from(paginationList.children);
-        buttons.pop();
-        buttons.shift();
-        buttons.forEach((li, i) => {
-            if (i === page) {
-                li.classList.add("active");
-            } else {
-                li.classList.remove("active");
-            }
-        });
-        const startButton = Math.max(0, page - Math.floor(maxButtons / 2));
-        const endButton = Math.min(page + Math.floor(maxButtons / 2), buttons.length - 1);
-        for (let i = 0; i < buttons.length; i++) {
-            buttons[i].hidden = !(i >= startButton && i <= endButton);
+        if (items.length > itemsPerPage) {
+            const paginationList = createPaginationList(pages, page);
+            paginationNav.appendChild(paginationList);
         }
-        paginationNav.innerHTML = "";
-        paginationNav.appendChild(paginationList);
     };
     function createPaginationList(pages, currentPage) {
         const createButton = (text) => {
@@ -199,12 +183,27 @@ const paginate = (parent, itemsPerPage = 5, maxButtons = 3, initialPage = 0) => 
             }
         });
         list.appendChild(succ);
+        const buttons = Array.from(list.children);
+        buttons.pop();
+        buttons.shift();
+        buttons.forEach((li, i) => {
+            if (i === currentPage) {
+                li.classList.add("active");
+            } else {
+                li.classList.remove("active");
+            }
+        });
+        const startButton = Math.max(0, currentPage - Math.floor(maxButtons / 2));
+        const endButton = Math.min(currentPage + Math.floor(maxButtons / 2), buttons.length - 1);
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].hidden = !(i >= startButton && i <= endButton);
+        }
         return list;
     };
     formatPage(initialPage);
 
     const obs = new MutationObserver(() => {
-        formatPage(paginationNav.dataset.currentPage || 0);
+        formatPage(parent.dataset.currentPage || 0);
     });
     obs.observe(parent, {
         childList: true,
