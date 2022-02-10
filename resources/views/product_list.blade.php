@@ -38,13 +38,13 @@
 </div>
 @endsection
 
-@auth
-@if(auth()->user()->isAdmin())
 @section('after')
 <script>
+    @auth
+    @if(auth()->user()->isAdmin())
     createAjaxDelete("remove-product", "card-product")();
+    @endif
+    @endauth
     paginate(document.getElementById("products"));
 </script>
 @endsection
-@endif
-@endauth

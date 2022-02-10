@@ -129,51 +129,50 @@ const createAjaxDelete = (buttonDataStr, cardDataStr) => {
     };
 };
 
-const paginate = (parent, itemsPerPage = 5, maxButtons = 3) => {
-    const items = Array.from(parent.children);
+const paginate = (parent, itemsPerPage = 5, maxButtons = 3, initialPage = 0) => {
     const paginationNav = document.querySelector("#pagination-nav");
     if (!paginationNav) {
         throw new Error("No pagination nav found");
     }
-    paginationNav.innerHTML = "";
-    if (items.length <= itemsPerPage) {
-        return;
-    }
-    const buttons = [];
-    let currentPage = 0;
-    const formatPage = (page) => {
-        parent.innerHTML = "";
+    function formatPage(page) {
+        const items = Array.from(parent.children);
+        if (items.length <= itemsPerPage) {
+            return;
+        }
+        const pages = Math.ceil(items.length / itemsPerPage);
+        page = Math.max(0, Math.min(page, pages - 1));
+        paginationNav.dataset.currentPage = page;
         const startItem = page * itemsPerPage;
         const endItem = Math.min(startItem + itemsPerPage, items.length);
-        for (let i = startItem; i < endItem; i++) {
-            parent.appendChild(items[i]);
-        }
-        buttons.forEach((button) => {
-            if (button !== buttons[page]) {
-                button.classList.remove("active");
+        items.forEach((child, i) => {
+            child.hidden = !(i >= startItem && i < endItem);
+        });
+        const paginationList = createPaginationList(pages, page);
+        const buttons = Array.from(paginationList.children);
+        buttons.pop();
+        buttons.shift();
+        buttons.forEach((li, i) => {
+            if (i === page) {
+                li.classList.add("active");
             } else {
-                button.classList.add("active");
+                li.classList.remove("active");
             }
         });
         const startButton = Math.max(0, page - Math.floor(maxButtons / 2));
         const endButton = Math.min(page + Math.floor(maxButtons / 2), buttons.length - 1);
         for (let i = 0; i < buttons.length; i++) {
-            if (i >= startButton && i <= endButton) {
-                buttons[i].style.display = "inline-block";
-            } else {
-                buttons[i].style.display = "none";
-            }
+            buttons[i].hidden = !(i >= startButton && i <= endButton);
         }
-        currentPage = page;
+        paginationNav.innerHTML = "";
+        paginationNav.appendChild(paginationList);
     };
-    const createButton = (text) => {
-        return tag("li", {class: "page-item"}, [
-            tag("button", {class: "page-link"}, [text]),
-        ]);
-    };
-    const pages = Math.ceil(items.length / itemsPerPage);
-    const paginationList = ((pages) => {
-        const list = tag("ul", {class: "pagination"});
+    function createPaginationList(pages, currentPage) {
+        const createButton = (text) => {
+            return tag("li", { class: "page-item" }, [
+                tag("button", { class: "page-link" }, [text]),
+            ]);
+        };
+        const list = tag("ul", { class: "pagination" });
         const prev = createButton("<");
         prev.addEventListener("click", (event) => {
             event.preventDefault();
@@ -190,7 +189,6 @@ const paginate = (parent, itemsPerPage = 5, maxButtons = 3) => {
                 formatPage(i);
             });
             list.appendChild(li);
-            buttons.push(li);
         }
         const succ = createButton(">");
         succ.addEventListener("click", (event) => {
@@ -202,8 +200,13 @@ const paginate = (parent, itemsPerPage = 5, maxButtons = 3) => {
         });
         list.appendChild(succ);
         return list;
-    })(pages);
-    formatPage(0);
-    paginationNav.innerHTML = "";
-    paginationNav.appendChild(paginationList);
+    };
+    formatPage(initialPage);
+
+    const obs = new MutationObserver(() => {
+        formatPage(paginationNav.dataset.currentPage || 0);
+    });
+    obs.observe(parent, {
+        childList: true,
+    });
 };

@@ -174,7 +174,6 @@
 
     makeReviewStars(document.querySelector("[data-reviewstars]"), document.querySelector("#stars-hidden"));
 
-
     paginate(document.getElementById("comments"));
 </script>
 @endsection
