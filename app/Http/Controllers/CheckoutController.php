@@ -4,9 +4,29 @@ namespace dress_shop\Http\Controllers;
 
 use Illuminate\Http\Request;
 use dress_shop\DataLayer;
+use dress_shop\PaymentMethod;
+use GuzzleHttp\Client;
 
 class CheckoutController extends Controller
 {
+    public function externPaymentCheck($creditCard)
+    {
+        $client = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'http://localhost:8081',
+            // You can set any number of default request options.
+            'timeout' => 5.0,
+        ]);
+
+        $response = $client->request('GET', '', [
+            'query' => ['card' => $creditCard]
+        ]);
+
+        $result = json_decode($response->getBody());
+
+        return $result->result == "positive";
+    }
+
     public function getCheckout() {
         if (auth()->user()->cartProducts->count() == 0) {
             return redirect()->route('user_error', ['messages' => ['Your cart is empty'], 'status' => 400]);
@@ -43,6 +63,14 @@ class CheckoutController extends Controller
             'address_id' => 'required',
             'payment_method_id' => 'required',
         ]);
+        $paymentMethod = PaymentMethod::find($request->payment_method_id);
+        if (!$this->externPaymentCheck($paymentMethod->cc_number)) {
+            $formattedNumber = substr($paymentMethod->cc_number, 0, 4) . ' ' . substr($paymentMethod->cc_number, 4, 4) . ' ' . substr($paymentMethod->cc_number, 8, 4) . ' ' . substr($paymentMethod->cc_number, 12, 4);
+            return redirect()->route('user_error', ['messages' => [
+                'Payment method refused',
+                'Card: ' . $formattedNumber
+            ]]);
+        } 
         DataLayer::postCreateOrder($request);
         return redirect()->route('index')->with('success', 'Order placed successfully');
     }
