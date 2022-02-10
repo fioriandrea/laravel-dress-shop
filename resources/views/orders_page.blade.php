@@ -8,6 +8,10 @@
 
         <hr>
 
+        @if(count($orders) > 0)
+        @include('pagination_select')
+        @endif
+
         <div id="orders">
         @foreach($orders as $order)
         <div class="border p-3 my-3 {{ $order->status == 'refused' ? 'border-danger' : '' }} {{ $order->status == 'confirmed' ? 'border-success' : '' }} {{ $order->status == 'pending' ? 'border-warning' : '' }}" data-card-order="{{ $order->id }}">
@@ -64,7 +68,10 @@
     createAjaxDelete("confirm-order", "card-order")();
     createAjaxDelete("refuse-order", "card-order")();
 
-
-    paginate(document.getElementById("orders"), 3);
+    const sizeSelect = document.querySelector("#pagination-select");
+    const paginator = paginate(document.getElementById("orders"), +sizeSelect?.value);
+    sizeSelect?.addEventListener("change", (event) => {
+        paginator.itemsPerPage = +event.target.value;
+    });
 </script>
 @endsection

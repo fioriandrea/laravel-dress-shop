@@ -3,15 +3,20 @@
 @section('title', 'Product List')
 
 @section('content')
+<div class="d-flex justify-content-between">
 @auth
 @if(auth()->user()->isAdmin())
 <!-- use icon-plus to add product -->
-<a href="{{ route('get_add_product') }}" class="btn btn-outline-success my-2">
+<a href="{{ route('get_add_product') }}" class="btn btn-outline-success my-2 me-2">
     <i class="bi bi-plus"></i>
     Add Product
 </a> 
 @endif
 @endauth
+@if(count($products) > 0)
+@include('pagination_select')
+@endif
+</div>
 <div id="products">
 @foreach($products as $product)
     @section('product-li-content')
@@ -41,6 +46,10 @@
 @section('after')
 <script>
     createAjaxDelete("remove-product", "card-product")();
-    paginate(document.getElementById("products"));
+    const sizeSelect = document.querySelector("#pagination-select");
+    const paginator = paginate(document.getElementById("products"), +sizeSelect?.value);
+    sizeSelect?.addEventListener("change", (event) => {
+        paginator.itemsPerPage = +event.target.value;
+    });
 </script>
 @endsection
