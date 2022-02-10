@@ -44,6 +44,16 @@ class CartController extends Controller
                     $submessage,
                 ], 'status' => 400]);
             }
+        } else {
+            $product = DataLayer::getProduct($request->product_id);
+            if ($product == null || $product->unlisted == 1) {
+                // redirect to 'user_error' route with error message (specify the product name and size)
+                return redirect()->route('user_error', ['messages' => ['Product not found'], 'status' => 404]);
+            }
+            if ($product->{$request->size} < $request->quantity) {
+                // redirect to 'user_error' route with error message (specify the product name and size)
+                return redirect()->route('user_error', ['messages' => ['Not enough stock for product: ' . $product->name . ' (size: ' . $request->size . ')'], 'status' => 400]);
+            }
         }
         DataLayer::addToCart($request);
         return redirect('/cart');

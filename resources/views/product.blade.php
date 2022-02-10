@@ -57,8 +57,8 @@
             @endforeach
         </select>
         <form method="post" action="{{ route('add_to_cart') }}">
-            <select name="quantity" id="size-number-select" class="form-select"></select>
             <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input name="quantity" id="quantity-form" placeholder="Quantity" min="1" type="number" class="form-control" required>
             <input type="hidden" name="size" id="size-form">
             @csrf
             <button {{ (auth()->user() == null || !auth()->user()->isAdmin()) ? '' : 'hidden' }} id="add-to-cart" type="submit" class="disabled btn btn-outline-success w-100">Add to cart</button>
@@ -143,40 +143,32 @@
 @endsection
 @section('after')
 <script>
-    const sizeSelectHandler = () => {
+    const sizeInputHandler = () => {
         const addToCart = document.querySelector("#add-to-cart");
         addToCart.classList.remove("disabled");
+        const quantityForm = document.querySelector("#quantity-form");
+        quantityForm.hidden = false;
+        quantityForm.value = undefined;
         const product = @json($product);
         const size = document.querySelector("#size-select").value;
+        const sizeForm = document.querySelector("#size-form");
+        sizeForm.value = size;
         const available = product[size]; 
         const availableElem = document.querySelector("#available");
         setAvailableParagraph(availableElem, available);
+        quantityForm.max = available;
         if (available === 0) {
             addToCart.classList.add("disabled");
-        }
-        document.querySelector("#size-form").value = size;
-        const sizeNumberSelect = document.querySelector("#size-number-select");
-        sizeNumberSelect.hidden = false;
-        sizeNumberSelect.innerHTML = "";
-        for (let i = 0; i <= available; i++) {
-            const option = document.createElement("option");
-            if (i === 0) {
-                // hide option
-                option.hidden = true;
-            } else if (i === 1) {
-                option.selected = true;
-            }
-            option.value = i;
-            option.innerText = i;
-            sizeNumberSelect.appendChild(option);
-        }
-        if (available <= 1) {
-            // hide select
-            sizeNumberSelect.hidden = true;
+            quantityForm.hidden = true;
         }
     };
-    sizeSelectHandler();
-    document.querySelector("#size-select").addEventListener("change", sizeSelectHandler);
+    sizeInputHandler();
+    document.querySelector("#size-select").addEventListener("change", sizeInputHandler);
+    document.querySelector("#quantity-form").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+        }
+    });
 
     makeReviewStars(document.querySelector("[data-reviewstars]"), document.querySelector("#stars-hidden"));
 </script>
