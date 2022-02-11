@@ -14,15 +14,11 @@
     </head>
     <body>
         <div class="h-100 d-flex flex-column  justify-content-center align-items-center">
-            <h1 class="card-title">Error ({{ $status }})</h1>
+            <h1 class="card-title">@lang('labels.Error') ({{ $status }})</h1>
             @foreach($messages as $message)
                 <h2 class="card-subtitle {{ $loop->last ? 'mb-4' : '' }} m-2">{{ $message }}</h2>
             @endforeach
             <div class="buttons d-flex justify-content-center align-items-center w-100">
-                <a href="{{ url()->previous() }}" class="btn btn-outline-success">
-                    <i class="bi bi-arrow-left"></i>
-                    Previous Page
-                </a>
                 @yield('buttons')
             </div>
         </div>

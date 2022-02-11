@@ -7,22 +7,22 @@
     <form method="post" action="{{ $add ? route('add_payment_method') : route('modify_payment_method', ['id' => $payment->id]) }}" id="payment-form" class="mt-3 form-horizontal">
         @csrf
         <div class="form-group">
-            <label for="owner_first_name">Owner's First Name</label>
+            <label for="owner_first_name">@lang('labels.Owners_First_Name')</label>
             <input name="owner_first_name" required type="text" class="form-control" id="owner-first-name" value="{{ $payment->owner_first_name }}" maxlength="40">
         </div>
         <div class="form-group">
-            <label for="owner-second-name">Owner's Second Name</label>
+            <label for="owner-second-name">@lang('labels.Owners_Second_Name')</label>
             <input name="owner_second_name" required type="text" class="form-control" id="owner-second-name" value="{{ $payment->owner_second_name }}" maxlength="40">
         </div>
         <div class="form-group">
-            <label for="ccn">Credit Card Number</label>
+            <label for="ccn">@lang('labels.Credit_Card_Number')</label>
             <input name="cc_number" required class="form-control" id="ccn" type="tel" value="{{ $payment->cc_number }}">
         </div>
         <div class="form-group">
-            <label for="expiration_date">Expiration Date</label>
+            <label for="expiration_date">@lang('labels.Expiration_Date')</label>
             <input name="expiration_date" required type="month" class="form-control" id="expiration-date" value="{{ $payment->expiration_date }}">
         </div>
-        <button type="submit" class="w-100 btn btn-outline-primary">Submit</button>
+        <button type="submit" class="w-100 btn btn-outline-primary">@lang('labels.Submit')</button>
     </form>
 </div>
 @endsection

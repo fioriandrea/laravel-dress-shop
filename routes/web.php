@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::group(['middleware' => ['lang']], function() {
+Route::group(['middleware' => ['language']], function() {
     Route::get('lang/{lang}', [
         'as' => 'lang.change',
         'uses' => 'LangController@changeLanguage'

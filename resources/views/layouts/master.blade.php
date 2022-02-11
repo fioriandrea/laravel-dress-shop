@@ -18,41 +18,41 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <form class="d-flex w-100 pe-2" method="get" action="{{ action('ProductController@getProductList') }}">
                         <select class="form-select w-auto" name="category">
-                            <option value="all" selected>All Categories</option>
+                            <option value="all" selected>@lang('labels.All_Categories')</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category }}">{{ $category }}</option>
+                                <option value="{{ $category }}">{{ trans('labels.' . $category) }}</option>
                             @endforeach
                         </select>
-                        <input class="form-control me-2" type="search" placeholder="Search" name="keyword">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                        <input class="form-control me-2" type="search" placeholder="{{ trans('labels.Search') }}" name="keyword">
+                        <button class="btn btn-outline-success" type="submit">@lang('labels.Search')</button>
                     </form>
                     <ul class="navbar-nav mb-2 mb-lg-0 d-flex justify-content-center align-items-center">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown">
-                                Catalogue
+                                @lang('labels.Catalog')
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ action('ProductController@getProductList', ['category' => 'all']) }}">All Categories</a></li>
+                                <li><a class="dropdown-item" href="{{ action('ProductController@getProductList', ['category' => 'all']) }}">@lang('labels.All_Categories')</a></li>
                                 @foreach($categories as $category)
-                                    <li><a class="dropdown-item" href="{{ action('ProductController@getProductList', ['category' => $category]) }}">{{ $category }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ action('ProductController@getProductList', ['category' => $category]) }}">{{ trans('labels.' . $category) }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown">
-                                Language
+                                @lang('labels.Language')
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{ route('lang.change', ['lang' => 'en']) }}">
-                                    English
+                                    @lang('labels.English')
                                     <i>
                                         <img src="{{ asset('storage/img/us.svg') }}" alt="American flag" width="20px" height="20px">
                                     </i>
                                 </a></li>
                                 <li><a class="dropdown-item" href="{{ route('lang.change', ['lang' => 'it']) }}">
-                                    Italian
+                                    @lang('labels.Italian')
                                     <i>
                                         <img src="{{ asset('storage/img/it.svg') }}" alt="Italian flag" width="20px" height="20px">
                                     </i>
@@ -67,16 +67,16 @@
                             <ul class="dropdown-menu">
                                 @auth
                                     @if(Auth::user()->isAdmin())
-                                    <li><a class="dropdown-item" href="{{ route('admin_orders') }}">Manage Orders</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('product_list') }}">Manage Products</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin_orders') }}">@lang('labels.Manage_Orders')</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('product_list') }}">@lang('labels.Manage_Products')</a></li>
                                     @else
-                                    <li><a class="dropdown-item" href="{{ route('orders') }}">Orders</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('orders') }}">@lang('labels.Orders')</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('profile') }}">@lang('labels.Profile')</a></li>
                                     @endif
-                                    <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('logout') }}">@lang('labels.Logout')</a></li>
                                 @else
-                                    <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('login') }}">@lang('labels.Login')</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('register') }}">@lang('labels.Register')</a></li>
                                 @endif
                             </ul>
                         </li>

@@ -14,14 +14,14 @@
         @foreach($orders as $order)
         <div class="border p-3 my-3 {{ $order->status == 'refused' ? 'border-danger' : '' }} {{ $order->status == 'confirmed' ? 'border-success' : '' }} {{ $order->status == 'pending' ? 'border-warning' : '' }}" data-card-order="{{ $order->id }}">
             <div class="pb-3">
-                <h2 class="fw-bold">Order Number: {{ $order->id }}</span></h2>
+                <h2 class="fw-bold">@lang('labels.Order_Number'): {{ $order->id }}</span></h2>
                 <!-- format order created_at date -->
-                <p>Order Date: <span class="fw-bold">{{ date('d/m/Y', strtotime($order->created_at)) }}</span></p>
+                <p>@lang('labels.Order_Date'): <span class="fw-bold">{{ date('d/m/Y', strtotime($order->created_at)) }}</span></p>
                 <!-- Estimate delivery date is created_at + 2 weeks -->
-                <p>Estimated Delivery Date: <span class="fw-bold">{{ date('d/m/Y', strtotime($order->created_at . ' + 2 weeks')) }}</span></p>
+                <p>@lang('labels.Estimated_Delivery_Date'): <span class="fw-bold">{{ date('d/m/Y', strtotime($order->created_at . ' + 2 weeks')) }}</span></p>
                 <!-- status capitalized -->
-                <p>Order Status: <span class="fw-bold">{{ ucfirst($order->status) }}</span></p>
-                <p>Order Total: <span class="fw-bold">EUR {{ $order->total }}</span></p>
+                <p>@lang('labels.Order_Status'): <span class="fw-bold">{{ trans('labels.' . ucfirst($order->status)) }}</span></p>
+                <p>@lang('labels.Order_Total'): <span class="fw-bold">EUR {{ $order->total }}</span></p>
                 <!-- address -->
                 @include('address_card_content', ['address' => $order->address])
                 @if(!auth()->user()->isAdmin())
@@ -29,18 +29,18 @@
                     @if($order->status == 'pending')
                         <form action="{{ route('delete_order', ['id' => $order->id]) }}" method="post">
                             @csrf
-                            <button class="btn btn-outline-danger" type="submit" data-remove-order="{{ $order->id }}">Cancel Order</button>
+                            <button class="btn btn-outline-danger" type="submit" data-remove-order="{{ $order->id }}">@lang('labels.Cancel_Order')</button>
                         </form>
                     @endif
                 @else
                     <div class="d-flex">
                         <form action="{{ route('confirm_order', ['id' => $order->id]) }}" method="post" class="me-2">
                             @csrf
-                            <button class="btn btn-outline-success" type="submit" data-confirm-order="{{ $order->id }}">Confirm Order</button>
+                            <button class="btn btn-outline-success" type="submit" data-confirm-order="{{ $order->id }}">@lang('labels.Confirm_Order')</button>
                         </form>
                         <form action="{{ route('refuse_order', ['id' => $order->id]) }}" method="post">
                             @csrf
-                            <button class="btn btn-outline-danger" type="submit" data-refuse-order="{{ $order->id }}">Refuse Order</button>
+                            <button class="btn btn-outline-danger" type="submit" data-refuse-order="{{ $order->id }}">@lang('labels.Refuse_Order')</button>
                         </form>
                     </div>
                 @endif
@@ -49,8 +49,8 @@
                 @section('product-li-content')
                     <p class="h1">EUR {{ $op->price }}</p>
                     <p class="small m-0" data-shipping="{{ $op->shipping }}"></p>
-                    <p class="small m-0">Size: <span class="fw-bold">{{ $op->size }}</span></p>
-                    <p class="small m-0">Quantity: <span class="fw-bold">{{ $op->quantity }}</span></p>
+                    <p class="small m-0">@lang('labels.Size'): <span class="fw-bold">{{ $op->size }}</span></p>
+                    <p class="small m-0">@lang('labels.Quantity'): <span class="fw-bold">{{ $op->quantity }}</span></p>
                 @overwrite
                 @include('product_list_card', ['product' => $op->product, 'inslider' => false])
             @endforeach

@@ -5,7 +5,7 @@
 @section('content')
 <form method="post" action="{{ route('post_checkout') }}" class="container border my-5 py-3">
     @csrf
-    <h3>Select Address</h3>
+    <h3>@lang('labels.Select_Address')</h3>
     <!--add address button with plus icon-->
     <div class="row g-3 lead mt-3">
         @foreach($addresses as $address)
@@ -17,7 +17,7 @@
         @endforeach
     </div>
     <hr>
-    <h3>Select Payment Method</h3>
+    <h3>@lang('labels.Select_Payment_Method')</h3>
     <div class="row g-3 lead mt-3">
         @foreach($payments as $payment)
         <label class="checkout-radio border p-3 m-3 col-lg-4">
@@ -28,7 +28,7 @@
     </div>
     <hr>
     <button type="submit" class="btn btn-outline-success">
-        Checkout
+        @lang('labels.Checkout')
         <i class="bi bi-check"></i>
     </button>
 </div>

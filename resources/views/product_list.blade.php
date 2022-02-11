@@ -9,7 +9,7 @@
 <!-- use icon-plus to add product -->
 <a href="{{ route('get_add_product') }}" class="btn btn-outline-success my-2 me-2">
     <i class="bi bi-plus"></i>
-    Add Product
+    @lang('labels.Add_Product')
 </a> 
 @endif
 @endauth
@@ -26,11 +26,11 @@
             <div class="d-flex justify-content-between my-2">
                 <form method="get" action="{{ route('get_edit_product', $product->id) }}">
                     @csrf
-                    <button class="me-2 btn btn-outline-success">Edit</button>
+                    <button class="me-2 btn btn-outline-success">@lang('labels.Edit')</button>
                 </form>
                 <form method="post" action="{{ route('post_unlist_product', $product->id) }}">
                     @csrf
-                    <button data-remove-product="{{ $product->id }}" class="me-2 btn btn-outline-danger">Unlist</button>
+                    <button data-remove-product="{{ $product->id }}" class="me-2 btn btn-outline-danger">@lang('labels.Unlist')</button>
                 </form>
             </div>
         @endif

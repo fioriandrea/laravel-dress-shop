@@ -43,13 +43,13 @@
         <p class="lead" data-shipping="{{ $product->shipping }}"></p>
         <p class="lead" id="available"></p>
         <p class="lead text-muted">
-            Description: {{ $product->description }}
+            @lang('labels.Description'): {{ $product->description }}
         </p>
         <p class="lead text-muted">
-            Brand: {{ $product->brand }}
+            @lang('labels.Brand'): {{ $product->brand }}
         </p>
         <p class="lead text-muted">
-            Category: {{ $product->category }}
+            @lang('labels.Category'): {{ $product->category }}
         </p>
         <select id="size-select" class="form-select">
             @foreach($sizes as $size)
@@ -58,17 +58,17 @@
         </select>
         <form method="post" action="{{ route('add_to_cart') }}">
             <input type="hidden" name="product_id" value="{{ $product->id }}">
-            <input name="quantity" id="quantity-form" placeholder="Quantity" min="1" type="number" class="form-control" required>
+            <input name="quantity" id="quantity-form" placeholder="{{ trans('labels.Quantity') }}" min="1" type="number" class="form-control" required>
             <input type="hidden" name="size" id="size-form">
             @csrf
-            <button {{ (auth()->user() == null || !auth()->user()->isAdmin()) ? '' : 'hidden' }} id="add-to-cart" type="submit" class="disabled btn btn-outline-success w-100">Add to cart</button>
+            <button {{ (auth()->user() == null || !auth()->user()->isAdmin()) ? '' : 'hidden' }} id="add-to-cart" type="submit" class="disabled btn btn-outline-success w-100">@lang('labels.Add_to_cart')</button>
         </form>
     </div>
 
 </section>
 
 <section class="mt-5">
-    <h1 class="mb-3">Related products that you might like</h1>
+    <h1 class="mb-3">@lang('labels.Related_products_that_you_might_like')</h1>
     <div class="d-flex flex-nowrap" style="overflow-y: hidden; overflow-x: scroll">
         @foreach($related as $rp)
         <!-- use product_list_card.blade.php -->
@@ -83,7 +83,7 @@
 </section>
 
 <section class="my-5">
-    <h1>Reviews Section</h1>
+    <h1>@lang('labels.Reviews_Section')</h1>
     @include('pagination_select')
     @auth
     @if(!auth()->user()->isAdmin())
@@ -114,7 +114,7 @@
         <li class="list-group-item">
             <h3>{{ $review->user->name }}</h3>
             <p class="small">
-                Reviewed on <span class="text-muted">{{ $review->review_date }}</span>
+                @lang('labels.Reviewed_on'): <span class="text-muted">{{ $review->review_date }}</span>
             </p>
             <a class="stars mb-3">
                 @for($i = 0; $i < round($review->rating); $i++)
@@ -132,7 +132,7 @@
                     @csrf
                     <button type="submit" class="btn btn-outline-danger btn-sm">
                         <i class="bi bi-trash"></i>
-                        Delete Review
+                        @lang('labels.Delete_Review')
                     </button>
                 </form>
             @endif

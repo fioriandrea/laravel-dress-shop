@@ -1,18 +1,18 @@
 @extends('layouts.master')
 
-@section('title', auth()->user()->name . '\'s Page')
+@section('title', auth()->user()->name . trans('labels.s_Page'))
 
 @section('content')
 
-<h1 class="mt-3">{{ auth()->user()->name }}'s Page</h1>
+<h1 class="mt-3">{{ auth()->user()->name }}@lang('labels.s_Page')</h1>
 
 <hr>
 
 <div class="container border my-5 py-3">
-    <h3>Addresses</h3>
+    <h3>@lang('labels.Addresses')</h3>
     <!--add address button with plus icon-->
     <a href="{{ route('get_add_address') }}" class="btn btn-outline-success">
-        Add Address
+        @lang('labels.Add_Address')
         <i class="bi bi-plus"></i>
     </a>
     <div class="row g-3 lead mt-3">
@@ -24,13 +24,13 @@
                 <form method="post" action="{{ route('remove_address', ['id' => $address->id]) }}">
                     @csrf
                     <button type="submit" class="btn btn-outline-danger" data-remove-address="{{ $address->id }}">
-                        Remove Address
+                        @lang('labels.Remove_Address')
                         <i class="bi bi-trash"></i>
                     </button>
                 </form>
                 <!--modify address button-->
                 <a href="{{ route('get_modify_address', ['id' => $address->id]) }}" class="btn btn-outline-primary">
-                    Modify Address
+                    @lang('labels.Modify_Address')
                     <i class="bi bi-pencil"></i>
                 </a>
             </div>
@@ -40,10 +40,10 @@
 </div>
 
 <div class="container border my-5 py-3">
-    <h3>Payment Methods</h3>
+    <h3>@lang('labels.Payment_Methods')</h3>
     <!--add payment method button with plus icon-->
     <a href="{{ route('get_add_payment_method') }}" class="btn btn-outline-success">
-        Add Payment Method
+        @lang('labels.Add_Payment_Method')
         <i class="bi bi-plus"></i>
     </a>
     <div class="row g-3 lead mt-3">
@@ -54,12 +54,12 @@
                 <form method="post" action="{{ route('remove_payment_method', ['id' => $payment->id]) }}">
                     @csrf
                     <button data-remove-payment="{{ $payment->id }}" type="submit" class="btn btn-outline-danger">
-                        Remove Payment
+                        @lang('labels.Remove_Payment')
                         <i class="bi bi-trash"></i>
                     </button>
                 </form>
                 <a href="{{ route('get_modify_payment_method', ['id' => $payment->id]) }}" class="btn btn-outline-primary">
-                    Modify Payment
+                    @lang('labels.Modify_Payment')
                     <i class="bi bi-pencil"></i>
                 </a>
             </div>

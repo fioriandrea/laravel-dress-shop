@@ -3,12 +3,12 @@
 @section('buttons')
 <a href="{{ route('index') }}" class="btn btn-outline-success">
     <i class="bi bi-arrow-left"></i>
-    Back to home
+    @lang('labels.Back_to_home')
 </a>
 <a href="{{ route('product_list') }}" class="btn btn-outline-success">
-    Edit Products
+    @lang('labels.Edit_Products')
 </a>
 <a href="{{ route('admin_orders') }}" class="btn btn-outline-success">
-    Manage Orders
+    @lang('labels.Manage_Orders')
 </a>
 @endsection
