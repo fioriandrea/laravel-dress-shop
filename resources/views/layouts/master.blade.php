@@ -40,6 +40,26 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown">
+                                Language
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('lang.change', ['lang' => 'en']) }}">
+                                    English
+                                    <i>
+                                        <img src="{{ asset('storage/img/us.svg') }}" alt="American flag" width="20px" height="20px">
+                                    </i>
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('lang.change', ['lang' => 'it']) }}">
+                                    Italian
+                                    <i>
+                                        <img src="{{ asset('storage/img/it.svg') }}" alt="Italian flag" width="20px" height="20px">
+                                    </i>
+                                </a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="i" role="button"
                                 data-bs-toggle="dropdown">
                                 <i class="bi bi-person h3"></i>

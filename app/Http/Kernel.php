@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'admin_checks' => \dress_shop\Http\Middleware\AdminChecks::class,
         'non_admin_checks' => \dress_shop\Http\Middleware\NonAdminChecks::class,
         'product_checks' => \dress_shop\Http\Middleware\ProductChecks::class,
+        'lang' => \dress_shop\Http\Middleware\language::class,
     ];
 
     /**
