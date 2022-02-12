@@ -10,35 +10,6 @@ class DataLayer {
         $review->delete();
     } 
 
-    public static function randomProduct() {
-        $product = new Product();
-        $product->price = rand(50, 300);
-        $product->description = 'Nullam feugiat turpis elit, vel maximus nulla vulputate at. Curabitur posuere augue enim, sit amet fringilla dui aliquet sed. Nulla tempor orci at diam dapibus faucibus. Aliquam egestas vel dui id euismod. Morbi vehicula neque in risus condimentum convallis. Praesent dignissim quis ipsum et varius. Donec nulla ipsum, pharetra non justo ac, aliquam condimentum lorem. Curabitur vehicula nibh odio, non consectetur arcu aliquam ac. Vestibulum dignissim eu eros et placerat. Proin lobortis viverra vulputate.';
-        $product->name = DataLayer::getRandomName();
-        $product->short_description = 'Nullam feugiat turpis elit, vel maximus nulla vulputate at. Curabitur posuere augue enim, sit amet fringilla dui aliquet sed';
-        $product->category = DataLayer::getRandomCategory();
-        // get first word from name as brand
-        $product->brand = substr($product->name, 0, strpos($product->name, ' '));
-        $product->shipping = rand(0, 30);
-        $product->S = rand(1, 10);
-        $product->M = rand(1, 10);
-        $product->L = rand(1, 10);
-        $product->XL = rand(1, 10);
-        $product->save();
-    }
-
-    public static function getRandomName() {
-        $names = ['Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Consectetur', 'Adipiscing', 'Elit', 'Vestibulum', 'Dignissim', 'Eu', 'Arcu', 'Vulputate', 'Et', 'Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Consectetur', 'Adipiscing', 'Elit', 'Vestibulum', 'Dignissim', 'Eu', 'Arcu', 'Vulputate', 'Et', 'Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Consectetur', 'Adipiscing', 'Elit', 'Vestibulum', 'Dignissim', 'Eu', 'Arcu', 'Vulputate', 'Et', 'Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Consectetur', 'Adipiscing', 'Elit', 'Vestibulum', 'Dignissim', 'Eu', 'Arcu', 'Vulputate', 'Et', 'Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Consectetur', 'Adipiscing', 'Elit', 'Vestibulum', 'Dignissim', 'Eu', 'Arcu', 'Vulputate', 'Et', 'Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Consectetur', 'Adipiscing', 'Elit', 'Vestibulum', 'Dignissim', 'Eu', 'Arcu', 'Vulputate', 'Et', 'Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Consectetur', 'Adipiscing', 'Elit', 'Vestibulum', 'Dignissim', 'Eu', 'Arcu', 'Vulputate', 'Et', 'Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Consectetur' ];
-        $name = $names[rand(0, count($names) - 1)];
-        $name .= ' ' . $names[rand(0, count($names) - 1)];
-        return $name;
-    }
-
-    public static function getRandomCategory() {
-        $categories = ['Shirts', 'Pants', 'Shoes', 'Hats', 'Suits', 'Ties'];
-        return $categories[rand(0, count($categories) - 1)];
-    }
-
     public static function editReviewObj($review, $data) {
         $review->product_id = $data->product_id;
         $review->user_id = auth()->user()->id;

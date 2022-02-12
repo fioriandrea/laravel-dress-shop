@@ -110,7 +110,7 @@
     <hr>
 
     <ul id="comments" class="list-group">
-        @foreach($product->reviews as $review)
+        @foreach($reviews as $review)
         <li class="list-group-item">
             <h3>{{ $review->user->name }}</h3>
             <p class="small">

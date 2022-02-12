@@ -40,6 +40,7 @@ class ProductController extends Controller
         return view('product', [
             'product' => $product,
             'rating' => $product->getRating(),
+            'reviews' => $product->reviews()->orderBy('id', 'desc')->get(),
             'related' => DataLayer::getRelatedProducts($product),
         ]);
     }
@@ -124,7 +125,7 @@ class ProductController extends Controller
             return redirect()->route('product', ['id' => $prodid])->with('error', 'You have already reviewed this product');
         }
         if (!$user->hasBought($prodid)) {
-            return redirect()->route('product', ['id' => $prodid])->with('error', 'You have to buy this product before you can review it');
+            return redirect()->route('product', ['id' => $prodid])->with('error', 'You have to own this product before you can review it');
         }
         $request->product_id = $prodid;
         DataLayer::addReview($request);
