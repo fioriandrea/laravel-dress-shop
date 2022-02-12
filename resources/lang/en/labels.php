@@ -35,7 +35,7 @@ return [
     'Brand' => 'Brand',
     'Shipping' => 'Shipping',
     'Submit' => 'Submit',
-    'View' => 'View',
+    'Pagination' => 'Pagination',
     'Not_available_at_the_moment' => 'Not available at the moment',
     'for_shipping' => 'for shipping',
     'Related_products_that_you_might_like' => 'Related products that you might like',

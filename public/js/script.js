@@ -131,7 +131,7 @@ const createAjaxDelete = (buttonDataStr, cardDataStr) => {
     };
 };
 
-const paginate = (parent, itemsPerPage = 5, maxButtons = 3, initialPage = 0) => {
+const paginate = (parent, itemsPerPage = 5, maxButtons = 5, initialPage = 0) => {
     const paginationNav = document.querySelector("#pagination-nav");
     if (!paginationNav) {
         throw new Error("No pagination nav found");

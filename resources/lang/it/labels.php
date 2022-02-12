@@ -35,7 +35,7 @@ return [
     'Brand' => 'Marca',
     'Shipping' => 'Spedizione',
     'Submit' => 'Invia',
-    'View' => 'Visualizza',
+    'Pagination' => 'Paginazione',
     'Not_available_at_the_moment' => 'Non disponibile al momento',
     'for_shipping' => 'per la spedizione',
     'Related_products_that_you_might_like' => 'Prodotti correlati che potrebbero interessarti',
