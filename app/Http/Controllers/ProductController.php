@@ -12,6 +12,7 @@ class ProductController extends Controller
 {
     private static function productsFilter($category = 'all', $keyword = '') {
         return function($product) use ($category, $keyword) {
+            $keyword = trim($keyword);
             $category = $category === null ? 'all' : $category;
             $keyword = $keyword === null ? '' : $keyword;
             if ($category != 'all' && $category != $product->category)
