@@ -144,7 +144,3 @@
         grid-template-columns: 1fr;
     }
 }
-
-input:invalid, textarea:invalid {
-    border: 2px dashed red;
-}

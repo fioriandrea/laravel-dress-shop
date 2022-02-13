@@ -2,6 +2,10 @@
 
 @section('title', $add ? 'Add Payment Method' : 'Modify Payment Method')
 
+@section('before')
+@include('form_invalid_style')
+@endsection
+
 @section('content')
     <!--an owner, credit card number, expiration date-->
     <form method="post" action="{{ $add ? route('add_payment_method') : route('modify_payment_method', ['id' => $payment->id]) }}" id="payment-form" class="mt-3 form-horizontal">
@@ -29,27 +33,39 @@
 
 @section('after')
 <script> 
+    const formatCardNumber = (value, delim = ' ') => {
+        const res = [];
+        for (let i = 0; i < value.length; i++) {
+            if (i % 4 === 0 && i !== 0) {
+                res.push(delim);
+            }
+            res.push(value[i]);
+        }
+        return res.join('');
+    };
+
     /*
     * Precondition: input an input element and the form containing it
     * Postcondition: credit card number formatting is applied to the input element with id inputid
     */
-    const mkcreditCardFormatter = (input, form, len = 16, placeholderSym = 'X', delim = ' ') => {
+    const mkcreditCardFormatter = (input, form, placeholderSym = 'X', delim = ' ') => {
         const getreal = (value) => value.replaceAll(delim, '');
 
         let real = getreal(input.value);
 
-        input.placeholder = formatCardNumber(new Array(len).fill(placeholderSym).join(''));
-        input.pattern = `.{${len},}`;
+        input.placeholder = formatCardNumber(new Array(16).fill(placeholderSym).join(''));
+        input.pattern = `[0-9]{4}${delim}[0-9]{4}${delim}[0-9]{4}${delim}[0-9]{4}`;
 
         const inputFormatter = (val) => {
             real = getreal(val);
             real = real.replaceAll(/[^\d]+/g, '');
-            real = real.slice(0, len);
+            real = real.slice(0, 16);
             input.value = formatCardNumber(real, delim);
         };
         inputFormatter(real);
         input.addEventListener('input', (e) => inputFormatter(e.target.value));
         form.addEventListener('submit', (e) => {
+            input.pattern = `[0-9]{16}`;
             input.value = real;
         });
     };

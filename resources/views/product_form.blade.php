@@ -2,6 +2,10 @@
 
 @section('title', $add ? 'Add Product' : 'Edit Product')
 
+@section('before')
+@include('form_invalid_style')
+@endsection
+
 @section('content')
     <form method="post" action="{{ $add ? route('post_add_product') : route('post_edit_product', ['id' => $product->id]) }}" class="mt-3 form-horizontal user-form" enctype="multipart/form-data">
         @csrf

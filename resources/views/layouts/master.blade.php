@@ -4,6 +4,7 @@
 <head>
     @include('header_content')
     <title>@yield('title')</title>
+    @yield('before')
 </head>
 
 <body>
