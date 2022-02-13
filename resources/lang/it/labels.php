@@ -88,7 +88,7 @@ return [
     'Main_Location' => 'Indirizzo principale',
     'CEO_telephone_number' => 'Numero di telefono del CEO',
     'CEO_email' => 'Email del CEO',
-    'Refound telephone number' => 'Numero di telefono per il rimborso',
+    'Refound_telephone_number' => 'Numero di telefono per il rimborso',
     'Refound_email' => 'Email per il rimborso',
     'Confirmed' => 'Confermato',
     'Refused' => 'Rifiutato',

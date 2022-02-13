@@ -88,7 +88,7 @@ return [
     'Main_Location' => 'Main Location',
     'CEO_telephone_number' => 'CEO telephone number',
     'CEO_email' => 'CEO email',
-    'Refound telephone number' => 'Refound telephone number',
+    'Refound_telephone_number' => 'Refound telephone number',
     'Refound_email' => 'Refound email',
     'Confirmed' => 'Confirmed',
     'Refused' => 'Refused',
