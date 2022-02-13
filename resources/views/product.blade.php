@@ -57,10 +57,10 @@
             @endforeach
         </select>
         <form method="post" action="{{ route('add_to_cart') }}">
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
-            <input name="quantity" id="quantity-form" placeholder="{{ trans('labels.Quantity') }}" min="1" type="number" class="form-control" required>
-            <input type="hidden" name="size" id="size-form">
             @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input name="quantity" id="quantity-form" placeholder="{{ trans('labels.Quantity') }}" type={{ (auth()->user() == null || !auth()->user()->isAdmin()) ? 'number' : 'hidden' }} min="1" class="form-control" required>
+            <input type="hidden" name="size" id="size-form">
             <button {{ (auth()->user() == null || !auth()->user()->isAdmin()) ? '' : 'hidden' }} id="add-to-cart" type="submit" class="disabled btn btn-outline-success w-100">@lang('labels.Add_to_cart')</button>
         </form>
     </div>

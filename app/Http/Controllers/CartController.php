@@ -38,11 +38,7 @@ class CartController extends Controller
                 } else {
                     $submessage = 'Only ' . $cartProduct->product->{$cartProduct->size} . ' left in stock and ' . $cartProduct->quantity . ' already in cart';
                 }
-                // redirect to 'user_error' route with error message (specify the product name and size)
-                return redirect()->route('user_error', ['messages' => [
-                    'Not enough stock for product: ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . ')',
-                    $submessage,
-                ], 'status' => 400]);
+                return redirect()->back()->with('error', 'Error: not enough stock for ' . $cartProduct->product->name . ' (size: ' . $cartProduct->size . '): ' . $submessage);
             }
         } else {
             $product = DataLayer::getProduct($request->product_id);

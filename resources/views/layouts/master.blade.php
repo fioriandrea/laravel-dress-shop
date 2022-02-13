@@ -27,6 +27,9 @@
                         <button class="btn btn-outline-success" type="submit">@lang('labels.Search')</button>
                     </form>
                     <ul class="navbar-nav mb-2 mb-lg-0 d-flex justify-content-center align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('product_list') }}">@lang('labels.Products')</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown">

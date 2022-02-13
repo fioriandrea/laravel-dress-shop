@@ -8,15 +8,15 @@
         @csrf
         <div class="form-group">
             <label for="street">@lang('labels.Street')</label>
-            <input required type="text" class="form-control" id="street" name="street" placeholder="1234 Main St" maxlength="40" value="{{ $address->street }}">
+            <input required type="text" class="form-control" id="street" name="street" placeholder="1234 Main St" maxlength="25" value="{{ $address->street }}">
         </div>
         <div class="form-group">
             <label for="city">@lang('labels.City')</label>
-            <input required type="text" class="form-control" id="city" name="city" placeholder="Castel Mella" maxlength="40" value="{{ $address->city }}">
+            <input required type="text" class="form-control" id="city" name="city" placeholder="Castel Mella" maxlength="25" value="{{ $address->city }}">
         </div>
         <div class="form-group">
             <label for="province">@lang('labels.Province')</label>
-            <input required type="text" class="form-control" id="province" name="province" placeholder="Brescia" maxlength="40" value="{{ $address->province }}">
+            <input required type="text" class="form-control" id="province" name="province" placeholder="Brescia" maxlength="25" value="{{ $address->province }}">
         </div>
         <div class="form-group">
             <label for="zip">@lang('labels.ZIP')</label>
@@ -24,8 +24,8 @@
         </div>
         <div class="form-group">
             <label for="country">@lang('labels.Country')</label>
-            <input required class="form-control" id="country" name="country" maxlength="40" value="{{ $address->country }}">
+            <input required class="form-control" id="country" name="country" maxlength="25" value="{{ $address->country }}">
         </div>
-        <button type="submit" class="w-100 btn btn-outline-primary">@lang('labels.Submit')</button>
+        <button type="submit" class="w-100 btn btn-outline-primary my-2">@lang('labels.Submit')</button>
     </form>
 @endsection

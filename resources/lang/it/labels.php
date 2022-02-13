@@ -104,4 +104,6 @@ return [
     'Go_to_orders' => 'Vai agli ordini',
     'Edit_Products' => 'Modifica prodotti',
     'Manage_Orders' => 'Gestisci ordini',
+    'Go_Back' => 'Torna indietro',
+    'Products' => 'Prodotti',
 ];

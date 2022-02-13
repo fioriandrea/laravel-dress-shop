@@ -104,4 +104,6 @@ return [
     'Go_to_orders' => 'Go to orders',
     'Edit_Products' => 'Edit Products',
     'Manage_Orders' => 'Manage Orders',
+    'Go_Back' => 'Go Back',
+    'Products' => 'Products',
 ];

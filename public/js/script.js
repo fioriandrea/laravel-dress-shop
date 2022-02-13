@@ -124,7 +124,7 @@ const createAjaxDelete = (buttonDataStr, cardDataStr) => {
                         card.remove();
                     }
                 }).catch(error => {
-                    alertAjax.appendChild(createAlertAjax(error));
+                    alertAjax.appendChild(createAlertAjax(error, "error"));
                 });
             });
         });
