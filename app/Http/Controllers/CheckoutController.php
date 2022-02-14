@@ -11,20 +11,24 @@ class CheckoutController extends Controller
 {
     public function externPaymentCheck($creditCard)
     {
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => 'http://localhost:8081',
-            // You can set any number of default request options.
-            'timeout' => 5.0,
-        ]);
+        try {
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => 'http://localhost:8081',
+                // You can set any number of default request options.
+                'timeout' => 5.0,
+            ]);
 
-        $response = $client->request('GET', '', [
-            'query' => ['card' => $creditCard]
-        ]);
+            $response = $client->request('GET', '', [
+                'query' => ['card' => $creditCard]
+            ]);
 
-        $result = json_decode($response->getBody());
+            $result = json_decode($response->getBody());
 
-        return $result->result == "positive";
+            return $result->result == "positive";
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function getCheckout() {
