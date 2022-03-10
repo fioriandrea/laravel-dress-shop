@@ -1,4 +1,4 @@
-# Dress Shop
+# Laravel Dress Shop
 
 Dress Shop e-commerce website for a university project.
 
